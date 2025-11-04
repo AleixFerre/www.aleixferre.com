@@ -8,6 +8,7 @@
 .info {
   margin: 5px 0;
   font-size: 0.8em;
+  grid-column: span 2;
 
   @media screen and (max-width: 1000px) {
     margin: 10px 0 0 0;
