@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TABS } from '../app.model';
@@ -9,7 +8,7 @@ import { TabService } from '../tab.service';
 
 @Component({
   selector: 'app-home-content',
-  imports: [MetricContainerComponent, IconTextComponent, NgClass],
+  imports: [MetricContainerComponent, IconTextComponent],
   templateUrl: './home-content.component.html',
   styleUrl: './home-content.component.scss',
 })

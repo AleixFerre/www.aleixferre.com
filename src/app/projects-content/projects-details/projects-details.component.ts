@@ -1,4 +1,4 @@
-import { DatePipe, KeyValuePipe, NgClass } from '@angular/common';
+import { DatePipe, KeyValuePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { keepOrder } from './keepOrder';
 
 @Component({
   selector: 'app-projects-details',
-  imports: [NgClass, KeyValuePipe, DatePipe, GalleryComponent],
+  imports: [KeyValuePipe, DatePipe, GalleryComponent],
   templateUrl: './projects-details.component.html',
   styleUrl: './projects-details.component.scss',
 })
@@ -58,6 +58,9 @@ export class ProjectsDetailsComponent {
 
     let years = end.getFullYear() - start.getFullYear();
     let months = end.getMonth() - start.getMonth();
+    const days = Math.floor(
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
+    );
 
     if (months < 0) {
       years--;
@@ -76,6 +79,9 @@ export class ProjectsDetailsComponent {
     }
 
     if (months <= 0 && years <= 0) {
+      if (days >= 1 && days <= 3) {
+        return `${days} day${days !== 1 ? 's' : ''}`;
+      }
       result = 'A week';
     }
 

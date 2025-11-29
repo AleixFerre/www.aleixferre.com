@@ -1,11 +1,11 @@
 <div class="grid list not-mobile-only">
-  <div class="button" (click)="setCurrentlyActiveId(null)">
+  <div class="button stick" (click)="setCurrentlyActiveId(null)">
     <img class="back" src="assets/back.svg" />
     <span class="see-all">See All</span>
   </div>
   @for (item of projects; track $index; let i = $index) {
   <div class="box project" style="background-image: url('{{ item.backgroundImage }}');"
-    [ngClass]="{'large': item.class === 'large', 'selected': projectsService.currentlyActiveId === item.id}"
+    [class]="{'large': item.class === 'large', 'selected': projectsService.currentlyActiveId === item.id}"
     (click)="setCurrentlyActiveId(item.id)">
     <img src="{{ item.image }}" class="inner" alt="{{ item.name }}" />
   </div>

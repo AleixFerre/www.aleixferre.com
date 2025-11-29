@@ -30,6 +30,7 @@ export const DUMMY_PROJECT: Project = {
 const YuukoGamesProject: Project = {
   id: 'yuukogames',
   name: 'Yuuko Games',
+  class: 'wide',
   description:
     'A game development studio focused on creating unique and engaging games based in Girona.',
   url: 'https://yuukogamesstudio.github.io',
@@ -88,6 +89,7 @@ const USignalsProject: Project = {
 const TheForbiddenDoorProject: Project = {
   id: 'the-forbidden-door',
   name: 'The Forbidden Door',
+  class: 'wide',
   description:
     'A horror puzzle game that challenges players to solve intricate puzzles while navigating a chilling atmosphere.',
   url: 'https://yuukogames.itch.io/the-forbidden-door',
@@ -471,10 +473,52 @@ const VeintiCuatroHorasAntesDelApocalipsisProject: Project = {
   finishedAt: new Date('2025-09-02'),
 };
 
+const ElTrenDeLaVidaProject: Project = {
+  id: 'el-tren-de-la-vida',
+  name: 'El tren de la vida',
+  description:
+    "A metaphor for the protagonist's entire life condensed into a single year. Each season is a train station. Each station is an important moment in your life that you miss because you're disconnected, absorbed in your phone. While you disconnect from life, you remain connected to your phone.",
+  url: 'https://aleixferre.itch.io/el-tren-de-la-vida',
+  image: '/assets/projects/el-tren-de-la-vida/el-tren-de-la-vida.webp',
+  backgroundImage:
+    '/assets/projects/el-tren-de-la-vida/el-tren-de-la-vida_bg.webp',
+  images: [
+    '/assets/projects/el-tren-de-la-vida/el-tren-de-la-vida-1.webp',
+    '/assets/projects/el-tren-de-la-vida/el-tren-de-la-vida-2.webp',
+    '/assets/projects/el-tren-de-la-vida/el-tren-de-la-vida-3.webp',
+  ],
+  details: {
+    'Main Focus': 'Develop a subjective metaphor driven game.',
+    'Notable Features':
+      'Seasonal train stops that mirror life stages. Draw, model, write good narrative and design the puzzles for the 4 stations.',
+    'Technologies Used': 'Unity, Blender, Affinity Designer, FL Studio.',
+    Music:
+      'The music was handmade by me for this game specifically. It changes on each station.',
+    'Game Jam':
+      'This project was part of the Game Jam El Modern Girona 2025. This project done in 48h and the theme was "Connection/Disconnection".',
+    'Challenges Faced':
+      'Balancing clarity of the metaphor with subtlety, joining it with the puzzle minigame, and building atmosphere fast during a game jam.',
+    Authors:
+      'Aleix Ferré, Joaquín Villena, Arnau Albertí, Guillem Rodriguez, Sara Cañada.',
+  },
+  goodForYouIf: [
+    'You enjoy short reflective experiences about presence versus technology.',
+    'You like narrative games that use symbolism instead of exposition.',
+    'You want an atmospheric journey you can finish in less than an hour.',
+  ],
+  whatILearned: [
+    'How to express a metaphor through mechanics, pacing, and art direction.',
+    'How to prioritize mood and narrative beats under tight jam deadlines.',
+    'How to align a multidisciplinary team quickly around a shared vision.',
+  ],
+  createdAt: new Date('2025-11-21'),
+  finishedAt: new Date('2025-11-23'),
+};
+
 export const FEATURED_PROJECTS: Project[] = [
   YuukoGamesProject,
   USignalsProject,
-  MastersArenaProject,
+  ElTrenDeLaVidaProject,
   {
     ...TheForbiddenDoorProject,
     class: 'large',
@@ -488,8 +532,9 @@ export const FEATURED_PROJECTS: Project[] = [
 export const ALL_PROJECTS: Project[] = [
   YuukoGamesProject,
   TheForbiddenDoorProject,
-  USignalsProject,
   VeintiCuatroHorasAntesDelApocalipsisProject,
+  ElTrenDeLaVidaProject,
+  USignalsProject,
   MastersArenaProject,
   EndlessDungeonProject,
   DragThemOutIntoSpaceProject,

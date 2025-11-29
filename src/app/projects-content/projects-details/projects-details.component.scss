@@ -83,7 +83,7 @@ $margin-p: 8px;
     gap: 10px;
     max-width: 10vw;
     height: 90vh;
-    overflow: visible;
+    overflow: auto;
   }
 
   @media screen and (max-width: 1000px) {
@@ -92,6 +92,7 @@ $margin-p: 8px;
   }
 
   .box {
+    min-height: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -168,6 +169,12 @@ $margin-p: 8px;
   gap: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+
+  &.stick {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+  }
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.35);

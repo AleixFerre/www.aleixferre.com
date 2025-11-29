@@ -1,9 +1,7 @@
-import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-metric-container',
-  imports: [NgClass],
   templateUrl: './metric-container.component.html',
   styleUrl: './metric-container.component.scss',
 })

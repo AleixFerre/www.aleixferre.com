@@ -32,7 +32,7 @@
     <div class="grid projects">
       @for (item of projects; track $index) {
       <div class="box project" style="background-image: url('{{ item.backgroundImage }}');"
-        [ngClass]="{'large': item.class === 'large'}" (click)="selectGame(item.id)">
+        [class]="{'large': item.class === 'large'}" (click)="selectGame(item.id)">
         <img src="{{ item.image }}" alt="{{ item.name }}" />
       </div>
       }

@@ -2,9 +2,9 @@
 @if (projectsService.currentlyActiveId === null) {
 <div class="grid appear">
   @for (item of projects; track $index) {
-  <div class="box project" style="background-image: url('{{ item.backgroundImage }}');"
-    [ngClass]="{'large': item.class === 'large'}" (click)="setCurrentlyActiveId(item.id)">
-    <img src="{{ item.image }}" alt="{{ item.name }}" />
+  <div class="box project" [class]="item.class" style="background-image: url('{{ item.backgroundImage }}');"
+    (click)="setCurrentlyActiveId(item.id)">
+    <img [src]="item.image" [alt]="item.name" />
   </div>
   }
 </div>

@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
@@ -15,7 +14,6 @@ import { TabService } from './tab.service';
 @Component({
   selector: 'app-root',
   imports: [
-    NgClass,
     HomeContentComponent,
     ProjectsContentComponent,
     ContactContentComponent,

@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsDetailsComponent } from './projects-details/projects-details.component';
@@ -7,7 +6,7 @@ import { ProjectsService } from './projects.service';
 
 @Component({
   selector: 'app-projects-content',
-  imports: [NgClass, ProjectsDetailsComponent],
+  imports: [ProjectsDetailsComponent],
   templateUrl: './projects-content.component.html',
   styleUrl: './projects-content.component.scss',
 })

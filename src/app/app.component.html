@@ -3,9 +3,9 @@
 
   @for (tab of tabsListEntries; track $index) {
   <div class="col title" (click)="selectTab(tab[0])">
-    <p [ngClass]="{'selected': tabService.currentTab === tab[0]}">{{ tab[1] }}</p>
+    <p [class]="{'selected': tabService.currentTab === tab[0]}">{{ tab[1] }}</p>
   </div>
-  <div class="col scrollable content-hide" [ngClass]="{'isActive': tabService.currentTab === tab[0]}">
+  <div class="col scrollable content-hide" [class]="{'isActive': tabService.currentTab === tab[0]}">
     @switch (tab[0]) {
     @case (TABS.HOME) {
     <app-home-content class="main-content"></app-home-content>
