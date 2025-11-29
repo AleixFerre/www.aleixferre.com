@@ -441,6 +441,36 @@ const CataBotProject: Project = {
   finishedAt: new Date('2022-08-01'),
 };
 
+const VeintiCuatroHorasAntesDelApocalipsisProject: Project = {
+  id: '24h-antes-del-apocalipsis',
+  name: '24h Antes del Apocalipsis',
+  description:
+    'A short story driven game, where your decisions will affect the outcome of the game.',
+  url: 'https://yuukogames.itch.io/24h-antes-del-apocalipsis',
+  image: '/assets/projects/24h-antes/24h-antes.webp',
+  backgroundImage: '/assets/projects/24h-antes/24h-antes_bg.webp',
+  images: [
+    '/assets/projects/24h-antes/24h-antes-1.webp',
+    '/assets/projects/24h-antes/24h-antes-2.webp',
+    '/assets/projects/24h-antes/24h-antes-3.webp',
+  ],
+  details: {
+    'Main Focus': 'Story-driven Game Development.',
+    'Notable Features': 'Decision-based narrative with multiple outcomes.',
+    'Technologies Used': 'Twine, HTML.',
+  },
+  goodForYouIf: [
+    'You like story-driven games with meaningful choices.',
+    'You want to experience a narrative game with multiple endings.',
+  ],
+  whatILearned: [
+    'How to design a narrative game with branching storylines.',
+    'How to implement decision systems that affect the game outcome.',
+  ],
+  createdAt: new Date('2025-08-01'),
+  finishedAt: new Date('2025-09-02'),
+};
+
 export const FEATURED_PROJECTS: Project[] = [
   YuukoGamesProject,
   USignalsProject,
@@ -449,18 +479,23 @@ export const FEATURED_PROJECTS: Project[] = [
     ...TheForbiddenDoorProject,
     class: 'large',
   },
+  {
+    ...VeintiCuatroHorasAntesDelApocalipsisProject,
+    class: 'large',
+  },
 ];
 
 export const ALL_PROJECTS: Project[] = [
   YuukoGamesProject,
   TheForbiddenDoorProject,
   USignalsProject,
-  AngryStewardessProject,
+  VeintiCuatroHorasAntesDelApocalipsisProject,
   MastersArenaProject,
   EndlessDungeonProject,
-  ASCIIShaderProject,
   DragThemOutIntoSpaceProject,
   SmokeFighterProject,
+  ASCIIShaderProject,
+  AngryStewardessProject,
   CataBotProject,
   PraeliaProject,
   AimDemoProject,

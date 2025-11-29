@@ -14,6 +14,8 @@ $margin-p: 8px;
   }
 
   &.projects {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     height: calc(100% - 1lh - ($margin-p * 2));
 
     .box {
@@ -63,6 +65,13 @@ $margin-p: 8px;
     }
   }
 
+  &.large {
+    grid-column: span 3;
+    grid-row: span 2;
+    background-size: cover;
+    background-position: center;
+  }
+
   p {
     margin: $margin-p 0 $margin-p 0;
   }
@@ -109,14 +118,8 @@ $margin-p: 8px;
   }
 }
 
-.large {
-  grid-column: span 3;
-  grid-row: span 2;
-  background-size: cover;
-  background-position: center;
-}
-
 .project {
+  grid-column: span 2;
   filter: brightness(0.8);
   background-size: cover;
   background-position: center;
@@ -124,6 +127,12 @@ $margin-p: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
+
+  .large {
+    grid-column: span 3;
+    grid-row: span 2;
+    background-position: center;
+  }
 
   &:hover {
     filter: brightness(1);
