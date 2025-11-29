@@ -1,41 +1,56 @@
 @defer (on viewport) {
 <div class="grid">
+  <div class="box hero">
+    <p class="eyebrow">Aleix Ferré</p>
+    <h2>Game Designer & Developer</h2>
+    <div class="pill-row">
+      <span class="pill">Game Design</span>
+      <span class="pill">Unity & C#</span>
+      <span class="pill">Web & Mobile</span>
+      <span class="pill">Team Management</span>
+    </div>
+    <p class="muted">
+      Crafting web dashboards and mobile apps at <strong>ClearPeaks</strong> by day, <br>
+      making <strong>Yuuko Games</strong> better by night, <br>
+      and going to the gym whenever I can.
+    </p>
+  </div>
   <div class="box profile">
     <p class="name">Aleix Ferré</p>
     <p class="age">{{ age }} years old</p>
     <p class="age">Girona</p>
   </div>
-  <div class="box clickable" (click)="goToContact()">
-    <p>Get in touch</p>
-    <div class="touch">
-      <lord-icon trigger="in" src="/assets/contact/contact.json" colors="primary:white" stroke="bold" state="in-reveal"
-        style="width: 200px; height: 200px;">
-      </lord-icon>
-    </div>
+  <div class="box focus">
+    <p>Currently focused on</p>
+    <ul class="bullets">
+      <li>Shipping new engaging experiences with <strong>Yuuko Games</strong>.</li>
+      <li>Building web and mobile interactive dashboards at <strong>ClearPeaks</strong>.</li>
+      <li>Prototyping mechanics, shaders, and tools to build <strong>new game experiments</strong>.</li>
+    </ul>
   </div>
-  <div class="box">
+  <div class="box education">
     <p>Education</p>
     <div class="list">
-      <app-metric-container class="box center" title="Game Design and Development Degree" number="2017" symbol="-"
-        numberAfterSymbol="2021" [small]="true" description="University of Girona">
+      <app-metric-container class="box center" title="University of Girona" number="Game Design and Development Degree"
+        [small]="true" description="2017 - 2021">
       </app-metric-container>
     </div>
   </div>
-  <div class="box large-both">
+  <div class="box professional">
     <p>Professional Experience</p>
     <div class="list">
-      <app-metric-container class="box center" title="Co-Founder" number="2023" symbol="-" numberAfterSymbol="Present"
-        [small]="true" description="Yuuko Games">
+      <app-metric-container class="box center" title="Yuuko Games" number="Co-Founder" [small]="true"
+        description="2023 - Present">
       </app-metric-container>
-      <app-metric-container class="box center" title="Senior Web & Mobile Developer" number="2023" symbol="-"
-        numberAfterSymbol="Present" [small]="true" description="ClearPeaks">
+      <app-metric-container class="box center" title="ClearPeaks" number="Senior Web & Mobile Developer" [small]="true"
+        description="2023 - Present">
       </app-metric-container>
-      <app-metric-container class="box center" title="Junior Web Developer" number="2021" symbol="-"
-        numberAfterSymbol="2023" [small]="true" description="ClearPeaks">
+      <app-metric-container class="box center" title="ClearPeaks" number="Junior Web Developer" [small]="true"
+        description="2021 - 2023">
       </app-metric-container>
     </div>
   </div>
-  <div class="box large-vertical">
+  <div class="box languages">
     <p>Languages</p>
     <div class="list">
       <app-metric-container class="box center" number="English" [small]="true" description="Full Professional">

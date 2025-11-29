@@ -15,6 +15,9 @@ import { TabService } from '../tab.service';
 export class HomeContentComponent {
   projects = FEATURED_PROJECTS;
 
+  yearsSinceIndie = this.calculateYearsSince(new Date('2017-01-01')).toString();
+  yearsSinceWeb = this.calculateYearsSince(new Date('2021-09-01')).toString();
+
   constructor(public tabService: TabService, private router: Router) {}
 
   selectGame(id: string) {
@@ -30,5 +33,12 @@ export class HomeContentComponent {
       replaceUrl: true,
       queryParamsHandling: 'replace',
     });
+  }
+
+  private calculateYearsSince(startDate: Date): number {
+    const now = new Date();
+    const diffInMs = now.getTime() - startDate.getTime();
+    const years = diffInMs / (1000 * 60 * 60 * 24 * 365.25);
+    return Math.floor(years);
   }
 }

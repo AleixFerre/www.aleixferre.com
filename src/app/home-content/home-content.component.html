@@ -2,17 +2,17 @@
 <div class="grid">
   <div class="box profile" (click)="goToProfile()">
     <img src="/assets/profile/yo_letra.webp" class="profile-image" alt="Aleix Ferré" />
-    <p class="name">Gameplay Programmer <br> & Designer</p>
+    <p class="name">Game Designer <br>& Developer</p>
   </div>
   <div class="box">
     <p>Experience</p>
     <div class="grid experience">
       <div class="box experience">
-        <app-metric-container title="Indie Games" number="6" symbol="+" description="years">
+        <app-metric-container title="Indie Games" [number]="yearsSinceIndie" symbol="+" description="years">
         </app-metric-container>
       </div>
       <div class="box experience">
-        <app-metric-container title="Web & Mobile" number="3" symbol="+" description="years">
+        <app-metric-container title="Web & Mobile" [number]="yearsSinceWeb" symbol="+" description="years">
         </app-metric-container>
       </div>
     </div>
@@ -20,11 +20,11 @@
   <div class="box">
     <p>Specialized In</p>
     <div class="grid specialized">
-      <app-icon-text class="specialization" text="Unity" icon="/assets/tecnologies/unity.webp"></app-icon-text>
+      <app-icon-text class="specialization" text="Unity" icon="/assets/tecnologies/unity.svg"></app-icon-text>
       <app-icon-text class="specialization" text="Game Design"
-        icon="/assets/tecnologies/game_design.webp"></app-icon-text>
+        icon="/assets/tecnologies/game_design.svg"></app-icon-text>
       <app-icon-text class="specialization" text="Project Management"
-        icon="/assets/tecnologies/project_management.webp"></app-icon-text>
+        icon="/assets/tecnologies/project_management.svg"></app-icon-text>
     </div>
   </div>
   <div class="box large">

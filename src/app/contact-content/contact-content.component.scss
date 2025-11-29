@@ -48,8 +48,8 @@ a {
   transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.01);
-    filter: brightness(1.1);
+    transform: translateY(-4px);
+    filter: brightness(1.05);
   }
 
   &.large {

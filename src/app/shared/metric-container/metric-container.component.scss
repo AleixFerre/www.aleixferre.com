@@ -2,6 +2,7 @@
   font-size: 0.8em;
   text-align: center;
   margin: 0;
+  text-wrap: balance;
 
   @media screen and (max-width: 1000px) {
     font-size: 1.2em;
@@ -25,18 +26,22 @@
     align-items: center;
     justify-content: center;
     font-size: 5em;
+    text-wrap: balance;
 
     &.small {
-      font-size: 3em;
-
-      @media screen and (max-width: 1300px) {
-        font-size: 2em;
-      }
+      font-size: 1.5em;
+      text-align: center;
+      text-wrap: balance;
     }
 
     .number {
       color: #a078ff;
       font-weight: bold;
     }
+  }
+
+  > div:last-child {
+    text-wrap: balance;
+    text-align: center;
   }
 }

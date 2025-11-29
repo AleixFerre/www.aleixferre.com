@@ -2,7 +2,11 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-areas:
+    "hero hero profile"
+    "focus professional languages"
+    "education professional languages";
+  gap: 16px;
   width: 100%;
   height: 100%;
 
@@ -48,19 +52,134 @@
   }
 }
 
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 16px 0;
+}
+
+.pill {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+.muted {
+  opacity: 0.9;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.focus {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .bullets {
+    padding-left: 1.1em;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+    line-height: 1.4;
+    text-wrap: balance;
+    overflow: auto;
+    height: 100%;
+  }
+}
+
 .box {
-  background-color: rgba(255, 255, 255, 0.051);
-  border-radius: 10px;
-  padding: 10px;
-  overflow: hidden;
+  &.hero {
+    grid-area: hero;
+  }
+
+  &.profile {
+    grid-area: profile;
+    background-image: url("/assets/profile/yo.webp"),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+    @media screen and (max-width: 1000px) {
+      height: 25em;
+    }
+
+    .profile-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .name {
+      text-align: end;
+      text-wrap-mode: nowrap;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .age {
+      text-align: end;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &.contact {
+    grid-area: contact;
+  }
+
+  &.education {
+    grid-area: education;
+  }
+
+  &.professional {
+    grid-area: professional;
+  }
+
+  &.focus {
+    grid-area: focus;
+  }
+
+  &.languages {
+    grid-area: languages;
+  }
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 14px;
+  padding: 16px;
+  outline: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 
   &.clickable {
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      transform: scale(1.01);
-      filter: brightness(1.1);
+      transform: translateY(-4px);
+      filter: brightness(1.05);
     }
   }
 
@@ -74,6 +193,7 @@
 
   p {
     margin: 8px 0 8px 0;
+    font-size: 0.85rem;
   }
 
   &.large {
@@ -95,37 +215,26 @@
     justify-content: center;
     align-items: center;
     padding: 2em;
+    flex: 1;
   }
 
-  &.profile {
-    background-image: url("/assets/profile/yo.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
+  &.hero {
+    padding: 2rem;
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.01)
+      ),
+      linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.02)
+      );
 
-    @media screen and (max-width: 1000px) {
-      height: 25em;
-    }
-
-    .profile-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .name {
-      text-align: end;
-      text-wrap-mode: nowrap;
-      font-size: 1.5em;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .age {
-      text-align: end;
-      margin: 0;
+    h2 {
+      margin: 4px 0 12px 0;
+      font-size: clamp(1.4rem, 2vw, 1rem);
+      line-height: 1.2;
     }
   }
 

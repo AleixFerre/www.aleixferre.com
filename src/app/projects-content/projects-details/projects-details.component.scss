@@ -26,9 +26,20 @@ $margin-p: 8px;
   font-family: "PT Sans", sans-serif;
   height: 70vh;
   overflow: auto;
+  position: relative;
+  scroll-padding-top: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
 
   @media screen and (max-width: 1000px) {
     height: auto;
+    padding: 1.25em;
+    overflow: visible; // allow sticky bar to pin to viewport on mobile
+    font-size: 1.05rem;
+  }
+
+  .separator {
+    height: 1rem;
   }
 
   .row {
@@ -40,6 +51,29 @@ $margin-p: 8px;
     .title {
       flex: 1;
       margin: 0;
+    }
+
+    &.sticky-actions {
+      position: sticky;
+      top: 10px;
+      z-index: 8;
+      background: rgba(16, 18, 26, 0.6);
+      backdrop-filter: blur(6px);
+      padding: 0.75em 0.75em 0.75em 1.4em;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    @media screen and (max-width: 1000px) {
+      &.sticky-actions {
+        font-size: 0.8rem;
+        position: sticky;
+        top: 8px;
+        margin: 0 -0.5em 0.75em -0.5em;
+        padding: 0.85em 1em;
+        z-index: 12;
+      }
     }
 
     .button {
@@ -56,6 +90,7 @@ $margin-p: 8px;
       color: white;
       text-decoration: none;
       font-family: "Fira Code", sans-serif;
+      text-align: center;
     }
   }
 }
@@ -81,9 +116,28 @@ $margin-p: 8px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 10vw;
+    max-width: 12vw;
+    min-width: 180px;
+    flex: 0 0 12vw;
     height: 90vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    position: relative;
+
+    .button.stick {
+      position: sticky;
+      top: 0;
+      align-self: stretch;
+      z-index: 7;
+      background: rgba(16, 18, 26, 0.75);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   @media screen and (max-width: 1000px) {
@@ -92,7 +146,6 @@ $margin-p: 8px;
   }
 
   .box {
-    min-height: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -122,10 +175,11 @@ $margin-p: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
   flex: 1;
+  min-height: 50px;
 
   &:hover {
     filter: brightness(1);
-    transform: scale(1.005);
+    transform: translateY(-4px) scale(1.01);
 
     img {
       transform: scale(1.05);
@@ -133,11 +187,16 @@ $margin-p: 8px;
   }
 
   &.selected {
-    flex: 1.5;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
     margin: 0 2px;
     transform: scale(1.03);
 
+    img {
+      transform: scale(1.1);
+    }
+  }
+
+  &.selected:hover {
+    transform: translateY(-4px) scale(1.03);
     img {
       transform: scale(1.1);
     }
@@ -159,9 +218,13 @@ $margin-p: 8px;
 }
 
 .button {
-  background-color: rgba(0, 0, 0, 0.226);
-  border-radius: 10px;
-  padding: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  border-radius: 12px;
+  padding: 12px;
   height: 1lh;
   display: flex;
   align-items: center;
@@ -169,12 +232,10 @@ $margin-p: 8px;
   gap: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  &.stick {
-    position: sticky;
-    top: 0;
-    z-index: 9;
-  }
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.35);
@@ -199,10 +260,8 @@ $margin-p: 8px;
 @keyframes appear-lite {
   0% {
     opacity: 0;
-    transform: scale(0.99);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 }

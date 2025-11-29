@@ -16,7 +16,7 @@
 <div class="details">
   @if (showPreview) {
   <div class="appear-lite">
-    <div class="row ">
+    <div class="row sticky-actions">
       <div class="button mobile-only" (click)="setCurrentlyActiveId(null)">
         <img class="back" src="assets/back.svg" />
       </div>
@@ -34,6 +34,7 @@
         <img src="assets/projects/_actions/visit_project.svg" alt="Visit Project" />
       </a>
     </div>
+    <div class="separator"></div>
     <p>{{ currentProject.description }}</p>
     @if (currentProject.images) {
     <app-gallery [images]="currentProject.images"></app-gallery>

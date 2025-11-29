@@ -1,12 +1,9 @@
 .icon {
-  width: 100%;
+  width: clamp(56px, 12vw, 88px);
+  height: auto;
+  padding: 8px;
   aspect-ratio: 1;
   filter: contrast(0.9) brightness(0.9);
-
-  @media screen and (max-width: 1000px) {
-    width: 8em;
-    height: 8em;
-  }
 }
 
 .text {

@@ -24,36 +24,93 @@ $margin-p: 8px;
       justify-content: center;
       align-items: center;
     }
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-rows: auto;
+      height: auto;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+      }
+    }
   }
 
   &.experience {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 1fr);
     height: calc(100% - 1lh - ($margin-p * 2));
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-rows: auto;
+      height: auto;
+      width: 100%;
+    }
   }
 
   &.specialized {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
     height: calc(100% - 1lh - ($margin-p * 2));
+    gap: 12px;
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-rows: auto;
+      height: auto;
+      width: 100%;
+    }
 
     .specialization {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      padding: 14px 12px;
+      border-radius: 14px;
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.02)
+      );
+      outline: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      transition: filter 0.25s ease;
 
       @media screen and (max-width: 1000px) {
         flex-direction: row;
         align-items: center;
+        gap: 12px;
+      }
+
+      &:hover {
+        filter: brightness(1.05);
+      }
+
+      .icon {
+        width: clamp(52px, 12vw, 80px);
+        height: auto;
+        padding: 6px;
       }
     }
   }
 }
 
 .box {
-  background-color: rgba(255, 255, 255, 0.051);
-  border-radius: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 14px;
   padding: 10px;
+  outline: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 
   &.experience {
     display: flex;
@@ -77,13 +134,15 @@ $margin-p: 8px;
   }
 
   &.profile {
-    background-image: url("/assets/profile/yo.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: url("/assets/profile/yo.webp"),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
     @media screen and (max-width: 1000px) {
       height: 50vw;
@@ -98,12 +157,8 @@ $margin-p: 8px;
     }
 
     &:hover {
-      filter: brightness(1);
-      transform: scale(1.01);
-
-      .profile-image {
-        transform: scale(1.1);
-      }
+      filter: brightness(1.05);
+      transform: translateY(-4px);
     }
   }
 
@@ -136,7 +191,7 @@ $margin-p: 8px;
 
   &:hover {
     filter: brightness(1);
-    transform: scale(1.005);
+    transform: translateY(-4px) scale(1.01);
 
     img {
       transform: scale(1.05);
