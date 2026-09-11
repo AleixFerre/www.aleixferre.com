@@ -1,19 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { TABS } from './app.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TabService {
-  constructor() {}
+  private _currentTab = signal<TABS | undefined>(undefined);
 
-  private _currentTab!: TABS;
-
-  get currentTab(): TABS {
-    return this._currentTab;
-  }
+  readonly currentTab = this._currentTab.asReadonly();
 
   setCurrentTab(newTab: TABS): void {
-    this._currentTab = newTab;
+    this._currentTab.set(newTab);
   }
 }

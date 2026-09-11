@@ -1,20 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { ALL_PROJECTS } from './projects.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService {
-  constructor(private router: Router) {}
+  private readonly router = inject(Router);
 
-  private currentProject = new BehaviorSubject<string | null>(null);
-  currentProject$ = this.currentProject.asObservable();
+  private currentProject = signal<string | null>(null);
 
-  get currentlyActiveId(): string | null {
-    return this.currentProject.value;
-  }
+  readonly currentlyActiveId = this.currentProject.asReadonly();
 
   setCurrentlyActiveId(index: string | null): void {
     if (index !== null) {
@@ -29,7 +25,7 @@ export class ProjectsService {
       }
     }
 
-    this.currentProject.next(index);
+    this.currentProject.set(index);
 
     if (!index) {
       return;

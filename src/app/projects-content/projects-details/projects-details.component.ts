@@ -1,8 +1,6 @@
 import { DatePipe, KeyValuePipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { distinctUntilChanged } from 'rxjs';
 import { ALL_PROJECTS, DUMMY_PROJECT, Project } from '../projects.model';
 import { ProjectsService } from '../projects.service';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -17,20 +15,22 @@ import { keepOrder } from './keepOrder';
 export class ProjectsDetailsComponent {
   keepOrder = keepOrder;
 
-  constructor(public projectsService: ProjectsService, private router: Router) {
-    this.projectsService.currentProject$
-      .pipe(takeUntilDestroyed(), distinctUntilChanged())
-      .subscribe(() => {
-        this.rebuildProject();
-      });
+  readonly projectsService = inject(ProjectsService);
+  private readonly router = inject(Router);
+
+  constructor() {
+    effect(() => {
+      this.projectsService.currentlyActiveId();
+      this.rebuildProject();
+    });
   }
 
-  showPreview = true;
+  showPreview = signal(false);
 
   rebuildProject(): void {
-    this.showPreview = false;
+    this.showPreview.set(false);
     setTimeout(() => {
-      this.showPreview = true;
+      this.showPreview.set(true);
     }, 0);
   }
 

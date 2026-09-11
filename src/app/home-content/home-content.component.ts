@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TABS } from '../app.model';
 import { FEATURED_PROJECTS } from '../projects-content/projects.model';
@@ -13,12 +13,14 @@ import { TabService } from '../tab.service';
   styleUrl: './home-content.component.scss',
 })
 export class HomeContentComponent {
+  readonly tabService = inject(TabService);
+  private readonly router = inject(Router);
+
   projects = FEATURED_PROJECTS;
 
   yearsSinceIndie = this.calculateYearsSince(new Date('2017-01-01')).toString();
   yearsSinceWeb = this.calculateYearsSince(new Date('2021-09-01')).toString();
 
-  constructor(public tabService: TabService, private router: Router) {}
 
   selectGame(id: string) {
     const url = [TABS.PROJECTS, id].filter((x) => x !== null);

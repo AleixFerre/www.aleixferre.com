@@ -1,5 +1,5 @@
 @defer (on viewport) {
-@if (projectsService.currentlyActiveId === null) {
+@if (projectsService.currentlyActiveId() === null) {
 <div class="grid appear">
   @for (item of projects; track $index) {
   <div class="box project" [class]="item.class" style="background-image: url('{{ item.backgroundImage }}');"

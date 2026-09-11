@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsDetailsComponent } from './projects-details/projects-details.component';
 import { ALL_PROJECTS } from './projects.model';
@@ -11,9 +11,11 @@ import { ProjectsService } from './projects.service';
   styleUrl: './projects-content.component.scss',
 })
 export class ProjectsContentComponent {
+  private readonly router = inject(Router);
+  readonly projectsService = inject(ProjectsService);
+
   projects = ALL_PROJECTS;
 
-  constructor(public router: Router, public projectsService: ProjectsService) {}
 
   setCurrentlyActiveId(id: string | null) {
     const url = ['projects', id].filter((x) => x !== null);

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, effect, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { AboutContentComponent } from './about-content/about-content.component';
 import { TABS, TABS_LIST } from './app.model';
 import { BackgroundStarsComponent } from './background-stars/background-stars.component';
@@ -24,6 +23,10 @@ import { TabService } from './tab.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  readonly tabService = inject(TabService);
+  private readonly projectsService = inject(ProjectsService);
+  private readonly router = inject(Router);
+
   keepOrder = keepOrder;
 
   TABS = TABS;
@@ -33,21 +36,25 @@ export class AppComponent {
     string
   ][];
 
-  constructor(
-    public tabService: TabService,
-    private projectsService: ProjectsService,
-    private router: Router
-  ) {
-    this.router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        const name = event.urlAfterRedirects.split('/')[1] || TABS.HOME;
-        this.tabService.setCurrentTab(name as TABS);
+  constructor() {
+    effect(() => {
+      const navigation = this.router.lastSuccessfulNavigation();
 
-        if (name === TABS.PROJECTS) {
-          this.projectsService.setCurrentlyActiveId(
-            event.urlAfterRedirects.split('/')[2] ?? null
-          );
-        }
+      if (!navigation?.finalUrl) {
+        return;
+      }
+
+      const [, name, id] = this.router
+        .serializeUrl(navigation.finalUrl)
+        .split(/[?#]/)[0]
+        .split('/');
+
+      const tab = (name || TABS.HOME) as TABS;
+
+      this.tabService.setCurrentTab(tab);
+
+      if (tab === TABS.PROJECTS) {
+        this.projectsService.setCurrentlyActiveId(id ?? null);
       }
     });
   }

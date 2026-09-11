@@ -1,4 +1,4 @@
-<div class="gallery" gallerize [style]="{ 'grid-template-columns': 'repeat(' + gridSize + ', 1fr)' }">
+<div class="gallery" gallerize [style]="{ 'grid-template-columns': 'repeat(' + gridSize() + ', 1fr)' }">
   @for (img of displayImages(); track $index) {
   <img unpic [src]="img" class="screenshot" />
   }
