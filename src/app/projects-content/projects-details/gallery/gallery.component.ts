@@ -14,7 +14,7 @@ import {
   ImageSize,
   ThumbnailsPosition,
 } from 'ng-gallery';
-import { LightboxModule } from 'ng-gallery/lightbox';
+import { Lightbox, LightboxModule } from 'ng-gallery/lightbox';
 
 @Component({
   selector: 'app-gallery',
@@ -24,6 +24,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 })
 export class GalleryComponent {
   private readonly gallery = inject(Gallery);
+  private readonly lightbox = inject(Lightbox);
 
   readonly images = input<string[]>([]);
   readonly thumbs = input<string[] | null>(null);
@@ -56,6 +57,11 @@ export class GalleryComponent {
     );
 
     this.recalculateGalleryCount();
+
+    this.lightbox.setConfig({
+      keyboardShortcuts: true,
+      exitAnimationTime: 200,
+    });
 
     const lightboxRef = this.gallery.ref('lightbox');
     lightboxRef.setConfig({

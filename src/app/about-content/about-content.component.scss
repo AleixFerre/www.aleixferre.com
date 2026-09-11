@@ -9,43 +9,6 @@
   gap: 16px;
   width: 100%;
   height: 100%;
-
-  &.horizontal {
-    height: calc(100% - 1lh - 16px);
-  }
-
-  .language {
-    grid-row: span 1;
-    grid-column: span 3;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    .icon {
-      object-fit: contain;
-      aspect-ratio: 1;
-      filter: contrast(0.9) brightness(0.9);
-      padding: 1em;
-      width: min-content;
-      height: min-content;
-    }
-
-    .info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      .title {
-        text-align: center;
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 0;
-      }
-    }
-  }
-
   @media screen and (max-width: 1000px) {
     display: flex;
     flex-direction: column;
@@ -127,14 +90,6 @@
     @media screen and (max-width: 1000px) {
       height: 25em;
     }
-
-    .profile-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
     .name {
       text-align: end;
       text-wrap-mode: nowrap;
@@ -152,11 +107,6 @@
       z-index: 1;
     }
   }
-
-  &.contact {
-    grid-area: contact;
-  }
-
   &.education {
     grid-area: education;
 
@@ -176,43 +126,10 @@
   &.languages {
     grid-area: languages;
   }
-
-  &.clickable {
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-4px);
-      filter: brightness(1.05);
-    }
-  }
-
-  .touch {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
   p {
     margin: 8px 0 8px 0;
     font-size: 0.85rem;
   }
-
-  &.large {
-    grid-column: span 2;
-  }
-
-  &.large-vertical {
-    grid-row: span 2;
-  }
-
-  &.large-both {
-    grid-row: span 2;
-    grid-column: span 2;
-  }
-
   &.center {
     display: flex;
     flex-direction: column;
@@ -297,10 +214,5 @@
     gap: 10px;
     height: calc(100% - 1lh - 16px);
     justify-content: space-evenly;
-
-    &.horizontal {
-      flex-direction: row;
-      align-items: stretch;
-    }
   }
 }

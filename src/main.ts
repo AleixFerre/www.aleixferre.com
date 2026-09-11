@@ -2,9 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 
-import { defineElement } from '@lordicon/element';
-
-defineElement();
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
-);
+bootstrapApplication(AppComponent, appConfig)
+  .then(() => import('@lordicon/element'))
+  .then(({ defineElement }) => defineElement())
+  .catch((err) => console.error(err));
