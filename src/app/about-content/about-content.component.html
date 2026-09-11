@@ -1,64 +1,59 @@
 @defer (on viewport) {
 <div class="grid">
   <div class="box hero">
-    <p class="eyebrow">Aleix Ferré</p>
-    <h2>Game Designer & Developer</h2>
+    <p class="eyebrow">{{ ABOUT.hero.eyebrow }}</p>
+    <h2>{{ ABOUT.hero.title }}</h2>
     <div class="pill-row">
-      <span class="pill">Game Design</span>
-      <span class="pill">Unity & C#</span>
-      <span class="pill">Web & Mobile</span>
-      <span class="pill">Team Management</span>
+      @for (pill of ABOUT.hero.pills; track $index) {
+      <span class="pill">{{ pill }}</span>
+      }
     </div>
-    <p class="muted">
-      Crafting web dashboards and mobile apps at <strong>ClearPeaks</strong> by day, <br>
-      making <strong>Yuuko Games</strong> better by night, <br>
-      and going to the gym whenever I can.
-    </p>
+    <p class="muted" [innerHTML]="ABOUT.hero.description"></p>
   </div>
   <div class="box profile">
-    <p class="name">Aleix Ferré</p>
+    <p class="name">{{ ABOUT.profile.name }}</p>
     <p class="age">{{ age }} years old</p>
-    <p class="age">Girona</p>
+    <p class="age">{{ ABOUT.profile.location }}</p>
   </div>
   <div class="box focus">
-    <p>Currently focused on</p>
+    <p>{{ ABOUT.focus.title }}</p>
     <ul class="bullets">
-      <li>Shipping new engaging experiences with <strong>Yuuko Games</strong>.</li>
-      <li>Building web and mobile interactive dashboards at <strong>ClearPeaks</strong>.</li>
-      <li>Prototyping mechanics, shaders, and tools to build <strong>new game experiments</strong>.</li>
+      @for (item of ABOUT.focus.items; track $index) {
+      <li [innerHTML]="item"></li>
+      }
     </ul>
   </div>
   <div class="box education">
-    <p>Education</p>
+    <p>{{ ABOUT.education.title }}</p>
     <div class="list">
-      <app-metric-container class="box center" title="University of Girona" number="Game Design and Development Degree"
-        [small]="true" description="2017 - 2021">
+      @for (education of ABOUT.education.items; track $index) {
+      <app-metric-container class="box center" [class.has-image]="!!education.img"
+        [style.--logo]="education.img ? 'url(' + education.img + ')' : null" [title]="education.title ?? ''"
+        [number]="education.number" [small]="true" [description]="education.description">
       </app-metric-container>
+      }
     </div>
   </div>
   <div class="box professional">
-    <p>Professional Experience</p>
+    <p>{{ ABOUT.professionalExperience.title }}</p>
     <div class="list">
-      <app-metric-container class="box center" title="Yuuko Games" number="Co-Founder" [small]="true"
-        description="2023 - Present">
+      @for (experience of ABOUT.professionalExperience.items; track $index) {
+      <app-metric-container class="box center" [class.has-image]="!!experience.img"
+        [style.--logo]="experience.img ? 'url(' + experience.img + ')' : null" [title]="experience.title ?? ''"
+        [number]="experience.number" [small]="true" [description]="experience.description">
       </app-metric-container>
-      <app-metric-container class="box center" title="ClearPeaks" number="Senior Web & Mobile Developer" [small]="true"
-        description="2023 - Present">
-      </app-metric-container>
-      <app-metric-container class="box center" title="ClearPeaks" number="Junior Web Developer" [small]="true"
-        description="2021 - 2023">
-      </app-metric-container>
+      }
     </div>
   </div>
   <div class="box languages">
-    <p>Languages</p>
+    <p>{{ ABOUT.languages.title }}</p>
     <div class="list">
-      <app-metric-container class="box center" number="English" [small]="true" description="Full Professional">
+      @for (language of ABOUT.languages.items; track $index) {
+      <app-metric-container class="box center align-left" [class.has-flag]="!!language.img"
+        [style.--flag]="language.img ? 'url(' + language.img + ')' : null" [title]="language.title ?? ''"
+        [number]="language.number" [small]="true" [description]="language.description">
       </app-metric-container>
-      <app-metric-container class="box center" number="Spanish" [small]="true" description="Native">
-      </app-metric-container>
-      <app-metric-container class="box center" number="Catalan" [small]="true" description="Native">
-      </app-metric-container>
+      }
     </div>
   </div>
 </div>

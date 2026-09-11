@@ -385,7 +385,7 @@ const AimDemoProject: Project = withThumbs({
   name: 'AIM Demo',
   description:
     'My first game ever made, a simple aim training game with a shooting range.',
-  url: 'https://yuukogames.github.io/aimdemo/',
+  url: 'https://aleixferre.itch.io/aimdemo/',
   image: '/assets/projects/aim-demo/aim-demo.webp',
   backgroundImage: '/assets/projects/aim-demo/aim-demo_bg.webp',
   images: [
@@ -555,7 +555,3 @@ export const ALL_PROJECTS: Project[] = [
   PraeliaProject,
   AimDemoProject,
 ];
-
-
-
-

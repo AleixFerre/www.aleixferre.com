@@ -2,6 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { TABS } from '../app.model';
 import { MetricContainerComponent } from '../shared/metric-container/metric-container.component';
+import { ABOUT } from './about-content.model';
 
 @Component({
   selector: 'app-about-content',
@@ -11,6 +12,8 @@ import { MetricContainerComponent } from '../shared/metric-container/metric-cont
   styleUrl: './about-content.component.scss',
 })
 export class AboutContentComponent {
+  ABOUT = ABOUT;
+
   age = new Date().getFullYear() - 2000;
 
   constructor(public router: Router) {}

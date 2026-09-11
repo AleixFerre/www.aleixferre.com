@@ -45,3 +45,26 @@
     text-align: center;
   }
 }
+
+:host(.align-left) {
+  .title {
+    text-align: left;
+  }
+
+  .metric {
+    align-items: flex-start;
+
+    .data {
+      justify-content: flex-start;
+      text-align: left;
+
+      &.small {
+        text-align: left;
+      }
+    }
+
+    > div:last-child {
+      text-align: left;
+    }
+  }
+}
