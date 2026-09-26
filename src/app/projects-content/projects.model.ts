@@ -40,7 +40,6 @@ export const DUMMY_PROJECT: Project = withThumbs({
 const YuukoGamesProject: Project = withThumbs({
   id: 'yuukogames',
   name: 'Yuuko Games',
-  class: 'wide',
   description:
     'A game development studio focused on creating unique and engaging games based in Girona.',
   url: 'https://yuukogamesstudio.github.io',
@@ -52,7 +51,7 @@ const YuukoGamesProject: Project = withThumbs({
   ],
   details: {
     'Main Focus': 'Game Development and Design',
-    'Notable Projects': 'The Forbidden Door, USignals',
+    'Notable Projects': 'Threefold, The Forbidden Door, USignals',
     'Technologies Used': 'Unity, C#, Git',
     'Team Members': 'Aleix Ferré, Joaquin Villena, Arnau Albertí',
   },
@@ -99,7 +98,6 @@ const USignalsProject: Project = withThumbs({
 const TheForbiddenDoorProject: Project = withThumbs({
   id: 'the-forbidden-door',
   name: 'The Forbidden Door',
-  class: 'wide',
   description:
     'A horror puzzle game that challenges players to solve intricate puzzles while navigating a chilling atmosphere.',
   url: 'https://yuukogames.itch.io/the-forbidden-door',
@@ -525,21 +523,61 @@ const ElTrenDeLaVidaProject: Project = withThumbs({
   finishedAt: new Date('2025-11-23'),
 });
 
+const ThreefoldProject: Project = withThumbs({
+  id: 'threefold',
+  name: 'Threefold',
+  class: 'wide',
+  description:
+    'A match-3 sorting puzzle about tidy shelves and messy piles. Drag the little pixel-art characters between floating islands: when a shelf holds three of the same kind they pop, and the layer behind them slides forward. Clear every layer before time runs out across 5,000 stages.',
+  url: 'https://yuukogames.itch.io/threefold',
+  additionalUrl: ['https://www.yuukogames.com/games/threefold', 'Website'],
+  image: '/assets/projects/threefold/threefold.webp',
+  backgroundImage: '/assets/projects/threefold/threefold_bg.webp',
+  images: [
+    '/assets/projects/threefold/threefold-1.webp',
+    '/assets/projects/threefold/threefold-2.webp',
+    '/assets/projects/threefold/threefold-3.webp',
+  ],
+  details: {
+    'Main Focus': 'Design and Development of a complete Match-3 Sorting Puzzle Game.',
+    'Notable Features':
+      '5,000 deterministic stages built from their number, new mechanics arriving up to stage 190 (crates, coins, rotting apples, wrapped parcels, bonded pairs, carousel rows, locks, fragile shelves, move budgets...), Jokers, level-up chests, 181 garments in the Dressing Room and 12 tools with passive bonuses.',
+    Platforms: 'Itch.io, Android, Windows, Web Browser.',
+    Languages: 'English, Spanish and Catalan.',
+    'Technologies Used': 'Flutter, Git.',
+    'Challenges Faced':
+      'Keeping a simple core mechanic fresh across thousands of stages by steadily layering new mechanics without overwhelming the player.',
+  },
+  goodForYouIf: [
+    'You like relaxing puzzle games that are easy to pick up.',
+    'You want a long game with thousands of stages and new mechanics to discover.',
+    'You want a game that plays offline, with no ads, no in-app purchases and no account.',
+  ],
+  whatILearned: [
+    'How to generate thousands of deterministic stages from a seed.',
+    'How to pace the introduction of new mechanics over a long progression.',
+    'How to ship the same game on mobile, desktop and web.',
+  ],
+  createdAt: new Date('2026-09-01'),
+  finishedAt: new Date('2026-10-01'),
+});
+
 export const FEATURED_PROJECTS: Project[] = [
   YuukoGamesProject,
   USignalsProject,
-  ElTrenDeLaVidaProject,
+  VeintiCuatroHorasAntesDelApocalipsisProject,
   {
-    ...TheForbiddenDoorProject,
+    ...ThreefoldProject,
     class: 'large',
   },
   {
-    ...VeintiCuatroHorasAntesDelApocalipsisProject,
+    ...TheForbiddenDoorProject,
     class: 'large',
   },
 ];
 
 export const ALL_PROJECTS: Project[] = [
+  ThreefoldProject,
   YuukoGamesProject,
   TheForbiddenDoorProject,
   VeintiCuatroHorasAntesDelApocalipsisProject,
