@@ -154,6 +154,18 @@ User story: [tasks/e1-foundation/e1-t6-tab-transitions.md](tasks/e1-foundation/e
 5. Back/forward navigation also animates and lands on the correct tab.
 6. Repeat steps 2 and 5 at mobile width.
 
+### E1-T7 — Node 24 LTS and Astro 7
+
+User story: [tasks/e1-foundation/e1-t7-astro-7.md](tasks/e1-foundation/e1-t7-astro-7.md)
+
+**Description:** Pin Node to the latest LTS (24.22.1) in `.nvmrc` and upgrade Astro from 6.4.8 to 7.4.2, which requires Node ≥ 22.23.4.
+
+**Testing steps:**
+1. `nvm install 24.22.1 && nvm use 24.22.1`; `node --version` prints `v24.22.1`.
+2. Delete `node_modules`, run `bun install`; `astro` 7.4.2 is installed.
+3. `bun run build` succeeds with 0 errors.
+4. Repeat the E1-T4 and E1-T6 testing steps in `bun run preview`: same behaviour as on Astro 6.
+
 ---
 
 ## Epic 2 — Home, About and Contact
