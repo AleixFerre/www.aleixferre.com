@@ -21,10 +21,13 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     {
       tabsListEntries.map(([tab, label]) => (
         <>
-          <a class="col title" href={`/${tab}`}>
+          <a class="col title" href={`/${tab}`} transition:name={`title-${tab}`}>
             <p class:list={{ selected: tab === activeTab }}>{label}</p>
           </a>
-          <div class:list={['col', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}>
+          <div
+            class:list={['col', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}
+            transition:name={`panel-${tab}`}
+          >
             {tab === activeTab && (
               <div class="main-content">
                 <slot />
@@ -53,7 +56,6 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
 
   .col {
     flex: 0;
-    transition: all 0.3s ease-in-out;
     font-size: 1em;
   }
 
