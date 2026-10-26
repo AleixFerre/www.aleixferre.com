@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import BackgroundStars from '../components/BackgroundStars.astro';
 import { TABS, TABS_LIST } from '../data/tabs';
 
 interface Props {
@@ -16,6 +17,7 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
 
 <BaseLayout {...baseProps}>
   <main class="row">
+    <BackgroundStars />
     {
       tabsListEntries.map(([tab, label]) => (
         <>
