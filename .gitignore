@@ -2,6 +2,7 @@
 
 # Compiled output
 /dist
+/.astro
 /tmp
 /out-tsc
 /bazel-out
