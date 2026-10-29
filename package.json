@@ -11,8 +11,7 @@
   "private": true,
   "dependencies": {
     "@lordicon/element": "^2.3.1",
-    "astro": "7.4.2",
-    "lottie-web": "^5.13.0"
+    "astro": "7.4.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
