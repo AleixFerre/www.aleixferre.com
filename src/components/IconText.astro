@@ -1,0 +1,34 @@
+---
+interface Props {
+  text: string;
+  icon: string;
+  small?: boolean;
+  class?: string;
+}
+
+const { text, icon, small = false, class: className } = Astro.props;
+---
+
+<div class:list={['icon-text', className]}>
+  <img class:list={['icon', { small }]} src={icon} alt={text} />
+  <p class="text">{text}</p>
+</div>
+
+<style lang="scss">
+  .icon {
+    width: clamp(56px, 12vw, 88px);
+    height: auto;
+    padding: 8px;
+    aspect-ratio: 1;
+    filter: contrast(0.9) brightness(0.9);
+  }
+
+  .text {
+    text-align: center;
+    font-size: 0.8em;
+
+    @media screen and (max-width: 1000px) {
+      font-size: 1.4em;
+    }
+  }
+</style>

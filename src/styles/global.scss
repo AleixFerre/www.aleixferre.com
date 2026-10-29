@@ -10,6 +10,32 @@ body {
   }
 }
 
+.appear {
+  animation: appear 0.3s ease-in-out;
+}
+
+.appear-lite {
+  animation: appear-lite 0.4s ease-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes appear-lite {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 ::view-transition-group(*) {
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;

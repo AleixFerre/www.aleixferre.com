@@ -4,5 +4,122 @@ import { TABS } from '../data/tabs';
 ---
 
 <TabLayout activeTab={TABS.CONTACT}>
-  <p>CONTACT content coming soon.</p>
+  <div class="all">
+    <div class="grid">
+      <a class="box large" href="/assets/contact/cv.pdf" target="_blank">
+        <lord-icon trigger="in" src="/assets/contact/cv.json" stroke="bold" state="in-reveal" class="icon"></lord-icon>
+        <p class="name">Download CV</p>
+      </a>
+      <a class="box" href="https://github.com/AleixFerre" target="_blank">
+        <lord-icon trigger="in" src="/assets/contact/github.json" stroke="bold" state="in-reveal" class="icon"
+        ></lord-icon>
+        <p class="name">Github</p>
+      </a>
+      <a class="box" href="https://aleixferre.itch.io/" target="_blank">
+        <lord-icon trigger="in" src="/assets/contact/itchio.json" stroke="bold" state="in-reveal" class="icon"
+        ></lord-icon>
+        <p class="name">Itch.io</p>
+      </a>
+      <a class="box" href="https://www.linkedin.com/in/aleixferre/" target="_blank">
+        <lord-icon trigger="in" src="/assets/contact/linkedin.json" stroke="bold" state="in-reveal" class="icon"
+        ></lord-icon>
+        <p class="name">LinkedIn</p>
+      </a>
+      <a class="box" href="mailto:afj.99@hotmail.com" target="_blank">
+        <lord-icon trigger="in" src="/assets/contact/email.json" stroke="bold" state="in-reveal" class="icon"
+        ></lord-icon>
+        <p class="name">Email</p>
+      </a>
+
+      <div class="info">
+        <a href="https://lordicon.com/">Animated icons by Lordicon.com</a> | <span>Home icons created by <a
+            href="https://www.flaticon.com/free-icons/project">Circlon Tech</a> & <a
+            href="https://www.flaticon.com/free-icons/game-planning">Freepik</a> - Flaticon </span> | <a
+          href="https://github.com/AleixFerre/aleixferre.github.io">Source code for this website</a>
+      </div>
+    </div>
+  </div>
 </TabLayout>
+
+<script>
+  import { defineElement } from '@lordicon/element';
+
+  if (!customElements.get('lord-icon')) defineElement();
+</script>
+
+<style lang="scss">
+  .all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .info {
+    margin: 5px 0;
+    font-size: 0.8em;
+    grid-column: span 2;
+
+    @media screen and (max-width: 1000px) {
+      margin: 10px 0 0 0;
+    }
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .box {
+    background-color: rgba(255, 255, 255, 0.051);
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.05);
+    }
+
+    &.large {
+      grid-column: span 2;
+    }
+
+    .icon {
+      width: 200px;
+      height: 200px;
+
+      @media screen and (max-width: 1000px) {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .name {
+      @media screen and (max-width: 1000px) {
+        margin-bottom: 0;
+      }
+    }
+  }
+</style>
