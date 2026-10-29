@@ -213,7 +213,7 @@ User story: [tasks/e2-pages/e2-t3-about.md](tasks/e2-pages/e2-t3-about.md)
 
 User story: [tasks/e2-pages/e2-t4-contact.md](tasks/e2-pages/e2-t4-contact.md)
 
-**Description:** Port `contact-content` into `/contact`: CV download, GitHub, Itch.io, LinkedIn, Email and the credits line. Load `@lordicon/element` only on this page, through a client script, so the animated icons play their "in" reveal.
+**Description:** Port `contact-content` into `/contact`: CV download, GitHub, Itch.io, LinkedIn, Email and the credits line. Load `@lordicon/element` only on this page, through a client script, so the animated icons play their "in" reveal. Remove the unused `lottie-web` dependency.
 
 **Testing steps:**
 1. `bun run dev`, open http://localhost:4321/contact.
@@ -221,7 +221,7 @@ User story: [tasks/e2-pages/e2-t4-contact.md](tasks/e2-pages/e2-t4-contact.md)
 3. Navigate Home → Contact through the tab bar: the icons still animate (works after a View Transition, not only on full load).
 4. "Download CV" opens `cv.pdf` in a new tab; GitHub, Itch.io and LinkedIn open the correct profiles in new tabs; Email opens a mail client to `afj.99@hotmail.com`.
 5. Credits links work.
-6. DevTools > Network on `/home`: no Lordicon or lottie script is downloaded.
+6. DevTools > Network on `/home`: no Lordicon script is downloaded.
 
 ---
 
