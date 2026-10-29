@@ -45,6 +45,19 @@ const cols = Math.min(Math.max(images.length, 2), 4);
       loop: true,
       pswpModule: () => import('photoswipe'),
     });
+    lightbox.addFilter('thumbBounds', (thumbBounds, itemData) => {
+      const thumb = itemData.element?.querySelector('img');
+      const width = itemData.width ?? itemData.w;
+      const height = itemData.height ?? itemData.h;
+      if (!thumb || !width || !height) return thumbBounds;
+      const rect = thumb.getBoundingClientRect();
+      const scale = Math.min(rect.width / width, rect.height / height);
+      return {
+        x: rect.left + (rect.width - width * scale) / 2,
+        y: rect.top + (rect.height - height * scale) / 2,
+        w: width * scale,
+      };
+    });
     lightbox.init();
   });
 </script>
