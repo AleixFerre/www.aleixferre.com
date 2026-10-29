@@ -1,0 +1,96 @@
+---
+import { getImageSize } from '../utils/image-size';
+
+interface Props {
+  images: string[];
+  thumbs?: string[];
+}
+
+const { images, thumbs } = Astro.props;
+
+const items = await Promise.all(
+  images.map(async (full, index) => ({
+    full,
+    thumb: thumbs?.[index] ?? full,
+    ...(await getImageSize(full)),
+  })),
+);
+
+const cols = Math.min(Math.max(images.length, 2), 4);
+---
+
+<div class="gallery pswp-gallery" style={`--cols: ${cols}`}>
+  {
+    items.map((item) => (
+      <a href={item.full} data-pswp-width={item.width} data-pswp-height={item.height} target="_blank">
+        <img class="screenshot" src={item.thumb} alt="" loading="lazy" decoding="async" />
+      </a>
+    ))
+  }
+</div>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  let lightbox: PhotoSwipeLightbox | null = null;
+
+  document.addEventListener('astro:page-load', () => {
+    lightbox?.destroy();
+    lightbox = null;
+    if (!document.querySelector('.pswp-gallery')) return;
+    lightbox = new PhotoSwipeLightbox({
+      gallery: '.pswp-gallery',
+      children: 'a',
+      loop: true,
+      pswpModule: () => import('photoswipe'),
+    });
+    lightbox.init();
+  });
+</script>
+
+<style lang="scss">
+  .gallery {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: 20px;
+    align-items: center;
+
+    .screenshot {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      border-radius: 12px;
+      object-fit: contain;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 82vw;
+      grid-template-columns: none;
+      gap: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 80vw;
+      scroll-snap-type: x mandatory;
+      padding: 4px 2px 10px;
+      -webkit-overflow-scrolling: touch;
+
+      .screenshot {
+        width: 100%;
+        max-height: 300px;
+        border-radius: 0;
+        scroll-snap-align: start;
+      }
+    }
+  }
+</style>
