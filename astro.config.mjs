@@ -1,7 +1,13 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://www.aleixferre.com',
+  integrations: [
+    sitemap({
+      filter: (page) => !page.endsWith('/404/') && page !== 'https://www.aleixferre.com/',
+    }),
+  ],
   output: 'static',
   trailingSlash: 'ignore',
   build: {
