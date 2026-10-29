@@ -1,4 +1,5 @@
 ---
+import 'photoswipe/style.css';
 import { getImageSize } from '../utils/image-size';
 
 interface Props {
@@ -31,7 +32,6 @@ const cols = Math.min(Math.max(images.length, 2), 4);
 
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
-  import 'photoswipe/style.css';
 
   let lightbox: PhotoSwipeLightbox | null = null;
 
