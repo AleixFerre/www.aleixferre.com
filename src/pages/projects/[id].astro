@@ -1,5 +1,6 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
+import Gallery from '../../components/Gallery.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS, type Project } from '../../data/projects';
 import { formatMonth } from '../../utils/format-month';
@@ -67,6 +68,7 @@ const { project } = Astro.props;
         </div>
         <div class="separator"></div>
         <p>{project.description}</p>
+        {project.images.length > 0 && <Gallery images={project.images} thumbs={project.imagesThumbs} />}
         <h3>Details</h3>
         <ul>
           {
