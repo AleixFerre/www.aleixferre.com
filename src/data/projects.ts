@@ -25,18 +25,6 @@ const withThumbs = (project: Project): Project => ({
   imagesThumbs: project.images.map(toThumb),
 });
 
-export const DUMMY_PROJECT: Project = withThumbs({
-  id: '__dummy__',
-  name: 'Dummy Project',
-  description: 'You should never see this.',
-  url: '#',
-  image: '',
-  backgroundImage: '',
-  images: [],
-  details: {},
-  createdAt: new Date(),
-});
-
 const YuukoGamesProject: Project = withThumbs({
   id: 'yuukogames',
   name: 'Yuuko Games',
