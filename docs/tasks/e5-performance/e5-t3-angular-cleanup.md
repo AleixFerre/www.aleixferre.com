@@ -33,7 +33,7 @@ Delete the Angular reference source and every leftover config, update editor set
 ### Remove
 
 - `src/app/`, `.angular/`, local `dist/` (untracked).
-- Any dependency no longer imported (check `@lordicon/element`, `lottie-web`, `sharp`, `photoswipe` are still used; remove anything else).
+- Any dependency no longer imported (check `@lordicon/element`, `sharp`, `photoswipe` are still used; remove anything else).
 
 ### Change
 

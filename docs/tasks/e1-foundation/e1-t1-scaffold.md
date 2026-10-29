@@ -16,7 +16,7 @@ Remove the Angular build toolchain and its runtime dependencies, scaffold an Ast
 
 - The site is an Angular 22 SPA built with `@angular/build:application` and deployed with `angular-cli-ghpages` (see `angular.json`, `package.json`).
 - Static files live in `src/assets/` and are copied to `/assets/` by the Angular `assets` config. All templates and data reference them as `/assets/...` (and a few as `assets/...`).
-- Bun is the package manager (`bun.lock`, `bunfig.toml` with `peer = false`). Node version is pinned in `.nvmrc` (22.12).
+- Bun is the package manager (`bun.lock`, `bunfig.toml` with `peer = false`). Node version is pinned in `.nvmrc` (22.12; bumped to 24.22.1 in E1-T7).
 - `scripts/generate-image-thumbs.mjs` creates `-thumb.webp` files next to the originals under `src/assets/profile` and `src/assets/projects`.
 - The live site is served from the `gh-pages` branch and must not be deployed during the migration.
 

@@ -154,6 +154,18 @@ User story: [tasks/e1-foundation/e1-t6-tab-transitions.md](tasks/e1-foundation/e
 5. Back/forward navigation also animates and lands on the correct tab.
 6. Repeat steps 2 and 5 at mobile width.
 
+### E1-T7 — Node 24 LTS and Astro 7
+
+User story: [tasks/e1-foundation/e1-t7-astro-7.md](tasks/e1-foundation/e1-t7-astro-7.md)
+
+**Description:** Pin Node to the latest LTS (24.22.1) in `.nvmrc` and upgrade Astro from 6.4.8 to 7.4.2, which requires Node ≥ 22.23.4.
+
+**Testing steps:**
+1. `nvm install 24.22.1 && nvm use 24.22.1`; `node --version` prints `v24.22.1`.
+2. Delete `node_modules`, run `bun install`; `astro` 7.4.2 is installed.
+3. `bun run build` succeeds with 0 errors.
+4. Repeat the E1-T4 and E1-T6 testing steps in `bun run preview`: same behaviour as on Astro 6.
+
 ---
 
 ## Epic 2 — Home, About and Contact
@@ -201,7 +213,7 @@ User story: [tasks/e2-pages/e2-t3-about.md](tasks/e2-pages/e2-t3-about.md)
 
 User story: [tasks/e2-pages/e2-t4-contact.md](tasks/e2-pages/e2-t4-contact.md)
 
-**Description:** Port `contact-content` into `/contact`: CV download, GitHub, Itch.io, LinkedIn, Email and the credits line. Load `@lordicon/element` only on this page, through a client script, so the animated icons play their "in" reveal.
+**Description:** Port `contact-content` into `/contact`: CV download, GitHub, Itch.io, LinkedIn, Email and the credits line. Load `@lordicon/element` only on this page, through a client script, so the animated icons play their "in" reveal. Remove the unused `lottie-web` dependency.
 
 **Testing steps:**
 1. `bun run dev`, open http://localhost:4321/contact.
@@ -209,7 +221,7 @@ User story: [tasks/e2-pages/e2-t4-contact.md](tasks/e2-pages/e2-t4-contact.md)
 3. Navigate Home → Contact through the tab bar: the icons still animate (works after a View Transition, not only on full load).
 4. "Download CV" opens `cv.pdf` in a new tab; GitHub, Itch.io and LinkedIn open the correct profiles in new tabs; Email opens a mail client to `afj.99@hotmail.com`.
 5. Credits links work.
-6. DevTools > Network on `/home`: no Lordicon or lottie script is downloaded.
+6. DevTools > Network on `/home`: no Lordicon script is downloaded.
 
 ---
 

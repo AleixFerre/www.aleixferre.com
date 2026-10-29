@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 
-const ROOTS = ['src/assets/profile', 'src/assets/projects'];
+const ROOTS = ['public/assets/profile', 'public/assets/projects'];
 const MAX_SIZE = 900;
 const THUMB_SUFFIX = '-thumb.webp';
 const QUALITIES = [70, 60, 50, 40];
