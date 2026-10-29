@@ -1,8 +1,86 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
 import { TABS } from '../../data/tabs';
+import { ALL_PROJECTS } from '../../data/projects';
 ---
 
 <TabLayout activeTab={TABS.PROJECTS}>
-  <p>PROJECTS content coming soon.</p>
+  <div class="grid appear">
+    {
+      ALL_PROJECTS.map((item) => (
+        <a
+          class:list={['box', 'project', item.class]}
+          style={`background-image: url('${item.backgroundImage}');`}
+          href={`/projects/${item.id}`}
+        >
+          <img src={item.imageThumb ?? item.image} alt={item.name} />
+        </a>
+      ))
+    }
+  </div>
 </TabLayout>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+      height: 100rem;
+    }
+
+    .box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .box {
+    background-color: rgba(255, 255, 255, 0.051);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .project {
+    filter: brightness(0.8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex: 1;
+
+    &.wide {
+      grid-column: span 2;
+    }
+
+    &:hover {
+      filter: brightness(1);
+      transform: translateY(-4px) scale(1.01);
+
+      img {
+        transform: scale(1.05);
+      }
+    }
+
+    img {
+      height: 70%;
+      max-width: 70%;
+      object-fit: contain;
+      aspect-ratio: inherit;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+  }
+</style>
