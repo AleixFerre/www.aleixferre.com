@@ -3,7 +3,11 @@ import TabLayout from '../layouts/TabLayout.astro';
 import { TABS } from '../data/tabs';
 ---
 
-<TabLayout activeTab={TABS.CONTACT}>
+<TabLayout
+  activeTab={TABS.CONTACT}
+  title="Contact | Aleix Ferré"
+  description="Get in touch with Aleix Ferré: download the CV or reach out on GitHub, Itch.io, LinkedIn or by email."
+>
   <div class="all">
     <div class="grid">
       <a class="box large" href="/assets/contact/cv.pdf" target="_blank">
