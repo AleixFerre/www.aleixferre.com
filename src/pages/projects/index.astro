@@ -1,5 +1,6 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
+import Img from '../../components/Img.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS } from '../../data/projects';
 ---
@@ -11,13 +12,13 @@ import { ALL_PROJECTS } from '../../data/projects';
 >
   <div class="grid appear">
     {
-      ALL_PROJECTS.map((item) => (
+      ALL_PROJECTS.map((item, index) => (
         <a
           class:list={['box', 'project', item.class]}
           style={`background-image: url('${item.backgroundImage}');`}
           href={`/projects/${item.id}`}
         >
-          <img src={item.imageThumb ?? item.image} alt={item.name} />
+          <Img src={item.imageThumb ?? item.image} alt={item.name} priority={index < 2} />
         </a>
       ))
     }
@@ -79,6 +80,7 @@ import { ALL_PROJECTS } from '../../data/projects';
     }
 
     img {
+      width: auto;
       height: 70%;
       max-width: 70%;
       object-fit: contain;

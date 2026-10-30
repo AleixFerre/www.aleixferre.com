@@ -1,6 +1,7 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
 import Gallery from '../../components/Gallery.astro';
+import Img from '../../components/Img.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS, type Project } from '../../data/projects';
 import { formatMonth } from '../../utils/format-month';
@@ -36,7 +37,7 @@ const { project } = Astro.props;
             style={`background-image: url('${item.backgroundImage}');`}
             href={`/projects/${item.id}`}
           >
-            <img src={item.imageThumb ?? item.image} class="inner" alt={item.name} />
+            <Img src={item.imageThumb ?? item.image} class="inner" alt={item.name} />
           </a>
         ))
       }
@@ -329,6 +330,7 @@ const { project } = Astro.props;
     }
 
     img {
+      width: auto;
       height: 70%;
       max-width: 70%;
       object-fit: contain;

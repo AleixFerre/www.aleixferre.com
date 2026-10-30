@@ -1,5 +1,6 @@
 ---
 import 'photoswipe/style.css';
+import Img from './Img.astro';
 import { getImageSize } from '../utils/image-size';
 
 interface Props {
@@ -24,7 +25,7 @@ const cols = Math.min(Math.max(images.length, 2), 4);
   {
     items.map((item) => (
       <a href={item.full} data-pswp-width={item.width} data-pswp-height={item.height} target="_blank">
-        <img class="screenshot" src={item.thumb} alt="" loading="lazy" decoding="async" />
+        <Img class="screenshot" src={item.thumb} alt="" />
       </a>
     ))
   }
