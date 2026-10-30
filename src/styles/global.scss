@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+.html,
+body {
+  margin: 0;
+  font-family: "Fira Code Variable", "Fira Code", monospace;
+  font-size: 16px;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 10px;
+  }
+}
+
+.appear {
+  animation: appear 0.3s ease-in-out;
+}
+
+.appear-lite {
+  animation: appear-lite 0.4s ease-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes appear-lite {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-image-pair(*) {
+  overflow: clip;
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  height: 100%;
+  object-fit: none;
+  object-position: center top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

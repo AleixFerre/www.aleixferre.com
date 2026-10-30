@@ -1,0 +1,370 @@
+---
+import TabLayout from '../../layouts/TabLayout.astro';
+import Gallery from '../../components/Gallery.astro';
+import Img from '../../components/Img.astro';
+import { TABS } from '../../data/tabs';
+import { ALL_PROJECTS, type Project } from '../../data/projects';
+import { formatMonth } from '../../utils/format-month';
+import { getProjectDuration } from '../../utils/project-duration';
+
+export function getStaticPaths() {
+  return ALL_PROJECTS.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<TabLayout
+  activeTab={TABS.PROJECTS}
+  title={`${project.name} | Aleix Ferré`}
+  description={project.description}
+  image={project.image}
+>
+  <div class="project-row appear">
+    <div class="grid list not-mobile-only">
+      <a class="button stick" href="/projects">
+        <img class="back" src="/assets/back.svg" alt="" />
+        <span class="see-all">See All</span>
+      </a>
+      {
+        ALL_PROJECTS.map((item) => (
+          <a
+            class:list={['box', 'project', { selected: item.id === project.id }]}
+            style={`background-image: url('${item.backgroundImage}');`}
+            href={`/projects/${item.id}`}
+          >
+            <Img src={item.imageThumb ?? item.image} class="inner" alt={item.name} />
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="details">
+      <div class="appear-lite">
+        <div class="row sticky-actions">
+          <a class="button mobile-only" href="/projects">
+            <img class="back" src="/assets/back.svg" alt="See All" />
+          </a>
+          <h2 class="title">{project.name}</h2>
+          {
+            project.additionalUrl && (
+              <>
+                <a class="button not-mobile-only" href={project.additionalUrl[0]} target="_blank">
+                  {project.additionalUrl[1]}
+                </a>
+                <a class="button mobile-only" href={project.additionalUrl[0]} target="_blank">
+                  <img src="/assets/projects/_actions/project_report.svg" alt="Project Report" />
+                </a>
+              </>
+            )
+          }
+          <a class="button not-mobile-only" href={project.url} target="_blank">Visit Project</a>
+          <a class="button mobile-only" href={project.url} target="_blank">
+            <img src="/assets/projects/_actions/visit_project.svg" alt="Visit Project" />
+          </a>
+        </div>
+        <div class="separator"></div>
+        <p>{project.description}</p>
+        {project.images.length > 0 && <Gallery images={project.images} thumbs={project.imagesThumbs} />}
+        <h3>Details</h3>
+        <ul>
+          {
+            Object.entries(project.details).map(([key, value]) => (
+              <li>
+                <b>{key}:</b><span> {value}</span>
+              </li>
+            ))
+          }
+        </ul>
+        {
+          project.goodForYouIf && (
+            <div>
+              <h3>Good for you if</h3>
+              <ul>
+                {project.goodForYouIf.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        {
+          project.whatILearned && (
+            <div>
+              <h3>What I learned</h3>
+              <ul>
+                {project.whatILearned.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        <h3>Project Timeline</h3>
+        <p>
+          {formatMonth(project.createdAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({getProjectDuration(project)})</span> : <span>In Progress</span>}
+        </p>
+      </div>
+    </div>
+  </div>
+</TabLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelector('.list .selected')?.scrollIntoView({ block: 'nearest' });
+  });
+</script>
+
+<style lang="scss">
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .project-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .mobile-only {
+      display: flex !important;
+    }
+
+    .not-mobile-only {
+      display: none !important;
+    }
+  }
+
+  .details {
+    flex: 1;
+    background-color: rgba(240, 248, 255, 0.103);
+    padding: 2em;
+    border-radius: 10px;
+    font-family: 'PT Sans', sans-serif;
+    height: 70vh;
+    overflow: auto;
+    position: relative;
+    scroll-padding-top: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    @media screen and (max-width: 1000px) {
+      height: auto;
+      padding: 1.25em;
+      overflow: visible;
+      font-size: 1.05rem;
+    }
+
+    .separator {
+      height: 1rem;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+
+      .title {
+        flex: 1;
+        margin: 0;
+      }
+
+      &.sticky-actions {
+        position: sticky;
+        top: 10px;
+        z-index: 8;
+        background: rgba(16, 18, 26, 0.6);
+        backdrop-filter: blur(6px);
+        padding: 0.75em 0.75em 0.75em 1.4em;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      @media screen and (max-width: 1000px) {
+        &.sticky-actions {
+          font-size: 0.8rem;
+          position: sticky;
+          top: 8px;
+          margin: 0 -0.5em 0.75em -0.5em;
+          padding: 0.85em 1em;
+          z-index: 12;
+        }
+      }
+
+      .button {
+        background-color: rgba(0, 0, 0, 0.226);
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        padding: 1em;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: white;
+        text-decoration: none;
+        font-family: 'Fira Code Variable', 'Fira Code', monospace;
+        text-align: center;
+      }
+    }
+  }
+
+  .see-all {
+    text-wrap-mode: nowrap;
+  }
+
+  .back {
+    width: 20px;
+    height: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    &.list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 12vw;
+      min-width: 180px;
+      flex: 0 0 12vw;
+      height: 90vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-radius: 10px;
+      position: relative;
+
+      .button.stick {
+        position: sticky;
+        top: 0;
+        align-self: stretch;
+        z-index: 7;
+        background: rgba(16, 18, 26, 0.75);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .box {
+    background-color: rgba(255, 255, 255, 0.051);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .project {
+    filter: brightness(0.8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex: 1;
+    min-height: 50px;
+
+    &:hover {
+      filter: brightness(1);
+      transform: translateY(-4px) scale(1.01);
+
+      img {
+        transform: scale(1.05);
+      }
+    }
+
+    &.selected {
+      margin: 0 2px;
+      transform: scale(1.03);
+
+      img {
+        transform: scale(1.1);
+      }
+    }
+
+    &.selected:hover {
+      transform: translateY(-4px) scale(1.03);
+      img {
+        transform: scale(1.1);
+      }
+    }
+
+    &:not(.selected) {
+      filter: brightness(0.3);
+      box-shadow: 0 0 0 0 transparent;
+    }
+
+    img {
+      width: auto;
+      height: 70%;
+      max-width: 70%;
+      object-fit: contain;
+      aspect-ratio: inherit;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+  }
+
+  .button {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-radius: 12px;
+    padding: 12px;
+    height: 1lh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.35);
+      font-weight: bold;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+</style>

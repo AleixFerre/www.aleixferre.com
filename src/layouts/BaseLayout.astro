@@ -1,0 +1,61 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@fontsource-variable/fira-code';
+import '@fontsource/pt-sans/400.css';
+import '@fontsource/pt-sans/700.css';
+import '../styles/global.scss';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Aleix Ferré - Game Designer & Programmer',
+  description = 'Game Designer & Programmer specializing in Unity development. Portfolio showcasing game projects, skills, and professional experience.',
+  image = '/assets/profile/promo.webp',
+} = Astro.props;
+
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="game design, game development, unity, programmer, portfolio, aleix ferré, game designer"
+    />
+    <meta name="author" content="Aleix Ferré" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script
+      is:inline
+      src="https://analytics.ahrefs.com/analytics.js"
+      data-key="fPJUOKILanfySrwwfD8iPA"
+      async></script>
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

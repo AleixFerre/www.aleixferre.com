@@ -1,0 +1,258 @@
+---
+import TabLayout from '../layouts/TabLayout.astro';
+import MetricContainer from '../components/MetricContainer.astro';
+import IconText from '../components/IconText.astro';
+import Img from '../components/Img.astro';
+import { TABS } from '../data/tabs';
+import { FEATURED_PROJECTS } from '../data/projects';
+import { yearsSince } from '../utils/years-since';
+
+const yearsSinceIndie = yearsSince(new Date('2017-01-01')).toString();
+const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
+---
+
+<TabLayout activeTab={TABS.HOME}>
+  <div class="grid">
+    <a class="box profile" href="/about">
+      <Img src="/assets/profile/yo_letra-thumb.webp" class="profile-image" alt="Aleix Ferré" priority />
+      <p class="name">Game Designer <br />& Developer</p>
+    </a>
+    <div class="box">
+      <p>Experience</p>
+      <div class="grid experience">
+        <div class="box experience">
+          <MetricContainer title="Indie Games" number={yearsSinceIndie} symbol="+" description="years" />
+        </div>
+        <div class="box experience">
+          <MetricContainer title="Web & Mobile" number={yearsSinceWeb} symbol="+" description="years" />
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <p>Specialized In</p>
+      <div class="grid specialized">
+        <IconText class="specialization" text="Unity" icon="/assets/tecnologies/unity.svg" />
+        <IconText class="specialization" text="Game Design" icon="/assets/tecnologies/game_design.svg" />
+        <IconText
+          class="specialization"
+          text="Project Management"
+          icon="/assets/tecnologies/project_management.svg"
+        />
+      </div>
+    </div>
+    <div class="box large">
+      <p>Featured Projects</p>
+      <div class="grid projects">
+        {
+          FEATURED_PROJECTS.map((item) => (
+            <a
+              class:list={['box', 'project', { large: item.class === 'large' }]}
+              style={`background-image: url('${item.backgroundImage}');`}
+              href={`/projects/${item.id}`}
+            >
+              <Img src={item.imageThumb ?? item.image} alt={item.name} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</TabLayout>
+
+<style lang="scss">
+  $margin-p: 8px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &.projects {
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      height: calc(100% - 1lh - ($margin-p * 2));
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-rows: auto;
+        height: auto;
+
+        .box {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 120px;
+        }
+      }
+    }
+
+    &.experience {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      height: calc(100% - 1lh - ($margin-p * 2));
+
+      @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-template-rows: auto;
+        height: auto;
+        width: 100%;
+      }
+    }
+
+    &.specialized {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      height: calc(100% - 1lh - ($margin-p * 2));
+      gap: 12px;
+
+      @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-template-rows: auto;
+        height: auto;
+        width: 100%;
+      }
+
+      :global(.specialization) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 14px 12px;
+        border-radius: 14px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        outline: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        transition: filter 0.25s ease;
+
+        @media screen and (max-width: 1000px) {
+          flex-direction: row;
+          align-items: center;
+          gap: 12px;
+        }
+
+        &:hover {
+          filter: brightness(1.05);
+        }
+      }
+    }
+  }
+
+  .box {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: 14px;
+    padding: 10px;
+    outline: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+    &.experience {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @media screen and (max-width: 1000px) {
+        padding: 20px;
+      }
+    }
+
+    &.large {
+      grid-column: span 3;
+      grid-row: span 2;
+      background-size: cover;
+      background-position: center;
+    }
+
+    p {
+      margin: $margin-p 0 $margin-p 0;
+    }
+
+    &.profile {
+      background-image: url('/assets/profile/yo.webp'),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+      @media screen and (max-width: 1000px) {
+        height: 50vw;
+      }
+
+      .profile-image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: all 0.3s ease;
+      }
+
+      &:hover {
+        filter: brightness(1.05);
+        transform: translateY(-4px);
+      }
+    }
+
+    .name {
+      display: flex;
+      text-align: end;
+      text-wrap-mode: nowrap;
+      justify-content: end;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  .project {
+    grid-column: span 2;
+    filter: brightness(0.8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1);
+      transform: translateY(-4px) scale(1.01);
+
+      img {
+        transform: scale(1.05);
+      }
+    }
+
+    img {
+      width: auto;
+      height: 70%;
+      max-width: 70%;
+      aspect-ratio: inherit;
+      transition: all 0.3s ease;
+      object-fit: contain;
+      pointer-events: none;
+    }
+  }
+</style>

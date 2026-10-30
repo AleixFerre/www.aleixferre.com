@@ -1,0 +1,303 @@
+---
+import TabLayout from '../layouts/TabLayout.astro';
+import MetricContainer from '../components/MetricContainer.astro';
+import { TABS } from '../data/tabs';
+import { ABOUT } from '../data/about';
+
+const age = new Date().getFullYear() - 2000;
+---
+
+<TabLayout
+  activeTab={TABS.ABOUT}
+  title="About | Aleix Ferré"
+  description="Aleix Ferré, Game Designer & Developer: web dashboards and mobile apps at ClearPeaks, Yuuko Games by night. Education, professional experience and languages."
+>
+  <div class="grid">
+    <div class="box hero">
+      <p class="eyebrow">{ABOUT.hero.eyebrow}</p>
+      <h2>{ABOUT.hero.title}</h2>
+      <div class="pill-row">
+        {ABOUT.hero.pills.map((pill) => <span class="pill">{pill}</span>)}
+      </div>
+      <p class="muted" set:html={ABOUT.hero.description} />
+    </div>
+    <div class="box profile">
+      <p class="name">{ABOUT.profile.name}</p>
+      <p class="age">{age} years old</p>
+      <p class="age">{ABOUT.profile.location}</p>
+    </div>
+    <div class="box focus">
+      <p>{ABOUT.focus.title}</p>
+      <ul class="bullets">
+        {ABOUT.focus.items.map((item) => <li set:html={item} />)}
+      </ul>
+    </div>
+    <div class="box education">
+      <p>{ABOUT.education.title}</p>
+      <div class="list">
+        {
+          ABOUT.education.items.map((education) => (
+            <MetricContainer
+              class:list={['box', 'center', { 'has-image': !!education.img }]}
+              style={education.img ? `--logo: url(${education.img})` : undefined}
+              title={education.title ?? ''}
+              number={education.number}
+              small
+              description={education.description}
+            />
+          ))
+        }
+      </div>
+    </div>
+    <div class="box professional">
+      <p>{ABOUT.professionalExperience.title}</p>
+      <div class="list">
+        {
+          ABOUT.professionalExperience.items.map((experience) => (
+            <MetricContainer
+              class:list={['box', 'center', { 'has-image': !!experience.img }]}
+              style={experience.img ? `--logo: url(${experience.img})` : undefined}
+              title={experience.title ?? ''}
+              number={experience.number}
+              small
+              description={experience.description}
+            />
+          ))
+        }
+      </div>
+    </div>
+    <div class="box languages">
+      <p>{ABOUT.languages.title}</p>
+      <div class="list">
+        {
+          ABOUT.languages.items.map((language) => (
+            <MetricContainer
+              class:list={['box', 'center', 'align-left', { 'has-flag': !!language.img }]}
+              style={language.img ? `--flag: url(${language.img})` : undefined}
+              title={language.title ?? ''}
+              number={language.number}
+              small
+              description={language.description}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</TabLayout>
+
+<style lang="scss">
+  @mixin box {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: 14px;
+    padding: 16px;
+    outline: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+      'hero hero profile'
+      'focus professional languages'
+      'education professional languages';
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    @media screen and (max-width: 1000px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 16px 0;
+  }
+
+  .pill {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+  }
+
+  .muted {
+    opacity: 0.9;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+
+  .focus {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .bullets {
+      padding-left: 1.1em;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+      line-height: 1.4;
+      text-wrap: balance;
+      overflow: auto;
+      height: 100%;
+    }
+  }
+
+  .box {
+    @include box;
+
+    &.hero {
+      grid-area: hero;
+    }
+
+    &.profile {
+      grid-area: profile;
+      background-image: url('/assets/profile/yo.webp'),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+      @media screen and (max-width: 1000px) {
+        height: 25em;
+      }
+      .name {
+        text-align: end;
+        text-wrap-mode: nowrap;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      .age {
+        text-align: end;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+      }
+    }
+    &.education {
+      grid-area: education;
+    }
+
+    &.professional {
+      grid-area: professional;
+    }
+
+    &.focus {
+      grid-area: focus;
+    }
+
+    &.languages {
+      grid-area: languages;
+    }
+    p {
+      margin: 8px 0 8px 0;
+      font-size: 0.85rem;
+    }
+
+    &.hero {
+      padding: 2rem;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+
+      h2 {
+        margin: 4px 0 12px 0;
+        font-size: clamp(1.4rem, 2vw, 1rem);
+        line-height: 1.2;
+      }
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: calc(100% - 1lh - 16px);
+      justify-content: space-evenly;
+    }
+  }
+
+  .list > :global(.box.center) {
+    @include box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    flex: 1;
+  }
+
+  .list > :global(.box.center.has-image) {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  .list > :global(.box.center.has-image)::after {
+    content: '';
+    position: absolute;
+    inset: 1.5em;
+    z-index: -1;
+    background-image: var(--logo);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.22;
+    filter: saturate(0.5);
+    pointer-events: none;
+  }
+
+  .education .list > :global(.box.center.has-image)::after {
+    opacity: 0.5;
+  }
+
+  .list > :global(.box.center.has-flag) {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    align-items: flex-start;
+    padding-right: 6em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  .list > :global(.box.center.has-flag)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1.25em;
+    transform: translateY(-50%);
+    width: 4em;
+    aspect-ratio: 3 / 2;
+    border-radius: 10px;
+    background-image: var(--flag);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: saturate(0.5);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { getImageSize } from '../utils/image-size';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'loading' | 'decoding'> {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}
+
+const { src, alt, priority = false, ...rest } = Astro.props;
+
+const size = src.endsWith('.svg') ? undefined : await getImageSize(src);
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={size?.width}
+  height={size?.height}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : undefined}
+  decoding="async"
+  {...rest}
+/>
