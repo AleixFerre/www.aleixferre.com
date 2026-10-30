@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "deploy": "bun run build && gh-pages -d dist --dotfiles -m \"deploy: astro build\"",
     "generate:thumbs": "node scripts/generate-image-thumbs.mjs"
   },
   "private": true,
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "gh-pages": "^6.3.0",
     "sass": "^1.106.1",
     "sharp": "^0.35.4",
     "typescript": "~6.0.3"
