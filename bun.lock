@@ -6,6 +6,8 @@
       "name": "aleixferre-portfolio",
       "dependencies": {
         "@astrojs/sitemap": "^3.7.4",
+        "@fontsource-variable/fira-code": "^5.3.0",
+        "@fontsource/pt-sans": "^5.3.0",
         "@lordicon/element": "^2.3.1",
         "astro": "7.4.2",
         "photoswipe": "^5.4.4",
@@ -112,6 +114,10 @@
     "@emnapi/runtime": ["@emnapi/runtime@1.11.3", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA=="],
 
     "@emnapi/wasi-threads": ["@emnapi/wasi-threads@1.2.3", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-ELEBe8PsLvvJ6QMr0zLt8ffvOHW/dc1m3CEzNMg7aJUv3bMaoDtw2TXyDAwkYBuroxxuHEwhRTLJSe5sya547g=="],
+
+    "@fontsource-variable/fira-code": ["@fontsource-variable/fira-code@5.3.0", "", {}, "sha512-ZhvHeknlicraKVSJBa1NrJnXDVByUkC407zwgELYfmnx3p9g8vwIPfQCxx8YD3K7dAeCdLuHJOHlpMfRsIcApQ=="],
+
+    "@fontsource/pt-sans": ["@fontsource/pt-sans@5.3.0", "", {}, "sha512-qisFKuquwSWlELeuQHQldOa4oSxDAOFpak2hj3FjFcdo4eCUGV0trhIBk3qt+Py50L8JKWHKnnL7/JPxRH0TPw=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 

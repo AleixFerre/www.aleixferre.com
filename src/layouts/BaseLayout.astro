@@ -1,5 +1,8 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import '@fontsource-variable/fira-code';
+import '@fontsource/pt-sans/400.css';
+import '@fontsource/pt-sans/700.css';
 import '../styles/global.scss';
 
 interface Props {
@@ -44,12 +47,6 @@ const imageUrl = new URL(image, Astro.site).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-      rel="stylesheet"
-    />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <script
       is:inline
