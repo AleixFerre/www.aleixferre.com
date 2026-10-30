@@ -2,6 +2,7 @@
 import TabLayout from '../layouts/TabLayout.astro';
 import MetricContainer from '../components/MetricContainer.astro';
 import IconText from '../components/IconText.astro';
+import Img from '../components/Img.astro';
 import { TABS } from '../data/tabs';
 import { FEATURED_PROJECTS } from '../data/projects';
 import { yearsSince } from '../utils/years-since';
@@ -13,7 +14,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
 <TabLayout activeTab={TABS.HOME}>
   <div class="grid">
     <a class="box profile" href="/about">
-      <img src="/assets/profile/yo_letra-thumb.webp" class="profile-image" alt="Aleix Ferré" />
+      <Img src="/assets/profile/yo_letra-thumb.webp" class="profile-image" alt="Aleix Ferré" priority />
       <p class="name">Game Designer <br />& Developer</p>
     </a>
     <div class="box">
@@ -49,7 +50,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
               style={`background-image: url('${item.backgroundImage}');`}
               href={`/projects/${item.id}`}
             >
-              <img src={item.imageThumb ?? item.image} alt={item.name} />
+              <Img src={item.imageThumb ?? item.image} alt={item.name} />
             </a>
           ))
         }
@@ -245,6 +246,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
     }
 
     img {
+      width: auto;
       height: 70%;
       max-width: 70%;
       aspect-ratio: inherit;
