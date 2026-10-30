@@ -7,7 +7,11 @@ import { ABOUT } from '../data/about';
 const age = new Date().getFullYear() - 2000;
 ---
 
-<TabLayout activeTab={TABS.ABOUT}>
+<TabLayout
+  activeTab={TABS.ABOUT}
+  title="About | Aleix Ferré"
+  description="Aleix Ferré, Game Designer & Developer: web dashboards and mobile apps at ClearPeaks, Yuuko Games by night. Education, professional experience and languages."
+>
   <div class="grid">
     <div class="box hero">
       <p class="eyebrow">{ABOUT.hero.eyebrow}</p>

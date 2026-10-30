@@ -4,7 +4,11 @@ import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS } from '../../data/projects';
 ---
 
-<TabLayout activeTab={TABS.PROJECTS}>
+<TabLayout
+  activeTab={TABS.PROJECTS}
+  title="Projects | Aleix Ferré"
+  description="Games and tools by Aleix Ferré, from Yuuko Games and Masters Arena to the USignals Unity package, with screenshots, details and lessons learned."
+>
   <div class="grid appear">
     {
       ALL_PROJECTS.map((item) => (

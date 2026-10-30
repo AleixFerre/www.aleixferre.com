@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://aleixferre.github.io/sitemap.xml
+Sitemap: https://www.aleixferre.com/sitemap-index.xml

@@ -14,8 +14,9 @@ const {
   image = '/assets/profile/promo.webp',
 } = Astro.props;
 
-const legacyOrigin = 'https://aleixferre.github.io';
-const imageUrl = new URL(image, legacyOrigin).href;
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
 ---
 
 <!doctype html>
@@ -30,11 +31,12 @@ const imageUrl = new URL(image, legacyOrigin).href;
       content="game design, game development, unity, programmer, portfolio, aleix ferré, game designer"
     />
     <meta name="author" content="Aleix Ferré" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`${legacyOrigin}/`} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
