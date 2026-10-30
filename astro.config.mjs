@@ -5,7 +5,7 @@ export default defineConfig({
   site: 'https://www.aleixferre.com',
   integrations: [
     sitemap({
-      filter: (page) => !page.endsWith('/404/') && page !== 'https://www.aleixferre.com/',
+      filter: (page) => !page.endsWith('/404/') && !page.endsWith('/home/'),
     }),
   ],
   output: 'static',
@@ -14,6 +14,6 @@ export default defineConfig({
     format: 'directory',
   },
   redirects: {
-    '/': '/home',
+    '/home': '/',
   },
 });

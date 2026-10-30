@@ -21,7 +21,7 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     {
       tabsListEntries.map(([tab, label]) => (
         <>
-          <a class="col title" href={`/${tab}`} transition:name={`title-${tab}`}>
+          <a class="col title" href={tab === TABS.HOME ? '/' : `/${tab}`} transition:name={`title-${tab}`}>
             <p class:list={{ selected: tab === activeTab }}>{label}</p>
           </a>
           <div

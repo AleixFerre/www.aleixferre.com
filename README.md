@@ -24,7 +24,7 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 
 | Path | Contents |
 |---|---|
-| `src/pages/` | One page per route: `/home`, `/projects`, `/projects/<id>`, `/about`, `/contact` |
+| `src/pages/` | One page per route: `/`, `/projects`, `/projects/<id>`, `/about`, `/contact` |
 | `src/layouts/` | Base HTML head and the tab shell shared by every page |
 | `src/components/` | Reusable components (gallery, images, metrics, star background) |
 | `src/data/` | Projects, about content and tabs, as plain TypeScript |
