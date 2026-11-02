@@ -82,7 +82,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
     width: 100%;
     height: 100%;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: flex;
       flex-direction: column;
     }
@@ -99,7 +99,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
         align-items: center;
       }
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         grid-template-rows: auto;
         height: auto;
@@ -119,7 +119,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       grid-template-rows: repeat(1, 1fr);
       height: calc(100% - 1lh - ($margin-p * 2));
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         grid-template-rows: auto;
         height: auto;
@@ -133,7 +133,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       height: calc(100% - 1lh - ($margin-p * 2));
       gap: 12px;
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         grid-template-rows: auto;
         height: auto;
@@ -152,7 +152,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         transition: filter 0.25s ease;
 
-        @media screen and (max-width: 1000px) {
+        @include mobile {
           flex-direction: row;
           align-items: center;
           gap: 12px;
@@ -177,7 +177,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       flex-direction: column;
       justify-content: center;
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         padding: 20px;
       }
     }
@@ -204,7 +204,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       position: relative;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         height: 50vw;
       }
 

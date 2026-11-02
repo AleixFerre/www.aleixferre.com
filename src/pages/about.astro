@@ -114,7 +114,7 @@ const experienceLogos = await Promise.all(
     gap: 16px;
     width: 100%;
     height: 100%;
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: flex;
       flex-direction: column;
     }
@@ -184,7 +184,7 @@ const experienceLogos = await Promise.all(
       position: relative;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         height: 25em;
       }
       .name {

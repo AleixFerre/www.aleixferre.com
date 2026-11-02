@@ -5,7 +5,7 @@ body {
   font-family: "Fira Code Variable", "Fira Code", monospace;
   font-size: 16px;
 
-  @media screen and (max-width: 1000px) {
+  @include mobile {
     font-size: 10px;
   }
 }

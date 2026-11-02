@@ -140,7 +140,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     display: none !important;
   }
 
-  @media screen and (max-width: 1000px) {
+  @include mobile {
     .mobile-only {
       display: flex !important;
     }
@@ -163,7 +163,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     font-size: 1rem;
     line-height: 1.6;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       height: auto;
       padding: 1.25em;
       overflow: visible;
@@ -197,7 +197,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
       }
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         &.sticky-actions {
           font-size: 0.8rem;
           position: sticky;
@@ -272,7 +272,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       }
     }
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: flex;
       flex-direction: column;
     }

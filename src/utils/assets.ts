@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import nodePath from 'node:path';
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
+import { MOBILE_QUERY } from './breakpoints';
 
 export const IMAGE_QUALITY = 70;
 export const IMAGE_WIDTHS = [320, 480, 640, 960, 1280];
@@ -10,8 +11,6 @@ const KEEP_ORIGINAL = new Set([
   '/assets/projects/ascii-shader/ascii-shader-1.webp',
   '/assets/projects/ascii-shader/ascii-shader-2.webp',
 ]);
-
-const MOBILE_QUERY = '(max-width: 1000px)';
 
 export const IMAGE_SIZES = {
   profile: `${MOBILE_QUERY} 86vw, 27vw`,

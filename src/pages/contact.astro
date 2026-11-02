@@ -64,7 +64,7 @@ import { TABS } from '../data/tabs';
     font-size: 0.8em;
     grid-column: span 2;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       margin: 10px 0 0 0;
     }
   }
@@ -82,7 +82,7 @@ import { TABS } from '../data/tabs';
     width: 100%;
     height: 100%;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: flex;
       flex-direction: column;
     }
@@ -114,14 +114,14 @@ import { TABS } from '../data/tabs';
       width: 200px;
       height: 200px;
 
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         width: 100px;
         height: 100px;
       }
     }
 
     .name {
-      @media screen and (max-width: 1000px) {
+      @include mobile {
         margin-bottom: 0;
       }
     }

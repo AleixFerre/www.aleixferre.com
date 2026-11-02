@@ -37,7 +37,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     width: 100%;
     height: 100%;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: flex;
       flex-direction: column;
 

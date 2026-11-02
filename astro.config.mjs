@@ -1,5 +1,7 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { MOBILE_BREAKPOINT } from './src/utils/breakpoints';
 
 export default defineConfig({
   site: 'https://www.aleixferre.com',
@@ -15,5 +17,15 @@ export default defineConfig({
   },
   redirects: {
     '/home': '/',
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          loadPaths: [fileURLToPath(new URL('./src/styles', import.meta.url))],
+          additionalData: `@use "breakpoints" as * with ($mobile-breakpoint: ${MOBILE_BREAKPOINT}px);\n`,
+        },
+      },
+    },
   },
 });
