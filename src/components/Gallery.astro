@@ -1,22 +1,18 @@
 ---
 import 'photoswipe/style.css';
 import Img from './Img.astro';
-import { getImageSize } from '../utils/image-size';
+import { asset } from '../utils/assets';
 
 interface Props {
   images: string[];
-  thumbs?: string[];
 }
 
-const { images, thumbs } = Astro.props;
+const { images } = Astro.props;
 
-const items = await Promise.all(
-  images.map(async (full, index) => ({
-    full,
-    thumb: thumbs?.[index] ?? full,
-    ...(await getImageSize(full)),
-  })),
-);
+const items = images.map((path) => {
+  const { src, width, height } = asset(path);
+  return { path, full: src, width, height };
+});
 
 const cols = Math.min(Math.max(images.length, 2), 4);
 ---
@@ -25,7 +21,7 @@ const cols = Math.min(Math.max(images.length, 2), 4);
   {
     items.map((item) => (
       <a href={item.full} data-pswp-width={item.width} data-pswp-height={item.height} target="_blank">
-        <Img class="screenshot" src={item.thumb} alt="" />
+        <Img class="screenshot" src={item.path} alt="" variant="gallery" />
       </a>
     ))
   }
@@ -86,7 +82,7 @@ const cols = Math.min(Math.max(images.length, 2), 4);
       }
     }
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       display: grid;
       grid-auto-flow: column;
       grid-auto-columns: 82vw;

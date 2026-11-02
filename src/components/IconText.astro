@@ -27,7 +27,7 @@ const { text, icon, small = false, class: className } = Astro.props;
     text-align: center;
     font-size: 0.8em;
 
-    @media screen and (max-width: 1000px) {
+    @include mobile {
       font-size: 1.4em;
     }
   }

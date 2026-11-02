@@ -21,6 +21,8 @@ export interface AboutContent {
     name: string;
     birthDate: string;
     location: string;
+    photo: string;
+    background: string;
   };
   focus: AboutSection<string>;
   education: AboutSection<AboutMetric>;
@@ -41,6 +43,8 @@ export const ABOUT: AboutContent = {
     name: 'Aleix Ferré',
     birthDate: '1999-12-19',
     location: 'Girona',
+    photo: '/assets/profile/yo_letra.webp',
+    background: '/assets/profile/yo.webp',
   },
   focus: {
     title: 'Currently focused on',
@@ -65,7 +69,7 @@ export const ABOUT: AboutContent = {
     title: 'Professional Experience',
     items: [
       {
-        img: '/assets/projects/yuukogames/yuukogames-thumb.webp',
+        img: '/assets/projects/yuukogames/yuukogames.webp',
         title: 'Yuuko Games',
         number: 'Co-Founder',
         description: '2023 - Present',
