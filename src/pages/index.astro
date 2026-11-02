@@ -5,7 +5,14 @@ import IconText from '../components/IconText.astro';
 import Img from '../components/Img.astro';
 import { TABS } from '../data/tabs';
 import { FEATURED_PROJECTS } from '../data/projects';
+import { ABOUT } from '../data/about';
 import { yearsSince } from '../utils/years-since';
+import { backgroundImage } from '../utils/assets';
+
+const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
+const backgrounds = await Promise.all(
+  FEATURED_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'card')),
+);
 
 const yearsSinceIndie = yearsSince(new Date('2017-01-01')).toString();
 const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
@@ -13,8 +20,8 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
 
 <TabLayout activeTab={TABS.HOME}>
   <div class="grid">
-    <a class="box profile" href="/about">
-      <Img src="/assets/profile/yo_letra-thumb.webp" class="profile-image" alt="Aleix Ferré" priority />
+    <a class="box profile" href="/about" style={`--profile-background: ${profileBackground}`}>
+      <Img src={ABOUT.profile.photo} class="profile-image" alt={ABOUT.profile.name} variant="profile" priority />
       <p class="name">Game Designer <br />& Developer</p>
     </a>
     <div class="box">
@@ -44,13 +51,13 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       <p>Featured Projects</p>
       <div class="grid projects">
         {
-          FEATURED_PROJECTS.map((item) => (
+          FEATURED_PROJECTS.map((item, index) => (
             <a
               class:list={['box', 'project', { large: item.class === 'large' }]}
-              style={`background-image: url('${item.backgroundImage}');`}
+              style={`background-image: ${backgrounds[index]};`}
               href={`/projects/${item.id}`}
             >
-              <Img src={item.imageThumb ?? item.image} alt={item.name} />
+              <Img src={item.image} alt={item.name} variant="card" />
             </a>
           ))
         }
@@ -187,7 +194,7 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
     }
 
     &.profile {
-      background-image: url('/assets/profile/yo.webp'),
+      background-image: var(--profile-background),
         linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
       background-size: cover, cover;
       background-position: center, center;

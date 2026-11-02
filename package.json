@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "deploy": "bun run build && gh-pages -d dist --dotfiles -m \"deploy: astro build\"",
-    "generate:thumbs": "node scripts/generate-image-thumbs.mjs"
+    "deploy": "bun run build && gh-pages -d dist --dotfiles -m \"deploy: astro build\""
   },
   "private": true,
   "dependencies": {

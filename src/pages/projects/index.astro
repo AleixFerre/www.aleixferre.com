@@ -3,6 +3,9 @@ import TabLayout from '../../layouts/TabLayout.astro';
 import Img from '../../components/Img.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS } from '../../data/projects';
+import { backgroundImage } from '../../utils/assets';
+
+const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'card')));
 ---
 
 <TabLayout
@@ -15,10 +18,10 @@ import { ALL_PROJECTS } from '../../data/projects';
       ALL_PROJECTS.map((item, index) => (
         <a
           class:list={['box', 'project', item.class]}
-          style={`background-image: url('${item.backgroundImage}');`}
+          style={`background-image: ${backgrounds[index]};`}
           href={`/projects/${item.id}`}
         >
-          <Img src={item.imageThumb ?? item.image} alt={item.name} priority={index < 2} />
+          <Img src={item.image} alt={item.name} variant="card" priority={index < 2} />
         </a>
       ))
     }

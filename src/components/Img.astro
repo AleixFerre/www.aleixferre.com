@@ -1,25 +1,46 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { getImageSize } from '../utils/image-size';
+import { Image } from 'astro:assets';
+import { asset, keepOriginal, IMAGE_QUALITY, IMAGE_SIZES, IMAGE_WIDTHS, type ImageVariant } from '../utils/assets';
 
-interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'loading' | 'decoding'> {
+interface Props
+  extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'loading' | 'decoding' | 'sizes'> {
   src: string;
   alt: string;
+  variant: ImageVariant;
   priority?: boolean;
 }
 
-const { src, alt, priority = false, ...rest } = Astro.props;
+const { src, alt, variant, priority = false, ...rest } = Astro.props;
 
-const size = src.endsWith('.svg') ? undefined : await getImageSize(src);
+const image = asset(src);
+const loading = priority ? 'eager' : 'lazy';
+const fetchpriority = priority ? 'high' : undefined;
 ---
 
-<img
-  src={src}
-  alt={alt}
-  width={size?.width}
-  height={size?.height}
-  loading={priority ? 'eager' : 'lazy'}
-  fetchpriority={priority ? 'high' : undefined}
-  decoding="async"
-  {...rest}
-/>
+{
+  keepOriginal(src) ? (
+    <img
+      src={image.src}
+      alt={alt}
+      width={image.width}
+      height={image.height}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding="async"
+      {...rest}
+    />
+  ) : (
+    <Image
+      src={image}
+      alt={alt}
+      widths={IMAGE_WIDTHS}
+      sizes={IMAGE_SIZES[variant]}
+      quality={IMAGE_QUALITY}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding="async"
+      {...rest}
+    />
+  )
+}

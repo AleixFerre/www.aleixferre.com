@@ -17,7 +17,6 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `bun run dev` | Start the dev server at http://localhost:4321 |
 | `bun run build` | Type-check with `astro check` and build the static site into `dist/` |
 | `bun run preview` | Serve `dist/` at http://localhost:4321 to test the production build |
-| `bun run generate:thumbs` | Create or refresh the `-thumb.webp` thumbnails for images in `public/assets/profile` and `public/assets/projects` |
 | `bun run deploy` | Build the site and publish `dist/` to the `gh-pages` branch (see [Deployment](#deployment)) |
 
 ## Project structure
@@ -28,14 +27,14 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `src/layouts/` | Base HTML head and the tab shell shared by every page |
 | `src/components/` | Reusable components (gallery, images, metrics, star background) |
 | `src/data/` | Projects, about content and tabs, as plain TypeScript |
-| `public/assets/` | Images, icons, Lordicon animations and the CV, served as `/assets/...` |
-| `scripts/` | Thumbnail generation script |
+| `src/assets/` | Profile and project images, resized and optimized at build time by Astro's `<Image>` |
+| `public/assets/` | Icons, logos, Lordicon animations and the CV, served as `/assets/...` |
+| `src/utils/assets.ts` | Looks up `src/assets` images by their `/assets/...` path and holds the image widths and quality |
 
 ## Adding a project
 
-1. Add the images under `public/assets/projects/<id>/`.
-2. Run `bun run generate:thumbs` to create the thumbnails.
-3. Add the project to `src/data/projects.ts` and include it in `ALL_PROJECTS` (and `FEATURED_PROJECTS` to show it on the home page).
+1. Add the `.webp` images under `src/assets/projects/<id>/`.
+2. Add the project to `src/data/projects.ts` and include it in `ALL_PROJECTS` (and `FEATURED_PROJECTS` to show it on the home page).
 
 ## Deployment
 

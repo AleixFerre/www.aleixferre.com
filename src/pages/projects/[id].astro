@@ -6,6 +6,7 @@ import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS, type Project } from '../../data/projects';
 import { formatMonth } from '../../utils/format-month';
 import { getProjectDuration } from '../../utils/project-duration';
+import { asset, backgroundImage } from '../../utils/assets';
 
 export function getStaticPaths() {
   return ALL_PROJECTS.map((project) => ({ params: { id: project.id }, props: { project } }));
@@ -16,13 +17,15 @@ interface Props {
 }
 
 const { project } = Astro.props;
+
+const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'sidebarCard')));
 ---
 
 <TabLayout
   activeTab={TABS.PROJECTS}
   title={`${project.name} | Aleix Ferré`}
   description={project.description}
-  image={project.image}
+  image={asset(project.image).src}
 >
   <div class="project-row appear">
     <div class="grid list not-mobile-only">
@@ -31,13 +34,13 @@ const { project } = Astro.props;
         <span class="see-all">See All</span>
       </a>
       {
-        ALL_PROJECTS.map((item) => (
+        ALL_PROJECTS.map((item, index) => (
           <a
             class:list={['box', 'project', { selected: item.id === project.id }]}
-            style={`background-image: url('${item.backgroundImage}');`}
+            style={`background-image: ${backgrounds[index]};`}
             href={`/projects/${item.id}`}
           >
-            <Img src={item.imageThumb ?? item.image} class="inner" alt={item.name} />
+            <Img src={item.image} class="inner" alt={item.name} variant="card" />
           </a>
         ))
       }
@@ -69,7 +72,7 @@ const { project } = Astro.props;
         </div>
         <div class="separator"></div>
         <p>{project.description}</p>
-        {project.images.length > 0 && <Gallery images={project.images} thumbs={project.imagesThumbs} />}
+        {project.images.length > 0 && <Gallery images={project.images} />}
         <h3>Details</h3>
         <ul>
           {

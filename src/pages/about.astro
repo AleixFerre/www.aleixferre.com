@@ -3,8 +3,16 @@ import TabLayout from '../layouts/TabLayout.astro';
 import MetricContainer from '../components/MetricContainer.astro';
 import { TABS } from '../data/tabs';
 import { ABOUT } from '../data/about';
+import { backgroundImage, findAsset } from '../utils/assets';
 
 const age = new Date().getFullYear() - 2000;
+
+const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
+const experienceLogos = await Promise.all(
+  ABOUT.professionalExperience.items.map(({ img }) =>
+    img && findAsset(img) ? backgroundImage(img, 'logo') : img && `url(${img})`,
+  ),
+);
 ---
 
 <TabLayout
@@ -21,7 +29,7 @@ const age = new Date().getFullYear() - 2000;
       </div>
       <p class="muted" set:html={ABOUT.hero.description} />
     </div>
-    <div class="box profile">
+    <div class="box profile" style={`--profile-background: ${profileBackground}`}>
       <p class="name">{ABOUT.profile.name}</p>
       <p class="age">{age} years old</p>
       <p class="age">{ABOUT.profile.location}</p>
@@ -53,10 +61,10 @@ const age = new Date().getFullYear() - 2000;
       <p>{ABOUT.professionalExperience.title}</p>
       <div class="list">
         {
-          ABOUT.professionalExperience.items.map((experience) => (
+          ABOUT.professionalExperience.items.map((experience, index) => (
             <MetricContainer
               class:list={['box', 'center', { 'has-image': !!experience.img }]}
-              style={experience.img ? `--logo: url(${experience.img})` : undefined}
+              style={experience.img ? `--logo: ${experienceLogos[index]}` : undefined}
               title={experience.title ?? ''}
               number={experience.number}
               small
@@ -168,7 +176,7 @@ const age = new Date().getFullYear() - 2000;
 
     &.profile {
       grid-area: profile;
-      background-image: url('/assets/profile/yo.webp'),
+      background-image: var(--profile-background),
         linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
       background-size: cover, cover;
       background-position: center, center;
