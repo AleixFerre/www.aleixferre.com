@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { MOBILE_BREAKPOINT } from './src/utils/breakpoints';
+import { MOBILE_BREAKPOINT } from './src/lib/breakpoints';
 import { SITE } from './src/data/site';
 
 export default defineConfig({
