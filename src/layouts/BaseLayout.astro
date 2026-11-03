@@ -59,3 +59,30 @@ const imageUrl = new URL(image, Astro.site).href;
     <slot />
   </body>
 </html>
+
+<script>
+  const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
+
+  document.addEventListener(
+    'click',
+    (event) => {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const link = (event.target as Element | null)?.closest?.('a');
+      if (!link || !link.href || link.hasAttribute('download')) return;
+      if (link.target && link.target !== '_self') return;
+
+      const to = new URL(link.href, location.href);
+      if (
+        to.origin === location.origin &&
+        normalizePath(to.pathname) === normalizePath(location.pathname) &&
+        to.search === location.search &&
+        to.hash === location.hash
+      ) {
+        event.preventDefault();
+      }
+    },
+    { capture: true },
+  );
+</script>

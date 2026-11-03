@@ -27,8 +27,8 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
   description={project.description}
   image={asset(project.image).src}
 >
-  <div class="project-row appear">
-    <div class="grid list not-mobile-only">
+  <div class="project-row">
+    <div class="grid list not-mobile-only appear">
       <a class="button stick" href="/projects">
         <img class="back" src="/assets/back.svg" alt="" />
         <span class="see-all">See All</span>
@@ -46,8 +46,8 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       }
     </div>
 
-    <div class="details">
-      <div class="appear-lite">
+    <div class="details appear-lite" data-swap-region>
+      <div>
         <div class="row sticky-actions">
           <a class="button mobile-only" href="/projects">
             <img class="back" src="/assets/back.svg" alt="See All" />
@@ -117,6 +117,13 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
 </TabLayout>
 
 <script>
+  document.addEventListener('astro:after-swap', () => {
+    const current = location.pathname.replace(/\/+$/, '');
+    for (const item of document.querySelectorAll<HTMLAnchorElement>('.list a.project')) {
+      item.classList.toggle('selected', new URL(item.href).pathname.replace(/\/+$/, '') === current);
+    }
+  });
+
   document.addEventListener('astro:page-load', () => {
     document.querySelector('.list .selected')?.scrollIntoView({ block: 'nearest' });
   });

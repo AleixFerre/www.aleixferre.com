@@ -16,17 +16,18 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
 ---
 
 <BaseLayout {...baseProps}>
-  <main class="row">
+  <main class="row tabs">
     <BackgroundStars />
     {
       tabsListEntries.map(([tab, label]) => (
         <>
-          <a class="col title" href={tab === TABS.HOME ? '/' : `/${tab}`} transition:name={`title-${tab}`}>
+          <a class="col title" href={tab === TABS.HOME ? '/' : `/${tab}`} data-tab={tab}>
             <p class:list={{ selected: tab === activeTab }}>{label}</p>
           </a>
           <div
-            class:list={['col', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}
-            transition:name={`panel-${tab}`}
+            class:list={['col', 'panel', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}
+            data-tab={tab}
+            inert={tab !== activeTab}
           >
             {tab === activeTab && (
               <div class="main-content">
@@ -57,6 +58,13 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
   .col {
     flex: 0;
     font-size: 1em;
+    transition:
+      flex-grow 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   .title {
@@ -100,12 +108,14 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     width: 0;
     overflow: hidden;
     opacity: 0;
+    content-visibility: auto;
   }
 
   .isActive {
     flex: 1;
     width: auto;
     opacity: 1;
+    content-visibility: visible;
   }
 
   .scrollable {
@@ -126,3 +136,74 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     }
   }
 </style>
+
+<script>
+  import { swapFunctions } from 'astro:transitions/client';
+
+  const STYLES = 'link[rel=stylesheet], style';
+
+  const keepLoadedStyles = (newDocument: Document) => {
+    const incoming = [...newDocument.head.querySelectorAll(STYLES)];
+    for (const style of document.head.querySelectorAll(STYLES)) {
+      if (!incoming.some((el) => el.isEqualNode(style))) newDocument.head.append(style.cloneNode(true));
+    }
+  };
+
+  const isLoaded = (script: HTMLScriptElement) =>
+    [...document.scripts].some((loaded) =>
+      script.src ? loaded.src === script.src : loaded.textContent === script.textContent,
+    );
+
+  const appendNewScripts = (newDocument: Document) => {
+    for (const script of newDocument.body.querySelectorAll<HTMLScriptElement>(':scope > script')) {
+      if (!isLoaded(script)) document.body.append(script);
+    }
+  };
+
+  const swapContent = (panel: HTMLElement, newContent: Element) => {
+    const content = panel.querySelector('.main-content');
+    const region = content?.querySelector('[data-swap-region]');
+    const newRegion = newContent.querySelector('[data-swap-region]');
+
+    if (region && newRegion) region.replaceWith(newRegion);
+    else if (content) content.replaceWith(newContent);
+    else panel.append(newContent);
+    panel.scrollTop = 0;
+  };
+
+  const setActiveTab = (activeTab: string) => {
+    for (const panel of document.querySelectorAll<HTMLElement>('.panel')) {
+      const isActive = panel.dataset.tab === activeTab;
+      panel.classList.toggle('isActive', isActive);
+      panel.inert = !isActive;
+    }
+
+    for (const title of document.querySelectorAll<HTMLElement>('.title')) {
+      title.querySelector('p')?.classList.toggle('selected', title.dataset.tab === activeTab);
+    }
+  };
+
+  const swapTabs = (newDocument: Document) => {
+    const newPanel = newDocument.querySelector<HTMLElement>('.panel.isActive');
+    const tab = newPanel?.dataset.tab;
+    const newContent = newPanel?.querySelector('.main-content');
+    const panel = document.querySelector<HTMLElement>(`.panel[data-tab="${tab}"]`);
+    if (!tab || !newContent || !panel) return;
+
+    swapContent(panel, newContent);
+    setActiveTab(tab);
+  };
+
+  document.addEventListener('astro:before-swap', (event) => {
+    if (!document.querySelector('.tabs') || !event.newDocument.querySelector('.tabs')) return;
+
+    event.swap = () => {
+      swapFunctions.deselectScripts(event.newDocument);
+      swapFunctions.swapRootAttributes(event.newDocument);
+      keepLoadedStyles(event.newDocument);
+      swapFunctions.swapHeadElements(event.newDocument);
+      swapTabs(event.newDocument);
+      appendNewScripts(event.newDocument);
+    };
+  });
+</script>

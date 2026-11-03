@@ -10,6 +10,9 @@ export default defineConfig({
       filter: (page) => !page.endsWith('/404/') && !page.endsWith('/home/'),
     }),
   ],
+  prefetch: {
+    prefetchAll: true,
+  },
   output: 'static',
   trailingSlash: 'ignore',
   build: {
