@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
-import { MOBILE_QUERY } from '../utils/breakpoints';
+import { MOBILE_QUERY } from './breakpoints';
 
 export const IMAGE_QUALITY = 70;
 export const IMAGE_WIDTHS = [320, 480, 640, 960, 1280];

@@ -8,7 +8,7 @@ import ProjectCard from '../components/project/ProjectCard.astro';
 import { ABOUT } from '../data/about';
 import { HOME } from '../data/home';
 import { getProject } from '../lib/projects';
-import { yearsSince } from '../utils/years-since';
+import { yearsSince } from '../lib/dates';
 import { backgroundImage } from '../lib/assets';
 
 const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');

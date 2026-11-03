@@ -3,8 +3,7 @@ import ActionLink from '../ui/ActionLink.astro';
 import BulletSection from './BulletSection.astro';
 import Gallery from './Gallery.astro';
 import type { Project } from '../../lib/projects';
-import { formatMonth } from '../../utils/format-month';
-import { formatDuration } from '../../utils/format-duration';
+import { formatDuration, formatMonth } from '../../lib/dates';
 
 interface Props {
   project: Project;

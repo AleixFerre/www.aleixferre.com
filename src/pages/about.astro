@@ -4,7 +4,7 @@ import Card from '../components/ui/Card.astro';
 import InfoCard from '../components/ui/InfoCard.astro';
 import { ABOUT } from '../data/about';
 import { backgroundImage } from '../lib/assets';
-import { ageOn } from '../utils/age';
+import { ageOn } from '../lib/dates';
 
 const age = ageOn(new Date(ABOUT.profile.birthDate));
 

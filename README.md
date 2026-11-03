@@ -30,6 +30,8 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `src/assets/` | Profile, project, company logo and flag images, resized and optimized at build time by Astro's `<Image>` |
 | `public/assets/` | SVG icons, Lordicon animations, the CV, the favicon and the social preview image, served as `/assets/...` |
 | `src/lib/assets.ts` | Image widths, sizes and quality, and the responsive background helper |
+| `src/lib/dates.ts` | Month, age, years-since and duration formatting (UTC) |
+| `src/lib/breakpoints.ts` | Mobile breakpoint shared by the Astro config, SCSS and responsive images |
 
 ## Adding a project
 
