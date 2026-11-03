@@ -88,6 +88,14 @@ const replaceDefaultSwap = (event: TransitionBeforeSwapEvent) => {
   };
 };
 
+const isSkipped = (error: unknown) => error instanceof DOMException && error.name === 'AbortError';
+
+const allowSkippedTransition = (event: TransitionBeforeSwapEvent) => {
+  event.viewTransition.ready.catch((error: unknown) => {
+    if (!isSkipped(error)) throw error;
+  });
+};
+
 const clearIfStale = (panel: HTMLElement) => {
   if (!panel.matches(CURRENT_PANEL)) panel.replaceChildren();
 };
@@ -115,5 +123,6 @@ const syncAfterSwap = () => {
 
 document.addEventListener('click', preventSamePageNavigation, { capture: true });
 document.addEventListener('astro:before-swap', replaceDefaultSwap);
+document.addEventListener('astro:before-swap', allowSkippedTransition);
 document.addEventListener('astro:after-swap', syncAfterSwap);
 document.addEventListener('astro:page-load', scrollCurrentIntoView);
