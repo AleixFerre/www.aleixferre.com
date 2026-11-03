@@ -5,7 +5,7 @@ import Img from '../../components/Img.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS, type Project } from '../../data/projects';
 import { formatMonth } from '../../utils/format-month';
-import { getProjectDuration } from '../../utils/project-duration';
+import { formatDuration } from '../../utils/format-duration';
 import { asset, backgroundImage } from '../../utils/assets';
 
 export function getStaticPaths() {
@@ -113,7 +113,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
         }
         <h3>Project Timeline</h3>
         <p>
-          {formatMonth(project.createdAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({getProjectDuration(project)})</span> : <span>In Progress</span>}
+          {formatMonth(project.createdAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({formatDuration(project.createdAt, project.finishedAt)})</span> : <span>In Progress</span>}
         </p>
       </div>
     </div>

@@ -4,8 +4,9 @@ import MetricContainer from '../components/MetricContainer.astro';
 import { TABS } from '../data/tabs';
 import { ABOUT } from '../data/about';
 import { backgroundImage, findAsset } from '../utils/assets';
+import { ageOn } from '../utils/age';
 
-const age = new Date().getFullYear() - 2000;
+const age = ageOn(new Date(ABOUT.profile.birthDate));
 
 const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
 const experienceLogos = await Promise.all(
