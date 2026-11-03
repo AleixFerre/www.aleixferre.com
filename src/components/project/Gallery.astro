@@ -17,46 +17,61 @@ const items = images.map((path) => {
 const cols = Math.min(Math.max(images.length, 2), 4);
 ---
 
-<div class="gallery pswp-gallery" style={`--cols: ${cols}`}>
+<photo-gallery class="gallery" style={`--cols: ${cols}`}>
   {
     items.map((item) => (
-      <a href={item.full} data-pswp-width={item.width} data-pswp-height={item.height} target="_blank">
+      <a
+        href={item.full}
+        data-gallery-item
+        data-pswp-width={item.width}
+        data-pswp-height={item.height}
+        target="_blank"
+      >
         <Img class="screenshot" src={item.path} alt="" variant="gallery" />
       </a>
     ))
   }
-</div>
+</photo-gallery>
 
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import type { Bounds, SlideData } from 'photoswipe';
 
-  let lightbox: PhotoSwipeLightbox | null = null;
+  function fitThumbBounds(thumbBounds: Bounds | undefined, itemData: SlideData): Bounds {
+    const thumb = itemData.element?.querySelector('img');
+    const width = itemData.width ?? itemData.w;
+    const height = itemData.height ?? itemData.h;
+    if (!thumb || !width || !height) return thumbBounds!;
+    const rect = thumb.getBoundingClientRect();
+    const scale = Math.min(rect.width / width, rect.height / height);
+    return {
+      x: rect.left + (rect.width - width * scale) / 2,
+      y: rect.top + (rect.height - height * scale) / 2,
+      w: width * scale,
+    };
+  }
 
-  document.addEventListener('astro:page-load', () => {
-    lightbox?.destroy();
-    lightbox = null;
-    if (!document.querySelector('.pswp-gallery')) return;
-    lightbox = new PhotoSwipeLightbox({
-      gallery: '.pswp-gallery',
-      children: 'a',
-      loop: true,
-      pswpModule: () => import('photoswipe'),
-    });
-    lightbox.addFilter('thumbBounds', (thumbBounds, itemData) => {
-      const thumb = itemData.element?.querySelector('img');
-      const width = itemData.width ?? itemData.w;
-      const height = itemData.height ?? itemData.h;
-      if (!thumb || !width || !height) return thumbBounds!;
-      const rect = thumb.getBoundingClientRect();
-      const scale = Math.min(rect.width / width, rect.height / height);
-      return {
-        x: rect.left + (rect.width - width * scale) / 2,
-        y: rect.top + (rect.height - height * scale) / 2,
-        w: width * scale,
-      };
-    });
-    lightbox.init();
-  });
+  class PhotoGallery extends HTMLElement {
+    private lightbox: PhotoSwipeLightbox | null = null;
+
+    connectedCallback() {
+      this.lightbox = new PhotoSwipeLightbox({
+        gallery: this,
+        children: '[data-gallery-item]',
+        loop: true,
+        pswpModule: () => import('photoswipe'),
+      });
+      this.lightbox.addFilter('thumbBounds', fitThumbBounds);
+      this.lightbox.init();
+    }
+
+    disconnectedCallback() {
+      this.lightbox?.destroy();
+      this.lightbox = null;
+    }
+  }
+
+  if (!customElements.get('photo-gallery')) customElements.define('photo-gallery', PhotoGallery);
 </script>
 
 <style lang="scss">
