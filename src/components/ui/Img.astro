@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { Image } from 'astro:assets';
-import { asset, keepOriginal, IMAGE_QUALITY, IMAGE_SIZES, IMAGE_WIDTHS, type ImageVariant } from '../utils/assets';
+import { asset, keepOriginal, IMAGE_QUALITY, IMAGE_SIZES, IMAGE_WIDTHS, type ImageVariant } from '../../utils/assets';
 
 interface Props
   extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'loading' | 'decoding' | 'sizes'> {

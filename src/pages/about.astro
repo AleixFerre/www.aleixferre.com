@@ -1,19 +1,15 @@
 ---
 import TabLayout from '../layouts/TabLayout.astro';
-import MetricContainer from '../components/MetricContainer.astro';
+import Card from '../components/ui/Card.astro';
+import InfoCard from '../components/ui/InfoCard.astro';
 import { TABS } from '../data/tabs';
 import { ABOUT } from '../data/about';
-import { backgroundImage, findAsset } from '../utils/assets';
+import { backgroundImage } from '../utils/assets';
 import { ageOn } from '../utils/age';
 
 const age = ageOn(new Date(ABOUT.profile.birthDate));
 
 const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
-const experienceLogos = await Promise.all(
-  ABOUT.professionalExperience.items.map(({ img }) =>
-    img && findAsset(img) ? backgroundImage(img, 'logo') : img && `url(${img})`,
-  ),
-);
 ---
 
 <TabLayout
@@ -22,88 +18,79 @@ const experienceLogos = await Promise.all(
   description="Aleix Ferré, Game Designer & Developer: web dashboards and mobile apps at ClearPeaks, Yuuko Games by night. Education, professional experience and languages."
 >
   <div class="grid">
-    <div class="box hero">
+    <Card class="box hero">
       <p class="eyebrow">{ABOUT.hero.eyebrow}</p>
       <h2>{ABOUT.hero.title}</h2>
       <div class="pill-row">
         {ABOUT.hero.pills.map((pill) => <span class="pill">{pill}</span>)}
       </div>
       <p class="muted" set:html={ABOUT.hero.description} />
-    </div>
-    <div class="box profile" style={`--profile-background: ${profileBackground}`}>
+    </Card>
+    <Card class="box profile" style={`--profile-background: ${profileBackground}`}>
       <p class="name">{ABOUT.profile.name}</p>
       <p class="age">{age} years old</p>
       <p class="age">{ABOUT.profile.location}</p>
-    </div>
-    <div class="box focus">
+    </Card>
+    <Card class="box focus">
       <p>{ABOUT.focus.title}</p>
       <ul class="bullets">
         {ABOUT.focus.items.map((item) => <li set:html={item} />)}
       </ul>
-    </div>
-    <div class="box education">
+    </Card>
+    <Card class="box education">
       <p>{ABOUT.education.title}</p>
       <div class="list">
         {
           ABOUT.education.items.map((education) => (
-            <MetricContainer
-              class:list={['box', 'center', { 'has-image': !!education.img }]}
-              style={education.img ? `--logo: url(${education.img})` : undefined}
-              title={education.title ?? ''}
-              number={education.number}
-              small
-              description={education.description}
+            <InfoCard
+              class="item"
+              heading={education.title}
+              title={education.number}
+              subtitle={education.description}
+              image={education.img}
+              imageOpacity={0.5}
             />
           ))
         }
       </div>
-    </div>
-    <div class="box professional">
+    </Card>
+    <Card class="box professional">
       <p>{ABOUT.professionalExperience.title}</p>
       <div class="list">
         {
-          ABOUT.professionalExperience.items.map((experience, index) => (
-            <MetricContainer
-              class:list={['box', 'center', { 'has-image': !!experience.img }]}
-              style={experience.img ? `--logo: ${experienceLogos[index]}` : undefined}
-              title={experience.title ?? ''}
-              number={experience.number}
-              small
-              description={experience.description}
+          ABOUT.professionalExperience.items.map((experience) => (
+            <InfoCard
+              class="item"
+              heading={experience.title}
+              title={experience.number}
+              subtitle={experience.description}
+              image={experience.img}
             />
           ))
         }
       </div>
-    </div>
-    <div class="box languages">
+    </Card>
+    <Card class="box languages">
       <p>{ABOUT.languages.title}</p>
       <div class="list">
         {
           ABOUT.languages.items.map((language) => (
-            <MetricContainer
-              class:list={['box', 'center', 'align-left', { 'has-flag': !!language.img }]}
-              style={language.img ? `--flag: url(${language.img})` : undefined}
-              title={language.title ?? ''}
-              number={language.number}
-              small
-              description={language.description}
+            <InfoCard
+              class="item"
+              title={language.number}
+              subtitle={language.description}
+              image={language.img}
+              imageMode="flag"
+              align="left"
             />
           ))
         }
       </div>
-    </div>
+    </Card>
   </div>
 </TabLayout>
 
 <style lang="scss">
-  @mixin box {
-    background: var(--surface-card);
-    border-radius: var(--radius-md);
-    padding: 16px;
-    outline: var(--outline-card);
-    box-shadow: var(--shadow-card);
-  }
-
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -166,7 +153,7 @@ const experienceLogos = await Promise.all(
   }
 
   .box {
-    @include box;
+    padding: 16px;
 
     &.hero {
       grid-area: hero;
@@ -243,67 +230,7 @@ const experienceLogos = await Promise.all(
     }
   }
 
-  .list > :global(.box.center) {
-    @include box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2em;
+  .item {
     flex: 1;
-  }
-
-  .list > :global(.box.center.has-image) {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  }
-
-  .list > :global(.box.center.has-image)::after {
-    content: '';
-    position: absolute;
-    inset: 1.5em;
-    z-index: -1;
-    background-image: var(--logo);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.22;
-    filter: saturate(0.5);
-    pointer-events: none;
-  }
-
-  .education .list > :global(.box.center.has-image)::after {
-    opacity: 0.5;
-  }
-
-  .list > :global(.box.center.has-flag) {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    align-items: flex-start;
-    padding-right: 6em;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  }
-
-  .list > :global(.box.center.has-flag)::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 1.25em;
-    transform: translateY(-50%);
-    width: 4em;
-    aspect-ratio: 3 / 2;
-    border-radius: var(--radius-sm);
-    background-image: var(--flag);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: saturate(0.5);
-    box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-    pointer-events: none;
   }
 </style>

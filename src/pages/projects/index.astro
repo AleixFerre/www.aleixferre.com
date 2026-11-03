@@ -1,11 +1,8 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
-import Img from '../../components/Img.astro';
+import ProjectCard from '../../components/project/ProjectCard.astro';
 import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS } from '../../data/projects';
-import { backgroundImage } from '../../utils/assets';
-
-const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'card')));
 ---
 
 <TabLayout
@@ -16,13 +13,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
   <div class="grid appear">
     {
       ALL_PROJECTS.map((item, index) => (
-        <a
-          class:list={['box', 'project', item.class]}
-          style={`background-image: ${backgrounds[index]};`}
-          href={`/projects/${item.id}`}
-        >
-          <Img src={item.image} alt={item.name} variant="card" priority={index < 2} />
-        </a>
+        <ProjectCard class:list={['item', { wide: item.class === 'wide' }]} project={item} priority={index < 2} />
       ))
     }
   </div>
@@ -41,59 +32,13 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       width: 100%;
       height: 100rem;
     }
-
-    .box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
   }
 
-  .box {
-    background-color: var(--surface-flat);
-    border-radius: var(--radius-sm);
-    padding: 10px;
-  }
-
-  .project {
-    filter: brightness(0.8);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    transition:
-      filter var(--duration-base) ease,
-      transform var(--duration-base) ease;
-    cursor: pointer;
+  .item {
     flex: 1;
+  }
 
-    &.wide {
-      grid-column: span 2;
-    }
-
-    &:hover {
-      filter: brightness(1);
-    }
-
-    @include motion-safe {
-      &:hover {
-        transform: translateY(-4px) scale(1.01);
-
-        img {
-          transform: scale(1.05);
-        }
-      }
-    }
-
-    img {
-      width: auto;
-      height: 70%;
-      max-width: 70%;
-      object-fit: contain;
-      aspect-ratio: inherit;
-      transition: transform var(--duration-base) ease;
-      pointer-events: none;
-    }
+  .wide {
+    grid-column: span 2;
   }
 </style>

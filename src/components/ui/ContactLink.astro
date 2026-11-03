@@ -1,0 +1,62 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  icon: string;
+  class?: string;
+}
+
+const { href, label, icon, class: className, ...rest } = Astro.props;
+---
+
+<Card href={href} target="_blank" variant="flat" class:list={['contact-link', className]} {...rest}>
+  <lord-icon trigger="in" src={icon} stroke="bold" state="in-reveal" class="icon"></lord-icon>
+  <p class="name">{label}</p>
+</Card>
+
+<script>
+  import { defineElement } from '@lordicon/element';
+
+  if (!customElements.get('lord-icon')) defineElement();
+</script>
+
+<style lang="scss">
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      filter var(--duration-base) ease,
+      transform var(--duration-base) ease;
+
+    &:hover {
+      filter: brightness(1.05);
+    }
+
+    @include motion-safe {
+      &:hover {
+        transform: translateY(-4px);
+      }
+    }
+  }
+
+  .icon {
+    width: 200px;
+    height: 200px;
+
+    @include mobile {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .name {
+    @include mobile {
+      margin-bottom: 0;
+    }
+  }
+</style>
