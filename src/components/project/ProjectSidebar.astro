@@ -1,0 +1,49 @@
+---
+import ActionLink from '../ui/ActionLink.astro';
+import ProjectCard from './ProjectCard.astro';
+import { ALL_PROJECTS } from '../../data/projects';
+
+interface Props {
+  currentId: string;
+}
+
+const { currentId } = Astro.props;
+---
+
+<div class="list">
+  <ActionLink class="see-all" href="/projects" icon="/assets/back.svg" label="See All" variant="floating" />
+  {ALL_PROJECTS.map((item) => <ProjectCard class="item" project={item} variant="sidebar" selected={item.id === currentId} />)}
+</div>
+
+<style lang="scss">
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 12vw;
+    min-width: 180px;
+    flex: 0 0 12vw;
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: var(--radius-sm);
+    position: relative;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .see-all {
+    position: sticky;
+    top: 0;
+    align-self: stretch;
+    z-index: 7;
+  }
+
+  .item {
+    flex: 1;
+    min-height: 50px;
+  }
+</style>

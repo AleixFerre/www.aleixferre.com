@@ -1,6 +1,8 @@
 ---
 import TabLayout from '../layouts/TabLayout.astro';
+import ContactLink from '../components/ui/ContactLink.astro';
 import { TABS } from '../data/tabs';
+import { CONTACT_LINKS } from '../data/contact';
 ---
 
 <TabLayout
@@ -10,30 +12,11 @@ import { TABS } from '../data/tabs';
 >
   <div class="all">
     <div class="grid">
-      <a class="box large" href="/assets/contact/cv.pdf" target="_blank">
-        <lord-icon trigger="in" src="/assets/contact/cv.json" stroke="bold" state="in-reveal" class="icon"></lord-icon>
-        <p class="name">Download CV</p>
-      </a>
-      <a class="box" href="https://github.com/AleixFerre" target="_blank">
-        <lord-icon trigger="in" src="/assets/contact/github.json" stroke="bold" state="in-reveal" class="icon"
-        ></lord-icon>
-        <p class="name">Github</p>
-      </a>
-      <a class="box" href="https://aleixferre.itch.io/" target="_blank">
-        <lord-icon trigger="in" src="/assets/contact/itchio.json" stroke="bold" state="in-reveal" class="icon"
-        ></lord-icon>
-        <p class="name">Itch.io</p>
-      </a>
-      <a class="box" href="https://www.linkedin.com/in/aleixferre/" target="_blank">
-        <lord-icon trigger="in" src="/assets/contact/linkedin.json" stroke="bold" state="in-reveal" class="icon"
-        ></lord-icon>
-        <p class="name">LinkedIn</p>
-      </a>
-      <a class="box" href="mailto:afj.99@hotmail.com" target="_blank">
-        <lord-icon trigger="in" src="/assets/contact/email.json" stroke="bold" state="in-reveal" class="icon"
-        ></lord-icon>
-        <p class="name">Email</p>
-      </a>
+      {
+        CONTACT_LINKS.map(({ wide, ...link }) => (
+          <ContactLink class:list={{ wide }} {...link} />
+        ))
+      }
 
       <div class="info">
         <a href="https://lordicon.com/">Animated icons by Lordicon.com</a> | <span>Home icons created by <a
@@ -44,12 +27,6 @@ import { TABS } from '../data/tabs';
     </div>
   </div>
 </TabLayout>
-
-<script>
-  import { defineElement } from '@lordicon/element';
-
-  if (!customElements.get('lord-icon')) defineElement();
-</script>
 
 <style lang="scss">
   .all {
@@ -80,49 +57,7 @@ import { TABS } from '../data/tabs';
     @include stack-on-mobile;
   }
 
-  .box {
-    background-color: var(--surface-flat);
-    border-radius: var(--radius-sm);
-    padding: 10px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    transition:
-      filter var(--duration-base) ease,
-      transform var(--duration-base) ease;
-
-    &:hover {
-      filter: brightness(1.05);
-    }
-
-    @include motion-safe {
-      &:hover {
-        transform: translateY(-4px);
-      }
-    }
-
-    &.large {
-      grid-column: span 2;
-    }
-
-    .icon {
-      width: 200px;
-      height: 200px;
-
-      @include mobile {
-        width: 100px;
-        height: 100px;
-      }
-    }
-
-    .name {
-      @include mobile {
-        margin-bottom: 0;
-      }
-    }
+  .wide {
+    grid-column: span 2;
   }
 </style>
