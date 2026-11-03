@@ -15,6 +15,3 @@ export const scrollCurrentIntoView = () => {
     link.scrollIntoView({ block: 'nearest' });
   }
 };
-
-document.addEventListener('astro:after-swap', syncCurrentLinks);
-document.addEventListener('astro:page-load', scrollCurrentIntoView);

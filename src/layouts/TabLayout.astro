@@ -18,7 +18,7 @@ const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) 
 ---
 
 <BaseLayout {...Astro.props}>
-  <main class="row tabs">
+  <main class="row">
     <BackgroundStars />
     {
       tabs.map(({ tab, label, href, mode, current }) => (
@@ -34,7 +34,7 @@ const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) 
           </a>
           <div class="col panel scrollable content-hide" data-tab-panel={tab}>
             {current && (
-              <div class="main-content">
+              <div class="main-content" data-tab-content>
                 <slot />
               </div>
             )}
@@ -140,79 +140,5 @@ const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) 
 </style>
 
 <script>
-  import { swapFunctions } from 'astro:transitions/client';
-  import '../scripts/current-links';
-
-  const STYLES = 'link[rel=stylesheet], style';
-
-  const keepLoadedStyles = (newDocument: Document) => {
-    const incoming = [...newDocument.head.querySelectorAll(STYLES)];
-    for (const style of document.head.querySelectorAll(STYLES)) {
-      if (!incoming.some((el) => el.isEqualNode(style))) newDocument.head.append(style.cloneNode(true));
-    }
-  };
-
-  const isLoaded = (script: HTMLScriptElement) =>
-    [...document.scripts].some((loaded) =>
-      script.src ? loaded.src === script.src : loaded.textContent === script.textContent,
-    );
-
-  const appendNewScripts = (newDocument: Document) => {
-    for (const script of newDocument.body.querySelectorAll<HTMLScriptElement>(':scope > script')) {
-      if (!isLoaded(script)) document.body.append(script);
-    }
-  };
-
-  const syncAttributes = (content: Element, newContent: Element) => {
-    for (const newElement of newContent.querySelectorAll<HTMLElement>('[data-sync-attributes]')) {
-      const element = content.querySelector(`[data-sync-attributes="${newElement.dataset.syncAttributes}"]`);
-      for (const { name, value } of newElement.attributes) element?.setAttribute(name, value);
-    }
-  };
-
-  const swapRegions = (content: Element, newContent: Element) => {
-    const newRegions = [...newContent.querySelectorAll<HTMLElement>('[data-swap-region]')];
-    const regions = newRegions.map((region) =>
-      content.querySelector(`[data-swap-region="${region.dataset.swapRegion}"]`),
-    );
-    if (newRegions.length === 0 || regions.includes(null)) return false;
-
-    regions.forEach((region, index) => region?.replaceWith(newRegions[index]));
-    syncAttributes(content, newContent);
-    return true;
-  };
-
-  const resetScroll = (panel: HTMLElement) => {
-    for (const element of [panel, ...panel.querySelectorAll('[data-reset-scroll]')]) element.scrollTop = 0;
-  };
-
-  const swapContent = (panel: HTMLElement, newContent: Element) => {
-    const content = panel.querySelector('.main-content');
-
-    if (!content) panel.append(newContent);
-    else if (!swapRegions(content, newContent)) content.replaceWith(newContent);
-    resetScroll(panel);
-  };
-
-  const swapTabs = (newDocument: Document) => {
-    const tab = newDocument.querySelector<HTMLElement>('[data-tab-link][aria-current]')?.dataset.tabLink;
-    const newContent = newDocument.querySelector(`[data-tab-panel="${tab}"] .main-content`);
-    const panel = document.querySelector<HTMLElement>(`[data-tab-panel="${tab}"]`);
-    if (!tab || !newContent || !panel) return;
-
-    swapContent(panel, newContent);
-  };
-
-  document.addEventListener('astro:before-swap', (event) => {
-    if (!document.querySelector('.tabs') || !event.newDocument.querySelector('.tabs')) return;
-
-    event.swap = () => {
-      swapFunctions.deselectScripts(event.newDocument);
-      swapFunctions.swapRootAttributes(event.newDocument);
-      keepLoadedStyles(event.newDocument);
-      swapFunctions.swapHeadElements(event.newDocument);
-      swapTabs(event.newDocument);
-      appendNewScripts(event.newDocument);
-    };
-  });
+  import '../scripts/tab-router';
 </script>

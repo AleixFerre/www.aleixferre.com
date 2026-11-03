@@ -13,10 +13,10 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="details" data-reset-scroll>
+<div class="details" data-swap-region="project-details" data-reset-scroll>
   <div class="sticky-actions row">
     <ActionLink href="/projects" icon="/assets/back.svg" label="See All" mobileOnly />
-    <div class="heading row appear-lite" data-swap-region="heading">
+    <div class="heading row appear-lite">
       <h2 class="title">{project.name}</h2>
       {
         project.additionalUrl && (
@@ -36,10 +36,9 @@ const { project } = Astro.props;
       icon="/assets/projects/_actions/visit_project.svg"
       label="Visit Project"
       iconOnDesktop={false}
-      data-sync-attributes="visit"
     />
   </div>
-  <div class="appear-lite" data-swap-region="body">
+  <div class="appear-lite">
     <div class="separator"></div>
     <p>{project.description}</p>
     {project.images.length > 0 && <Gallery images={project.images} />}
