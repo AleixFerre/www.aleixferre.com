@@ -1,18 +1,17 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import Card from '../ui/Card.astro';
 import Img from '../ui/Img.astro';
 import type { Project } from '../../data/projects';
 import { backgroundImage } from '../../utils/assets';
 
-interface Props {
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
   project: Project;
   variant?: 'grid' | 'featured' | 'sidebar';
-  selected?: boolean;
   priority?: boolean;
-  class?: string;
 }
 
-const { project, variant = 'grid', selected = false, priority = false, class: className, ...rest } = Astro.props;
+const { project, variant = 'grid', priority = false, class: className, ...rest } = Astro.props;
 
 const background = await backgroundImage(project.backgroundImage, variant === 'sidebar' ? 'sidebarCard' : 'card');
 ---
@@ -20,7 +19,7 @@ const background = await backgroundImage(project.backgroundImage, variant === 's
 <Card
   href={`/projects/${project.id}`}
   variant={variant === 'featured' ? 'raised' : 'flat'}
-  class:list={['project', `project-${variant}`, { selected }, className]}
+  class:list={['project', `project-${variant}`, className]}
   style={`background-image: ${background};`}
   {...rest}
 >
@@ -74,7 +73,7 @@ const background = await backgroundImage(project.backgroundImage, variant === 's
       transform var(--duration-base) ease,
       margin var(--duration-base) ease;
 
-    &.selected {
+    &[aria-current] {
       margin: 0 2px;
       transform: scale(1.03);
 
@@ -84,7 +83,7 @@ const background = await backgroundImage(project.backgroundImage, variant === 's
     }
 
     @include motion-safe {
-      &.selected:hover {
+      &[aria-current]:hover {
         transform: translateY(-4px) scale(1.03);
 
         img {
@@ -93,7 +92,7 @@ const background = await backgroundImage(project.backgroundImage, variant === 's
       }
     }
 
-    &:not(.selected) {
+    &:not([aria-current]) {
       filter: brightness(0.3);
       box-shadow: 0 0 0 0 transparent;
     }

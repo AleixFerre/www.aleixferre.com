@@ -2,34 +2,38 @@
 import BaseLayout from './BaseLayout.astro';
 import BackgroundStars from '../components/BackgroundStars.astro';
 import { TABS, TABS_LIST } from '../data/tabs';
+import { ariaCurrentValue, isCurrent, type CurrentMode } from '../lib/navigation';
 
 interface Props {
-  activeTab: TABS;
   title?: string;
   description?: string;
   image?: string;
 }
 
-const { activeTab, ...baseProps } = Astro.props;
-
-const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
+const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) => {
+  const href = tab === TABS.HOME ? '/' : `/${tab}`;
+  const mode: CurrentMode = tab === TABS.HOME ? 'page' : 'section';
+  return { tab, label, href, mode, current: isCurrent(Astro.url.pathname, href, mode) };
+});
 ---
 
-<BaseLayout {...baseProps}>
+<BaseLayout {...Astro.props}>
   <main class="row tabs">
     <BackgroundStars />
     {
-      tabsListEntries.map(([tab, label]) => (
+      tabs.map(({ tab, label, href, mode, current }) => (
         <>
-          <a class="col title" href={tab === TABS.HOME ? '/' : `/${tab}`} data-tab={tab}>
-            <p class:list={{ selected: tab === activeTab }}>{label}</p>
-          </a>
-          <div
-            class:list={['col', 'panel', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}
-            data-tab={tab}
-            inert={tab !== activeTab}
+          <a
+            class="col tab-link"
+            href={href}
+            data-tab-link={tab}
+            data-current={mode}
+            aria-current={current ? ariaCurrentValue(mode) : undefined}
           >
-            {tab === activeTab && (
+            <p>{label}</p>
+          </a>
+          <div class="col panel scrollable content-hide" data-tab-panel={tab}>
+            {current && (
               <div class="main-content">
                 <slot />
               </div>
@@ -63,7 +67,7 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
       opacity var(--duration-base) ease-in-out;
   }
 
-  .title {
+  .tab-link {
     background-color: rgba(255, 255, 255, 0.1);
     outline: 1px solid rgba(0, 0, 0, 0.5);
     writing-mode: sideways-lr;
@@ -82,7 +86,7 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
       padding-bottom: 0;
     }
 
-    .selected {
+    &[aria-current] {
       font-weight: bold;
     }
 
@@ -99,14 +103,21 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     width: 0;
     overflow: hidden;
     opacity: 0;
+    visibility: hidden;
     content-visibility: auto;
+    transition:
+      flex-grow var(--duration-base) ease-in-out,
+      opacity var(--duration-base) ease-in-out,
+      visibility 0s var(--duration-base);
   }
 
-  .isActive {
+  .tab-link[aria-current] + .panel {
     flex: 1;
     width: auto;
     opacity: 1;
+    visibility: visible;
     content-visibility: visible;
+    transition-delay: 0s;
   }
 
   .scrollable {
@@ -130,6 +141,7 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
 
 <script>
   import { swapFunctions } from 'astro:transitions/client';
+  import '../scripts/current-links';
 
   const STYLES = 'link[rel=stylesheet], style';
 
@@ -170,35 +182,25 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     return true;
   };
 
+  const resetScroll = (panel: HTMLElement) => {
+    for (const element of [panel, ...panel.querySelectorAll('[data-reset-scroll]')]) element.scrollTop = 0;
+  };
+
   const swapContent = (panel: HTMLElement, newContent: Element) => {
     const content = panel.querySelector('.main-content');
 
     if (!content) panel.append(newContent);
     else if (!swapRegions(content, newContent)) content.replaceWith(newContent);
-    panel.scrollTop = 0;
-  };
-
-  const setActiveTab = (activeTab: string) => {
-    for (const panel of document.querySelectorAll<HTMLElement>('.panel')) {
-      const isActive = panel.dataset.tab === activeTab;
-      panel.classList.toggle('isActive', isActive);
-      panel.inert = !isActive;
-    }
-
-    for (const title of document.querySelectorAll<HTMLElement>('.title')) {
-      title.querySelector('p')?.classList.toggle('selected', title.dataset.tab === activeTab);
-    }
+    resetScroll(panel);
   };
 
   const swapTabs = (newDocument: Document) => {
-    const newPanel = newDocument.querySelector<HTMLElement>('.panel.isActive');
-    const tab = newPanel?.dataset.tab;
-    const newContent = newPanel?.querySelector('.main-content');
-    const panel = document.querySelector<HTMLElement>(`.panel[data-tab="${tab}"]`);
+    const tab = newDocument.querySelector<HTMLElement>('[data-tab-link][aria-current]')?.dataset.tabLink;
+    const newContent = newDocument.querySelector(`[data-tab-panel="${tab}"] .main-content`);
+    const panel = document.querySelector<HTMLElement>(`[data-tab-panel="${tab}"]`);
     if (!tab || !newContent || !panel) return;
 
     swapContent(panel, newContent);
-    setActiveTab(tab);
   };
 
   document.addEventListener('astro:before-swap', (event) => {
