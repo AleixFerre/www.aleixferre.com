@@ -14,19 +14,11 @@ const cols = Math.min(Math.max(images.length, 2), 4);
 ---
 
 <photo-gallery class="gallery" style={`--cols: ${cols}`}>
-  {
-    images.map((image) => (
-      <a
-        href={image.src}
-        data-gallery-item
-        data-pswp-width={image.width}
-        data-pswp-height={image.height}
-        target="_blank"
-      >
-        <Img class="screenshot" src={image} alt="" variant="gallery" keepOriginal={keepOriginal} />
-      </a>
-    ))
-  }
+  {images.map((image) => (
+    <a href={image.src} data-gallery-item data-pswp-width={image.width} data-pswp-height={image.height} target="_blank">
+      <Img class="screenshot" src={image} alt="" variant="gallery" keepOriginal={keepOriginal} />
+    </a>
+  ))}
 </photo-gallery>
 
 <script>

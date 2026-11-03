@@ -19,28 +19,26 @@ const tabs = TABS.map(({ id, label, href }) => {
 <BaseLayout {...Astro.props}>
   <main class="row">
     <BackgroundStars />
-    {
-      tabs.map(({ id, label, href, mode, current }) => (
-        <>
-          <a
-            class="col tab-link"
-            href={href}
-            data-tab-link={id}
-            data-current={mode}
-            aria-current={current ? ariaCurrentValue(mode) : undefined}
-          >
-            <p>{label}</p>
-          </a>
-          <div class="col panel scrollable content-hide" data-tab-panel={id}>
-            {current && (
-              <div class="main-content" data-tab-content>
-                <slot />
-              </div>
-            )}
-          </div>
-        </>
-      ))
-    }
+    {tabs.map(({ id, label, href, mode, current }) => (
+      <>
+        <a
+          class="col tab-link"
+          href={href}
+          data-tab-link={id}
+          data-current={mode}
+          aria-current={current ? ariaCurrentValue(mode) : undefined}
+        >
+          <p>{label}</p>
+        </a>
+        <div class="col panel scrollable content-hide" data-tab-panel={id}>
+          {current && (
+            <div class="main-content" data-tab-content>
+              <slot />
+            </div>
+          )}
+        </div>
+      </>
+    ))}
   </main>
 </BaseLayout>
 
@@ -93,8 +91,11 @@ const tabs = TABS.map(({ id, label, href }) => {
     &:hover {
       $shadow-color: #ffffff34;
 
-      text-shadow: -1px -1px 0 $shadow-color, 1px -1px 0 $shadow-color,
-        -1px 1px 0 $shadow-color, 1px 1px 0 $shadow-color;
+      text-shadow:
+        -1px -1px 0 $shadow-color,
+        1px -1px 0 $shadow-color,
+        -1px 1px 0 $shadow-color,
+        1px 1px 0 $shadow-color;
       transition: text-shadow 0.5s;
     }
   }

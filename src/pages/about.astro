@@ -20,7 +20,9 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
       <p class="eyebrow">{ABOUT.hero.eyebrow}</p>
       <h2>{ABOUT.hero.title}</h2>
       <div class="pill-row">
-        {ABOUT.hero.pills.map((pill) => <span class="pill">{pill}</span>)}
+        {ABOUT.hero.pills.map((pill) => (
+          <span class="pill">{pill}</span>
+        ))}
       </div>
       <p class="muted" set:html={ABOUT.hero.description} />
     </Card>
@@ -32,35 +34,33 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
     <Card class="box focus">
       <p>{ABOUT.focus.title}</p>
       <ul class="bullets">
-        {ABOUT.focus.items.map((item) => <li set:html={item} />)}
+        {ABOUT.focus.items.map((item) => (
+          <li set:html={item} />
+        ))}
       </ul>
     </Card>
     <Card class="box education">
       <p>{ABOUT.education.title}</p>
       <div class="list">
-        {
-          ABOUT.education.items.map((education) => (
-            <InfoCard class="item" {...education} imageOpacity={0.5} />
-          ))
-        }
+        {ABOUT.education.items.map((education) => (
+          <InfoCard class="item" {...education} imageOpacity={0.5} />
+        ))}
       </div>
     </Card>
     <Card class="box professional">
       <p>{ABOUT.professionalExperience.title}</p>
       <div class="list">
-        {
-          ABOUT.professionalExperience.items.map((experience) => <InfoCard class="item" {...experience} />)
-        }
+        {ABOUT.professionalExperience.items.map((experience) => (
+          <InfoCard class="item" {...experience} />
+        ))}
       </div>
     </Card>
     <Card class="box languages">
       <p>{ABOUT.languages.title}</p>
       <div class="list">
-        {
-          ABOUT.languages.items.map((language) => (
-            <InfoCard class="item" {...language} imageMode="flag" align="left" />
-          ))
-        }
+        {ABOUT.languages.items.map((language) => (
+          <InfoCard class="item" {...language} imageMode="flag" align="left" />
+        ))}
       </div>
     </Card>
   </div>
@@ -137,8 +137,7 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
 
     &.profile {
       grid-area: profile;
-      background-image: var(--profile-background),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+      background-image: var(--profile-background), linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
       background-size: cover, cover;
       background-position: center, center;
       background-repeat: no-repeat, no-repeat;
@@ -187,7 +186,8 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
 
     &.hero {
       padding: 2rem;
-      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)),
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)),
         linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 
       h2 {

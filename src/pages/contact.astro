@@ -10,17 +10,17 @@ import { CONTACT_LINKS } from '../data/contact';
 >
   <div class="all">
     <div class="grid">
-      {
-        CONTACT_LINKS.map(({ wide, ...link }) => (
-          <ContactLink class:list={{ wide }} {...link} />
-        ))
-      }
+      {CONTACT_LINKS.map(({ wide, ...link }) => (
+        <ContactLink class:list={{ wide }} {...link} />
+      ))}
 
       <div class="info">
-        <a href="https://lordicon.com/">Animated icons by Lordicon.com</a> | <span>Home icons created by <a
-            href="https://www.flaticon.com/free-icons/project">Circlon Tech</a> & <a
-            href="https://www.flaticon.com/free-icons/game-planning">Freepik</a> - Flaticon </span> | <a
-          href="https://github.com/AleixFerre/aleixferre.github.io">Source code for this website</a>
+        <a href="https://lordicon.com/">Animated icons by Lordicon.com</a> |{' '}
+        <span>
+          Home icons created by <a href="https://www.flaticon.com/free-icons/project">Circlon Tech</a> &{' '}
+          <a href="https://www.flaticon.com/free-icons/game-planning">Freepik</a> - Flaticon{' '}
+        </span>{' '}
+        | <a href="https://github.com/AleixFerre/aleixferre.github.io">Source code for this website</a>
       </div>
     </div>
   </div>

@@ -14,17 +14,15 @@ const projects = await getProjects();
 
 <div class="list" data-scroll-current>
   <ActionLink class="see-all" href="/projects" icon="/assets/back.svg" label="See All" variant="floating" />
-  {
-    projects.map((item) => (
-      <ProjectCard
-        class="item"
-        project={item}
-        variant="sidebar"
-        data-current="page"
-        aria-current={item.id === currentId ? 'page' : undefined}
-      />
-    ))
-  }
+  {projects.map((item) => (
+    <ProjectCard
+      class="item"
+      project={item}
+      variant="sidebar"
+      data-current="page"
+      aria-current={item.id === currentId ? 'page' : undefined}
+    />
+  ))}
 </div>
 
 <style lang="scss">

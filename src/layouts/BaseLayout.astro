@@ -44,11 +44,7 @@ const imageUrl = new URL(image, Astro.site).href;
     <meta name="twitter:image" content={imageUrl} />
 
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <script
-      is:inline
-      src="https://analytics.ahrefs.com/analytics.js"
-      data-key={SITE.analyticsKey}
-      async></script>
+    <script is:inline src="https://analytics.ahrefs.com/analytics.js" data-key={SITE.analyticsKey} async></script>
     <ClientRouter />
   </head>
   <body>

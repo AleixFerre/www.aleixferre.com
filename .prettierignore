@@ -1,0 +1,6 @@
+dist
+.astro
+node_modules
+bun.lock
+public/assets/**/*.json
+*.md
