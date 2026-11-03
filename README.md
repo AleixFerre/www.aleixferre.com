@@ -27,9 +27,9 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `src/layouts/` | Base HTML head and the tab shell shared by every page |
 | `src/components/` | Reusable components (gallery, images, metrics, star background) |
 | `src/data/` | Projects, about content and tabs, as plain TypeScript |
-| `src/assets/` | Profile and project images, resized and optimized at build time by Astro's `<Image>` |
-| `public/assets/` | Icons, logos, Lordicon animations and the CV, served as `/assets/...` |
-| `src/utils/assets.ts` | Looks up `src/assets` images by their `/assets/...` path and holds the image widths and quality |
+| `src/assets/` | Profile, project, company logo and flag images, resized and optimized at build time by Astro's `<Image>` |
+| `public/assets/` | SVG icons, Lordicon animations, the CV, the favicon and the social preview image, served as `/assets/...` |
+| `src/lib/assets.ts` | Image widths, sizes and quality, and the responsive background helper |
 
 ## Adding a project
 
