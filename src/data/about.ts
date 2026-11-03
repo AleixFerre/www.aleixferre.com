@@ -1,5 +1,15 @@
+import type { ImageMetadata } from 'astro';
+import profilePhoto from '../assets/profile/yo_letra.webp';
+import profileBackground from '../assets/profile/yo.webp';
+import udgLogo from '../assets/companies/udg.webp';
+import clearpeaksLogo from '../assets/companies/clearpeaks.webp';
+import yuukoGamesLogo from '../assets/projects/yuukogames/yuukogames.webp';
+import englishFlag from '../assets/flags/english.webp';
+import spanishFlag from '../assets/flags/spanish.webp';
+import catalanFlag from '../assets/flags/catalan.webp';
+
 export interface AboutItem {
-  image?: string;
+  image?: ImageMetadata;
   heading?: string;
   title: string;
   subtitle: string;
@@ -21,8 +31,8 @@ export interface AboutContent {
     name: string;
     birthDate: string;
     location: string;
-    photo: string;
-    background: string;
+    photo: ImageMetadata;
+    background: ImageMetadata;
   };
   focus: AboutSection<string>;
   education: AboutSection<AboutItem>;
@@ -43,8 +53,8 @@ export const ABOUT: AboutContent = {
     name: 'Aleix Ferré',
     birthDate: '1999-12-19',
     location: 'Girona',
-    photo: '/assets/profile/yo_letra.webp',
-    background: '/assets/profile/yo.webp',
+    photo: profilePhoto,
+    background: profileBackground,
   },
   focus: {
     title: 'Currently focused on',
@@ -58,7 +68,7 @@ export const ABOUT: AboutContent = {
     title: 'Education',
     items: [
       {
-        image: '/assets/companies/udg.webp',
+        image: udgLogo,
         heading: 'University of Girona',
         title: 'Game Design and Development Degree',
         subtitle: '2017 - 2021',
@@ -69,19 +79,19 @@ export const ABOUT: AboutContent = {
     title: 'Professional Experience',
     items: [
       {
-        image: '/assets/projects/yuukogames/yuukogames.webp',
+        image: yuukoGamesLogo,
         heading: 'Yuuko Games',
         title: 'Co-Founder',
         subtitle: '2023 - Present',
       },
       {
-        image: '/assets/companies/clearpeaks.webp',
+        image: clearpeaksLogo,
         heading: 'ClearPeaks',
         title: 'Senior Web & Mobile Developer',
         subtitle: '2023 - Present',
       },
       {
-        image: '/assets/companies/clearpeaks.webp',
+        image: clearpeaksLogo,
         heading: 'ClearPeaks',
         title: 'Junior Web Developer',
         subtitle: '2021 - 2023',
@@ -92,17 +102,17 @@ export const ABOUT: AboutContent = {
     title: 'Languages',
     items: [
       {
-        image: '/assets/flags/english.webp',
+        image: englishFlag,
         title: 'English',
         subtitle: 'Full Professional',
       },
       {
-        image: '/assets/flags/spanish.webp',
+        image: spanishFlag,
         title: 'Spanish',
         subtitle: 'Native',
       },
       {
-        image: '/assets/flags/catalan.webp',
+        image: catalanFlag,
         title: 'Catalan',
         subtitle: 'Native',
       },

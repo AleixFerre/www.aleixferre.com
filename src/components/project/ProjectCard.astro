@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 import Card from '../ui/Card.astro';
 import Img from '../ui/Img.astro';
 import type { Project } from '../../lib/projects';
-import { backgroundImage } from '../../utils/assets';
+import { backgroundImage } from '../../lib/assets';
 
 interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
   project: Project;

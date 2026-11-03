@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
-import { MOBILE_QUERY } from './breakpoints';
+import { MOBILE_QUERY } from '../utils/breakpoints';
 
 export const IMAGE_QUALITY = 70;
 export const IMAGE_WIDTHS = [320, 480, 640, 960, 1280];
@@ -22,20 +22,8 @@ export const BACKGROUND_WIDTHS = {
 
 export type ImageVariant = keyof typeof IMAGE_SIZES;
 export type BackgroundVariant = keyof typeof BACKGROUND_WIDTHS;
-export type ImageSource = string | ImageMetadata;
 
-const images = import.meta.glob<ImageMetadata>('../assets/**/*.webp', { eager: true, import: 'default' });
-
-export function findAsset(path: string): ImageMetadata | undefined {
-  return images[`..${path}`];
-}
-
-export function asset(source: ImageSource): ImageMetadata {
-  if (typeof source !== 'string') return source;
-  const image = findAsset(source);
-  if (!image) throw new Error(`Image not found in src/assets: ${source}`);
-  return image;
-}
+const keepOriginalByFile = new Map<string, boolean>();
 
 function sourceFile(image: ImageMetadata): string {
   const { fsPath } = image as ImageMetadata & { fsPath?: string };
@@ -44,7 +32,13 @@ function sourceFile(image: ImageMetadata): string {
 }
 
 export function shouldKeepOriginal(image: ImageMetadata): boolean {
-  return fs.statSync(sourceFile(image)).size <= ORIGINAL_MAX_BYTES;
+  const file = sourceFile(image);
+  let keep = keepOriginalByFile.get(file);
+  if (keep === undefined) {
+    keep = fs.statSync(file).size <= ORIGINAL_MAX_BYTES;
+    keepOriginalByFile.set(file, keep);
+  }
+  return keep;
 }
 
 async function imageUrl(image: ImageMetadata, width: number): Promise<string> {
@@ -53,8 +47,7 @@ async function imageUrl(image: ImageMetadata, width: number): Promise<string> {
   return src;
 }
 
-export async function backgroundImage(source: ImageSource, variant: BackgroundVariant): Promise<string> {
-  const image = asset(source);
+export async function backgroundImage(image: ImageMetadata, variant: BackgroundVariant): Promise<string> {
   const width = BACKGROUND_WIDTHS[variant];
   const [x1, x2] = await Promise.all([imageUrl(image, width), imageUrl(image, width * 2)]);
   return x1 === x2 ? `url('${x1}')` : `image-set(url('${x1}') 1x, url('${x2}') 2x)`;

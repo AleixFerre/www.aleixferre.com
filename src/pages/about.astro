@@ -3,7 +3,7 @@ import TabLayout from '../layouts/TabLayout.astro';
 import Card from '../components/ui/Card.astro';
 import InfoCard from '../components/ui/InfoCard.astro';
 import { ABOUT } from '../data/about';
-import { backgroundImage } from '../utils/assets';
+import { backgroundImage } from '../lib/assets';
 import { ageOn } from '../utils/age';
 
 const age = ageOn(new Date(ABOUT.profile.birthDate));
