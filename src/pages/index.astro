@@ -5,15 +5,17 @@ import Stat from '../components/ui/Stat.astro';
 import IconText from '../components/ui/IconText.astro';
 import Img from '../components/ui/Img.astro';
 import ProjectCard from '../components/project/ProjectCard.astro';
-import { FEATURED_PROJECTS } from '../data/projects';
 import { ABOUT } from '../data/about';
+import { HOME } from '../data/home';
+import { getProject } from '../lib/projects';
 import { yearsSince } from '../utils/years-since';
 import { backgroundImage } from '../utils/assets';
 
 const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
 
-const yearsSinceIndie = yearsSince(new Date('2017-01-01'));
-const yearsSinceWeb = yearsSince(new Date('2021-09-01'));
+const featured = await Promise.all(
+  HOME.featured.map(async ({ id, size }) => ({ project: await getProject(id), size })),
+);
 ---
 
 <TabLayout>
@@ -25,24 +27,25 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01'));
     <Card class="box">
       <p>Experience</p>
       <div class="grid experience">
-        <Stat label="Indie Games" value={yearsSinceIndie} suffix="+" caption="years" />
-        <Stat label="Web & Mobile" value={yearsSinceWeb} suffix="+" caption="years" />
+        {
+          HOME.experience.map(({ label, since }) => (
+            <Stat label={label} value={yearsSince(since)} suffix="+" caption="years" />
+          ))
+        }
       </div>
     </Card>
     <Card class="box">
       <p>Specialized In</p>
       <div class="grid specialized">
-        <IconText variant="tile" text="Unity" icon="/assets/tecnologies/unity.svg" />
-        <IconText variant="tile" text="Game Design" icon="/assets/tecnologies/game_design.svg" />
-        <IconText variant="tile" text="Project Management" icon="/assets/tecnologies/project_management.svg" />
+        {HOME.specializations.map(({ text, icon }) => <IconText variant="tile" text={text} icon={icon} />)}
       </div>
     </Card>
     <Card class="box featured">
       <p>Featured Projects</p>
       <div class="grid projects">
         {
-          FEATURED_PROJECTS.map((item) => (
-            <ProjectCard class:list={['item', { large: item.class === 'large' }]} project={item} variant="featured" />
+          featured.map(({ project, size }) => (
+            <ProjectCard class:list={['item', size]} project={project} variant="featured" />
           ))
         }
       </div>

@@ -1,0 +1,28 @@
+order: 13
+name: CataBot
+description: A Discord bot that helps you manage your server with various commands and features.
+url: https://www.github.com/AleixFerre/CataBot
+logo: ../../assets/projects/catabot/catabot.webp
+background: ../../assets/projects/catabot/catabot_bg.webp
+screenshots:
+  - ../../assets/projects/catabot/catabot-1.webp
+  - ../../assets/projects/catabot/catabot-2.webp
+  - ../../assets/projects/catabot/catabot-3.webp
+  - ../../assets/projects/catabot/catabot-4.webp
+details:
+  Main Focus: Discord Bot Development.
+  Notable Features: A Discord bot that lets you play music, manage your server, play games, have currency, xp, have lots of API connections to grab real-time data, and much more.
+  Technologies Used: Discord.js, YTDL (Youtube Download Library), JavaScript, Git, Heroku.
+  Records: It was the most used Catalan Discord Bot in 2021 in the entire Discord. I had over 100k users.
+  Discontinued: The bot was discontinued in 2022. Since Youtube decided to shut down the music API, I decided to stop updating the bot.
+  Challenges Faced: The biggest challenges were integrating the YTDL API to stream music into a voice channel and establishing a real-time database connection to reliably store all client data.
+goodForYouIf:
+  - You want a Discord bot in your server. Sadly it is now discontinued.
+  - You want to learn how to make a Discord bot. You can check out the source code on GitHub.
+whatILearned:
+  - How to create a Discord bot.
+  - How to use the Discord.js library.
+  - How to use the YTDL package to play music in the voice channel.
+  - How to deploy a node server to Heroku.
+startedAt: 2020-01-01
+finishedAt: 2022-08-01

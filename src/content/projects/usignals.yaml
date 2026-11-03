@@ -1,0 +1,20 @@
+order: 6
+name: USignals
+description: A lightweight package that provides a simple and easy to use a reactive signal system for Unity.
+url: https://github.com/Yuuko-Games/usignals
+logo: ../../assets/projects/usignals/usignals.webp
+background: ../../assets/projects/usignals/usignals_bg.webp
+screenshots:
+  - ../../assets/projects/usignals/usignals-1.webp
+  - ../../assets/projects/usignals/usignals-2.webp
+details:
+  Main Focus: Library Development.
+  Notable Features: Reactive programming, event handling and signaling.
+  Technologies Used: Unity, C#, Git.
+  Challenges Faced: Making the package useful and easy to use.
+whatILearned:
+  - How to create and publish a package for Unity.
+  - How to make reusable components in Unity.
+  - How to use reactive programming concepts in Unity.
+startedAt: 2025-01-01
+finishedAt: 2025-03-02

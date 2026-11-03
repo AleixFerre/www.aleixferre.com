@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import BackgroundStars from '../components/BackgroundStars.astro';
-import { TABS, TABS_LIST } from '../data/tabs';
+import { TABS } from '../data/tabs';
 import { ariaCurrentValue, isCurrent, type CurrentMode } from '../lib/navigation';
 
 interface Props {
@@ -10,10 +10,9 @@ interface Props {
   image?: string;
 }
 
-const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) => {
-  const href = tab === TABS.HOME ? '/' : `/${tab}`;
-  const mode: CurrentMode = tab === TABS.HOME ? 'page' : 'section';
-  return { tab, label, href, mode, current: isCurrent(Astro.url.pathname, href, mode) };
+const tabs = TABS.map(({ id, label, href }) => {
+  const mode: CurrentMode = href === '/' ? 'page' : 'section';
+  return { id, label, href, mode, current: isCurrent(Astro.url.pathname, href, mode) };
 });
 ---
 
@@ -21,18 +20,18 @@ const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) 
   <main class="row">
     <BackgroundStars />
     {
-      tabs.map(({ tab, label, href, mode, current }) => (
+      tabs.map(({ id, label, href, mode, current }) => (
         <>
           <a
             class="col tab-link"
             href={href}
-            data-tab-link={tab}
+            data-tab-link={id}
             data-current={mode}
             aria-current={current ? ariaCurrentValue(mode) : undefined}
           >
             <p>{label}</p>
           </a>
-          <div class="col panel scrollable content-hide" data-tab-panel={tab}>
+          <div class="col panel scrollable content-hide" data-tab-panel={id}>
             {current && (
               <div class="main-content" data-tab-content>
                 <slot />
@@ -76,6 +75,7 @@ const tabs = (Object.entries(TABS_LIST) as [TABS, string][]).map(([tab, label]) 
     display: flex;
     font-weight: normal;
     padding-bottom: 1em;
+    text-transform: uppercase;
     cursor: pointer;
 
     @include mobile {

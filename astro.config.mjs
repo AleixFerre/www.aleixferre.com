@@ -2,9 +2,10 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { MOBILE_BREAKPOINT } from './src/utils/breakpoints';
+import { SITE } from './src/data/site';
 
 export default defineConfig({
-  site: 'https://www.aleixferre.com',
+  site: SITE.url,
   integrations: [
     sitemap({
       filter: (page) => !page.endsWith('/404/') && !page.endsWith('/home/'),

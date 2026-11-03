@@ -1,0 +1,29 @@
+order: 14
+name: PRAELIA
+description: A university 3D puzzle project about navigating through a series of intricate futuristic mazes.
+url: https://aleixferre.itch.io/praelia
+logo: ../../assets/projects/praelia/praelia.webp
+background: ../../assets/projects/praelia/praelia_bg.webp
+screenshots:
+  - ../../assets/projects/praelia/praelia-1.webp
+  - ../../assets/projects/praelia/praelia-2.webp
+  - ../../assets/projects/praelia/praelia-3.webp
+  - ../../assets/projects/praelia/praelia-4.webp
+details:
+  Main Focus: Design and Implement 3D Puzzle Game.
+  Notable Features: The first game using HDRP. It also was first time designing 3D puzzle mechanics.
+  University Project: This is a university project.
+  Technologies Used: Unity, C#, Unity Version Control System, Git.
+  Challenges Faced: Making the puzzle mechanic interesting, useful and easily understandable.
+  Authors: Aleix Ferré, Oriol Viu, Roger Gibert.
+goodForYouIf:
+  - You like puzzle heavy challenging games.
+  - You like a realistic and immersive experience.
+  - You like a interesting short story.
+whatILearned:
+  - How to use the new HDRP in Unity.
+  - How to design 3D puzzle mechanics that are both interesting and challenging.
+  - How to use the integrated version control system from Unity.
+  - How to make a minimap using a cenital camera.
+startedAt: 2019-10-01
+finishedAt: 2020-01-01

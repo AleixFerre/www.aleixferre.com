@@ -1,33 +1,29 @@
 ---
+import type { ImageMetadata } from 'astro';
 import 'photoswipe/style.css';
 import Img from '../ui/Img.astro';
-import { asset } from '../../utils/assets';
 
 interface Props {
-  images: string[];
+  images: ImageMetadata[];
+  keepOriginal?: boolean;
 }
 
-const { images } = Astro.props;
-
-const items = images.map((path) => {
-  const { src, width, height } = asset(path);
-  return { path, full: src, width, height };
-});
+const { images, keepOriginal = false } = Astro.props;
 
 const cols = Math.min(Math.max(images.length, 2), 4);
 ---
 
 <photo-gallery class="gallery" style={`--cols: ${cols}`}>
   {
-    items.map((item) => (
+    images.map((image) => (
       <a
-        href={item.full}
+        href={image.src}
         data-gallery-item
-        data-pswp-width={item.width}
-        data-pswp-height={item.height}
+        data-pswp-width={image.width}
+        data-pswp-height={image.height}
         target="_blank"
       >
-        <Img class="screenshot" src={item.path} alt="" variant="gallery" />
+        <Img class="screenshot" src={image} alt="" variant="gallery" keepOriginal={keepOriginal} />
       </a>
     ))
   }

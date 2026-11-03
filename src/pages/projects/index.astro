@@ -1,17 +1,19 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
 import ProjectCard from '../../components/project/ProjectCard.astro';
-import { ALL_PROJECTS } from '../../data/projects';
+import { getProjects } from '../../lib/projects';
+
+const projects = await getProjects();
 ---
 
 <TabLayout
-  title="Projects | Aleix Ferré"
+  title="Projects"
   description="Games and tools by Aleix Ferré, from Yuuko Games and Masters Arena to the USignals Unity package, with screenshots, details and lessons learned."
 >
   <div class="grid appear">
     {
-      ALL_PROJECTS.map((item, index) => (
-        <ProjectCard class:list={['item', { wide: item.class === 'wide' }]} project={item} priority={index < 2} />
+      projects.map((item, index) => (
+        <ProjectCard class:list={['item', { wide: item.data.highlight }]} project={item} priority={index < 2} />
       ))
     }
   </div>

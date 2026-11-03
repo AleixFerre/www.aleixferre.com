@@ -1,17 +1,26 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { Image } from 'astro:assets';
-import { asset, keepOriginal, IMAGE_QUALITY, IMAGE_SIZES, IMAGE_WIDTHS, type ImageVariant } from '../../utils/assets';
+import {
+  asset,
+  shouldKeepOriginal,
+  IMAGE_QUALITY,
+  IMAGE_SIZES,
+  IMAGE_WIDTHS,
+  type ImageSource,
+  type ImageVariant,
+} from '../../utils/assets';
 
 interface Props
   extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'loading' | 'decoding' | 'sizes'> {
-  src: string;
+  src: ImageSource;
   alt: string;
   variant: ImageVariant;
   priority?: boolean;
+  keepOriginal?: boolean;
 }
 
-const { src, alt, variant, priority = false, ...rest } = Astro.props;
+const { src, alt, variant, priority = false, keepOriginal = false, ...rest } = Astro.props;
 
 const image = asset(src);
 const loading = priority ? 'eager' : 'lazy';
@@ -19,7 +28,7 @@ const fetchpriority = priority ? 'high' : undefined;
 ---
 
 {
-  keepOriginal(src) ? (
+  keepOriginal || shouldKeepOriginal(image) ? (
     <img
       src={image.src}
       alt={alt}
