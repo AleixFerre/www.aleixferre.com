@@ -160,14 +160,30 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     }
   };
 
+  const syncAttributes = (content: Element, newContent: Element) => {
+    for (const newElement of newContent.querySelectorAll<HTMLElement>('[data-sync-attributes]')) {
+      const element = content.querySelector(`[data-sync-attributes="${newElement.dataset.syncAttributes}"]`);
+      for (const { name, value } of newElement.attributes) element?.setAttribute(name, value);
+    }
+  };
+
+  const swapRegions = (content: Element, newContent: Element) => {
+    const newRegions = [...newContent.querySelectorAll<HTMLElement>('[data-swap-region]')];
+    const regions = newRegions.map((region) =>
+      content.querySelector(`[data-swap-region="${region.dataset.swapRegion}"]`),
+    );
+    if (newRegions.length === 0 || regions.includes(null)) return false;
+
+    regions.forEach((region, index) => region?.replaceWith(newRegions[index]));
+    syncAttributes(content, newContent);
+    return true;
+  };
+
   const swapContent = (panel: HTMLElement, newContent: Element) => {
     const content = panel.querySelector('.main-content');
-    const region = content?.querySelector('[data-swap-region]');
-    const newRegion = newContent.querySelector('[data-swap-region]');
 
-    if (region && newRegion) region.replaceWith(newRegion);
-    else if (content) content.replaceWith(newContent);
-    else panel.append(newContent);
+    if (!content) panel.append(newContent);
+    else if (!swapRegions(content, newContent)) content.replaceWith(newContent);
     panel.scrollTop = 0;
   };
 

@@ -27,8 +27,8 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
   description={project.description}
   image={asset(project.image).src}
 >
-  <div class="project-row">
-    <div class="grid list not-mobile-only appear">
+  <div class="project-row appear">
+    <div class="grid list not-mobile-only">
       <a class="button stick" href="/projects">
         <img class="back" src="/assets/back.svg" alt="" />
         <span class="see-all">See All</span>
@@ -46,12 +46,12 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       }
     </div>
 
-    <div class="details appear-lite" data-swap-region>
-      <div>
-        <div class="row sticky-actions">
-          <a class="button mobile-only" href="/projects">
-            <img class="back" src="/assets/back.svg" alt="See All" />
-          </a>
+    <div class="details">
+      <div class="sticky-actions row">
+        <a class="button mobile-only" href="/projects">
+          <img class="back" src="/assets/back.svg" alt="See All" />
+        </a>
+        <div class="heading row appear-lite" data-swap-region="heading">
           <h2 class="title">{project.name}</h2>
           {
             project.additionalUrl && (
@@ -65,11 +65,15 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
               </>
             )
           }
-          <a class="button not-mobile-only" href={project.url} target="_blank">Visit Project</a>
-          <a class="button mobile-only" href={project.url} target="_blank">
-            <img src="/assets/projects/_actions/visit_project.svg" alt="Visit Project" />
-          </a>
         </div>
+        <a class="button not-mobile-only" href={project.url} target="_blank" data-sync-attributes="visit">
+          Visit Project
+        </a>
+        <a class="button mobile-only" href={project.url} target="_blank" data-sync-attributes="visit-icon">
+          <img src="/assets/projects/_actions/visit_project.svg" alt="Visit Project" />
+        </a>
+      </div>
+      <div class="appear-lite" data-swap-region="body">
         <div class="separator"></div>
         <p>{project.description}</p>
         {project.images.length > 0 && <Gallery images={project.images} />}
@@ -122,6 +126,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     for (const item of document.querySelectorAll<HTMLAnchorElement>('.list a.project')) {
       item.classList.toggle('selected', new URL(item.href).pathname.replace(/\/+$/, '') === current);
     }
+    document.querySelector('.details')?.scrollTo({ top: 0 });
   });
 
   document.addEventListener('astro:page-load', () => {
@@ -181,38 +186,39 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       height: 1rem;
     }
 
+    .sticky-actions {
+      position: sticky;
+      top: 10px;
+      z-index: 8;
+      background: rgba(16, 18, 26, 0.6);
+      backdrop-filter: blur(6px);
+      padding: 0.75em 0.75em 0.75em 1.4em;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+      @include mobile {
+        font-size: 0.8rem;
+        top: 8px;
+        margin: 0 -0.5em 0.75em -0.5em;
+        padding: 0.85em 1em;
+        z-index: 12;
+      }
+    }
+
     .row {
       display: flex;
       flex-direction: row;
       gap: 10px;
       align-items: center;
 
+      .heading {
+        flex: 1;
+      }
+
       .title {
         flex: 1;
         margin: 0;
-      }
-
-      &.sticky-actions {
-        position: sticky;
-        top: 10px;
-        z-index: 8;
-        background: rgba(16, 18, 26, 0.6);
-        backdrop-filter: blur(6px);
-        padding: 0.75em 0.75em 0.75em 1.4em;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-      }
-
-      @include mobile {
-        &.sticky-actions {
-          font-size: 0.8rem;
-          position: sticky;
-          top: 8px;
-          margin: 0 -0.5em 0.75em -0.5em;
-          padding: 0.85em 1em;
-          z-index: 12;
-        }
       }
 
       .button {
