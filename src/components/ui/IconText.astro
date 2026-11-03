@@ -1,0 +1,56 @@
+---
+interface Props {
+  text: string;
+  icon: string;
+  variant?: 'plain' | 'tile';
+}
+
+const { text, icon, variant = 'plain' } = Astro.props;
+---
+
+<div class:list={['icon-text', variant]}>
+  <img class="icon" src={icon} alt={text} />
+  <p class="text">{text}</p>
+</div>
+
+<style lang="scss">
+  .tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 12px;
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+    outline: var(--outline-card);
+    box-shadow: var(--shadow-card);
+    transition: filter 0.25s ease;
+
+    @include mobile {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &:hover {
+      filter: brightness(1.05);
+    }
+  }
+
+  .icon {
+    width: clamp(56px, 12vw, 88px);
+    height: auto;
+    padding: 8px;
+    aspect-ratio: 1;
+    filter: contrast(0.9) brightness(0.9);
+  }
+
+  .text {
+    text-align: center;
+    font-size: 0.8em;
+
+    @include mobile {
+      font-size: 1.4em;
+    }
+  }
+</style>

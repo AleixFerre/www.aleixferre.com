@@ -1,0 +1,25 @@
+order: 3
+name: The Forbidden Door
+description: A horror puzzle game that challenges players to solve intricate puzzles while navigating a chilling atmosphere.
+url: https://yuukogames.itch.io/the-forbidden-door
+logo: ../../assets/projects/the-forbidden-door/the-forbidden-door.webp
+background: ../../assets/projects/the-forbidden-door/the-forbidden-door_bg.webp
+screenshots:
+  - ../../assets/projects/the-forbidden-door/the-forbidden-door-1.webp
+  - ../../assets/projects/the-forbidden-door/the-forbidden-door-2.webp
+  - ../../assets/projects/the-forbidden-door/the-forbidden-door-3.webp
+details:
+  Main Focus: Development and Design of a complete Horror Puzzle Game.
+  Notable Features: A unique puzzle system, a unique art style, and a unique story.
+  Technologies Used: Unity, C#, Git.
+  Authors: Aleix Ferré, Joaquín Villena.
+goodForYouIf:
+  - You like atmospheric puzzle horror games.
+  - You would like to live a unique and immersive experience.
+  - You like a short but intense experience.
+whatILearned:
+  - How to create a complete commercial game from start to finish.
+  - How to market a game.
+  - How to work in a team with other developers.
+startedAt: 2023-04-01
+finishedAt: 2025-04-01

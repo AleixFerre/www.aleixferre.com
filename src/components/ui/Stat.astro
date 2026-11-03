@@ -1,0 +1,75 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  value: string | number;
+  suffix?: string;
+  label: string;
+  caption: string;
+}
+
+const { value, suffix, label, caption } = Astro.props;
+---
+
+<Card class="stat">
+  <p class="label">{label}</p>
+  <div class="metric">
+    <div class="data">
+      <span class="value">{value}</span>
+      {suffix}
+    </div>
+    <div class="caption">{caption}</div>
+  </div>
+</Card>
+
+<style lang="scss">
+  .stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include mobile {
+      padding: 20px;
+    }
+  }
+
+  .label {
+    font-size: 0.8em;
+    text-align: center;
+    margin: 0;
+    text-wrap: balance;
+
+    @include mobile {
+      font-size: 1.2em;
+    }
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include mobile {
+      font-size: 1.4em;
+    }
+  }
+
+  .data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 5em;
+    text-wrap: balance;
+  }
+
+  .value {
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .caption {
+    text-wrap: balance;
+    text-align: center;
+  }
+</style>

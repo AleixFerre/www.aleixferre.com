@@ -1,30 +1,19 @@
 ---
 import TabLayout from '../../layouts/TabLayout.astro';
-import Img from '../../components/Img.astro';
-import { TABS } from '../../data/tabs';
-import { ALL_PROJECTS } from '../../data/projects';
-import { backgroundImage } from '../../utils/assets';
+import ProjectCard from '../../components/project/ProjectCard.astro';
+import { getProjects } from '../../lib/projects';
 
-const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'card')));
+const projects = await getProjects();
 ---
 
 <TabLayout
-  activeTab={TABS.PROJECTS}
-  title="Projects | Aleix Ferré"
+  title="Projects"
   description="Games and tools by Aleix Ferré, from Yuuko Games and Masters Arena to the USignals Unity package, with screenshots, details and lessons learned."
 >
   <div class="grid appear">
-    {
-      ALL_PROJECTS.map((item, index) => (
-        <a
-          class:list={['box', 'project', item.class]}
-          style={`background-image: ${backgrounds[index]};`}
-          href={`/projects/${item.id}`}
-        >
-          <Img src={item.image} alt={item.name} variant="card" priority={index < 2} />
-        </a>
-      ))
-    }
+    {projects.map((item, index) => (
+      <ProjectCard class:list={['item', { wide: item.data.highlight }]} project={item} priority={index < 2} />
+    ))}
   </div>
 </TabLayout>
 
@@ -37,59 +26,17 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     width: 100%;
     height: 100%;
 
-    @include mobile {
-      display: flex;
-      flex-direction: column;
-
+    @include stack-on-mobile {
       width: 100%;
       height: 100rem;
     }
-
-    .box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
   }
 
-  .box {
-    background-color: rgba(255, 255, 255, 0.051);
-    border-radius: 10px;
-    padding: 10px;
-  }
-
-  .project {
-    filter: brightness(0.8);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  .item {
     flex: 1;
+  }
 
-    &.wide {
-      grid-column: span 2;
-    }
-
-    &:hover {
-      filter: brightness(1);
-      transform: translateY(-4px) scale(1.01);
-
-      img {
-        transform: scale(1.05);
-      }
-    }
-
-    img {
-      width: auto;
-      height: 70%;
-      max-width: 70%;
-      object-fit: contain;
-      aspect-ratio: inherit;
-      transition: all 0.3s ease;
-      pointer-events: none;
-    }
+  .wide {
+    grid-column: span 2;
   }
 </style>

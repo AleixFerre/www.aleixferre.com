@@ -1,43 +1,44 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import BackgroundStars from '../components/BackgroundStars.astro';
-import { TABS, TABS_LIST } from '../data/tabs';
+import { TABS } from '../data/tabs';
+import { ariaCurrentValue, isCurrent, type CurrentMode } from '../lib/navigation';
 
 interface Props {
-  activeTab: TABS;
   title?: string;
   description?: string;
   image?: string;
 }
 
-const { activeTab, ...baseProps } = Astro.props;
-
-const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
+const tabs = TABS.map(({ id, label, href }) => {
+  const mode: CurrentMode = href === '/' ? 'page' : 'section';
+  return { id, label, href, mode, current: isCurrent(Astro.url.pathname, href, mode) };
+});
 ---
 
-<BaseLayout {...baseProps}>
-  <main class="row tabs">
+<BaseLayout {...Astro.props}>
+  <main class="row">
     <BackgroundStars />
-    {
-      tabsListEntries.map(([tab, label]) => (
-        <>
-          <a class="col title" href={tab === TABS.HOME ? '/' : `/${tab}`} data-tab={tab}>
-            <p class:list={{ selected: tab === activeTab }}>{label}</p>
-          </a>
-          <div
-            class:list={['col', 'panel', 'scrollable', 'content-hide', { isActive: tab === activeTab }]}
-            data-tab={tab}
-            inert={tab !== activeTab}
-          >
-            {tab === activeTab && (
-              <div class="main-content">
-                <slot />
-              </div>
-            )}
-          </div>
-        </>
-      ))
-    }
+    {tabs.map(({ id, label, href, mode, current }) => (
+      <>
+        <a
+          class="col tab-link"
+          href={href}
+          data-tab-link={id}
+          data-current={mode}
+          aria-current={current ? ariaCurrentValue(mode) : undefined}
+        >
+          <p>{label}</p>
+        </a>
+        <div class="col panel scrollable content-hide" data-tab-panel={id}>
+          {current && (
+            <div class="main-content" data-tab-content>
+              <slot />
+            </div>
+          )}
+        </div>
+      </>
+    ))}
   </main>
 </BaseLayout>
 
@@ -59,15 +60,11 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     flex: 0;
     font-size: 1em;
     transition:
-      flex-grow 0.3s ease-in-out,
-      opacity 0.3s ease-in-out;
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
+      flex-grow var(--duration-base) ease-in-out,
+      opacity var(--duration-base) ease-in-out;
   }
 
-  .title {
+  .tab-link {
     background-color: rgba(255, 255, 255, 0.1);
     outline: 1px solid rgba(0, 0, 0, 0.5);
     writing-mode: sideways-lr;
@@ -76,9 +73,8 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     display: flex;
     font-weight: normal;
     padding-bottom: 1em;
+    text-transform: uppercase;
     cursor: pointer;
-    color: inherit;
-    text-decoration: none;
 
     @include mobile {
       font-size: 1.2em;
@@ -88,19 +84,19 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
       padding-bottom: 0;
     }
 
-    .selected {
+    &[aria-current] {
       font-weight: bold;
     }
 
     &:hover {
       $shadow-color: #ffffff34;
 
-      text-shadow: -1px -1px 0 $shadow-color, 1px -1px 0 $shadow-color,
-        -1px 1px 0 $shadow-color, 1px 1px 0 $shadow-color;
-      -webkit-transition: all 0.5s;
-      -moz-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s;
+      text-shadow:
+        -1px -1px 0 $shadow-color,
+        1px -1px 0 $shadow-color,
+        -1px 1px 0 $shadow-color,
+        1px 1px 0 $shadow-color;
+      transition: text-shadow 0.5s;
     }
   }
 
@@ -108,14 +104,21 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
     width: 0;
     overflow: hidden;
     opacity: 0;
+    visibility: hidden;
     content-visibility: auto;
+    transition:
+      flex-grow var(--duration-base) ease-in-out,
+      opacity var(--duration-base) ease-in-out,
+      visibility 0s var(--duration-base);
   }
 
-  .isActive {
+  .tab-link[aria-current] + .panel {
     flex: 1;
     width: auto;
     opacity: 1;
+    visibility: visible;
     content-visibility: visible;
+    transition-delay: 0s;
   }
 
   .scrollable {
@@ -138,88 +141,5 @@ const tabsListEntries = Object.entries(TABS_LIST) as [TABS, string][];
 </style>
 
 <script>
-  import { swapFunctions } from 'astro:transitions/client';
-
-  const STYLES = 'link[rel=stylesheet], style';
-
-  const keepLoadedStyles = (newDocument: Document) => {
-    const incoming = [...newDocument.head.querySelectorAll(STYLES)];
-    for (const style of document.head.querySelectorAll(STYLES)) {
-      if (!incoming.some((el) => el.isEqualNode(style))) newDocument.head.append(style.cloneNode(true));
-    }
-  };
-
-  const isLoaded = (script: HTMLScriptElement) =>
-    [...document.scripts].some((loaded) =>
-      script.src ? loaded.src === script.src : loaded.textContent === script.textContent,
-    );
-
-  const appendNewScripts = (newDocument: Document) => {
-    for (const script of newDocument.body.querySelectorAll<HTMLScriptElement>(':scope > script')) {
-      if (!isLoaded(script)) document.body.append(script);
-    }
-  };
-
-  const syncAttributes = (content: Element, newContent: Element) => {
-    for (const newElement of newContent.querySelectorAll<HTMLElement>('[data-sync-attributes]')) {
-      const element = content.querySelector(`[data-sync-attributes="${newElement.dataset.syncAttributes}"]`);
-      for (const { name, value } of newElement.attributes) element?.setAttribute(name, value);
-    }
-  };
-
-  const swapRegions = (content: Element, newContent: Element) => {
-    const newRegions = [...newContent.querySelectorAll<HTMLElement>('[data-swap-region]')];
-    const regions = newRegions.map((region) =>
-      content.querySelector(`[data-swap-region="${region.dataset.swapRegion}"]`),
-    );
-    if (newRegions.length === 0 || regions.includes(null)) return false;
-
-    regions.forEach((region, index) => region?.replaceWith(newRegions[index]));
-    syncAttributes(content, newContent);
-    return true;
-  };
-
-  const swapContent = (panel: HTMLElement, newContent: Element) => {
-    const content = panel.querySelector('.main-content');
-
-    if (!content) panel.append(newContent);
-    else if (!swapRegions(content, newContent)) content.replaceWith(newContent);
-    panel.scrollTop = 0;
-  };
-
-  const setActiveTab = (activeTab: string) => {
-    for (const panel of document.querySelectorAll<HTMLElement>('.panel')) {
-      const isActive = panel.dataset.tab === activeTab;
-      panel.classList.toggle('isActive', isActive);
-      panel.inert = !isActive;
-    }
-
-    for (const title of document.querySelectorAll<HTMLElement>('.title')) {
-      title.querySelector('p')?.classList.toggle('selected', title.dataset.tab === activeTab);
-    }
-  };
-
-  const swapTabs = (newDocument: Document) => {
-    const newPanel = newDocument.querySelector<HTMLElement>('.panel.isActive');
-    const tab = newPanel?.dataset.tab;
-    const newContent = newPanel?.querySelector('.main-content');
-    const panel = document.querySelector<HTMLElement>(`.panel[data-tab="${tab}"]`);
-    if (!tab || !newContent || !panel) return;
-
-    swapContent(panel, newContent);
-    setActiveTab(tab);
-  };
-
-  document.addEventListener('astro:before-swap', (event) => {
-    if (!document.querySelector('.tabs') || !event.newDocument.querySelector('.tabs')) return;
-
-    event.swap = () => {
-      swapFunctions.deselectScripts(event.newDocument);
-      swapFunctions.swapRootAttributes(event.newDocument);
-      keepLoadedStyles(event.newDocument);
-      swapFunctions.swapHeadElements(event.newDocument);
-      swapTabs(event.newDocument);
-      appendNewScripts(event.newDocument);
-    };
-  });
+  import '../scripts/tab-router';
 </script>

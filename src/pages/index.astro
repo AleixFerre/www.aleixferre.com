@@ -1,78 +1,60 @@
 ---
 import TabLayout from '../layouts/TabLayout.astro';
-import MetricContainer from '../components/MetricContainer.astro';
-import IconText from '../components/IconText.astro';
-import Img from '../components/Img.astro';
-import { TABS } from '../data/tabs';
-import { FEATURED_PROJECTS } from '../data/projects';
+import Card from '../components/ui/Card.astro';
+import Stat from '../components/ui/Stat.astro';
+import IconText from '../components/ui/IconText.astro';
+import Img from '../components/ui/Img.astro';
+import ProjectCard from '../components/project/ProjectCard.astro';
 import { ABOUT } from '../data/about';
-import { yearsSince } from '../utils/years-since';
-import { backgroundImage } from '../utils/assets';
+import { HOME } from '../data/home';
+import { getProject } from '../lib/projects';
+import { yearsSince } from '../lib/dates';
+import { backgroundImage } from '../lib/assets';
 
 const profileBackground = await backgroundImage(ABOUT.profile.background, 'profile');
-const backgrounds = await Promise.all(
-  FEATURED_PROJECTS.map((item) => backgroundImage(item.backgroundImage, 'card')),
-);
 
-const yearsSinceIndie = yearsSince(new Date('2017-01-01')).toString();
-const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
+const featured = await Promise.all(
+  HOME.featured.map(async ({ id, size }) => ({ project: await getProject(id), size })),
+);
 ---
 
-<TabLayout activeTab={TABS.HOME}>
+<TabLayout>
   <div class="grid">
-    <a class="box profile" href="/about" style={`--profile-background: ${profileBackground}`}>
+    <Card class="box profile" href="/about" style={`--profile-background: ${profileBackground}`}>
       <Img src={ABOUT.profile.photo} class="profile-image" alt={ABOUT.profile.name} variant="profile" priority />
-      <p class="name">Game Designer <br />& Developer</p>
-    </a>
-    <div class="box">
+      <p class="name">
+        Game Designer <br />& Developer
+      </p>
+    </Card>
+    <Card class="box">
       <p>Experience</p>
       <div class="grid experience">
-        <div class="box experience">
-          <MetricContainer title="Indie Games" number={yearsSinceIndie} symbol="+" description="years" />
-        </div>
-        <div class="box experience">
-          <MetricContainer title="Web & Mobile" number={yearsSinceWeb} symbol="+" description="years" />
-        </div>
+        {HOME.experience.map(({ label, since }) => (
+          <Stat label={label} value={yearsSince(since)} suffix="+" caption="years" />
+        ))}
       </div>
-    </div>
-    <div class="box">
+    </Card>
+    <Card class="box">
       <p>Specialized In</p>
       <div class="grid specialized">
-        <IconText class="specialization" text="Unity" icon="/assets/tecnologies/unity.svg" />
-        <IconText class="specialization" text="Game Design" icon="/assets/tecnologies/game_design.svg" />
-        <IconText
-          class="specialization"
-          text="Project Management"
-          icon="/assets/tecnologies/project_management.svg"
-        />
+        {HOME.specializations.map(({ text, icon }) => (
+          <IconText variant="tile" text={text} icon={icon} />
+        ))}
       </div>
-    </div>
-    <div class="box large">
+    </Card>
+    <Card class="box featured">
       <p>Featured Projects</p>
       <div class="grid projects">
-        {
-          FEATURED_PROJECTS.map((item, index) => (
-            <a
-              class:list={['box', 'project', { large: item.class === 'large' }]}
-              style={`background-image: ${backgrounds[index]};`}
-              href={`/projects/${item.id}`}
-            >
-              <Img src={item.image} alt={item.name} variant="card" />
-            </a>
-          ))
-        }
+        {featured.map(({ project, size }) => (
+          <ProjectCard class:list={['item', size]} project={project} variant="featured" />
+        ))}
       </div>
-    </div>
+    </Card>
   </div>
 </TabLayout>
 
 <style lang="scss">
   $margin-p: 8px;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
 
   .grid {
     display: grid;
@@ -82,35 +64,17 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
     width: 100%;
     height: 100%;
 
-    @include mobile {
-      display: flex;
-      flex-direction: column;
-    }
+    @include stack-on-mobile;
 
     &.projects {
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: repeat(3, 1fr);
       height: calc(100% - 1lh - ($margin-p * 2));
 
-      .box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
       @include mobile {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         grid-template-rows: auto;
         height: auto;
-
-        .box {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          height: 120px;
-        }
       }
     }
 
@@ -139,50 +103,24 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
         height: auto;
         width: 100%;
       }
+    }
+  }
 
-      :global(.specialization) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 14px 12px;
-        border-radius: 14px;
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-        outline: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-        transition: filter 0.25s ease;
+  .item {
+    grid-column: span 2;
 
-        @include mobile {
-          flex-direction: row;
-          align-items: center;
-          gap: 12px;
-        }
+    &.large {
+      grid-column: span 3;
+      grid-row: span 2;
+    }
 
-        &:hover {
-          filter: brightness(1.05);
-        }
-      }
+    @include mobile {
+      height: 120px;
     }
   }
 
   .box {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border-radius: 14px;
-    padding: 10px;
-    outline: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-
-    &.experience {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      @include mobile {
-        padding: 20px;
-      }
-    }
-
-    &.large {
+    &.featured {
       grid-column: span 3;
       grid-row: span 2;
       background-size: cover;
@@ -194,15 +132,16 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
     }
 
     &.profile {
-      background-image: var(--profile-background),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+      background-image: var(--profile-background), linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
       background-size: cover, cover;
       background-position: center, center;
       background-repeat: no-repeat, no-repeat;
-      transition: all 0.3s ease;
+      transition:
+        filter var(--duration-base) ease,
+        transform var(--duration-base) ease;
       cursor: pointer;
       position: relative;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-inset);
 
       @include mobile {
         height: 50vw;
@@ -213,12 +152,16 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
         width: 100%;
         height: 100%;
         object-fit: contain;
-        transition: all 0.3s ease;
       }
 
       &:hover {
         filter: brightness(1.05);
-        transform: translateY(-4px);
+      }
+
+      @include motion-safe {
+        &:hover {
+          transform: translateY(-4px);
+        }
       }
     }
 
@@ -230,36 +173,6 @@ const yearsSinceWeb = yearsSince(new Date('2021-09-01')).toString();
       font-size: 1.5em;
       font-weight: bold;
       margin: 0;
-    }
-  }
-
-  .project {
-    grid-column: span 2;
-    filter: brightness(0.8);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(1);
-      transform: translateY(-4px) scale(1.01);
-
-      img {
-        transform: scale(1.05);
-      }
-    }
-
-    img {
-      width: auto;
-      height: 70%;
-      max-width: 70%;
-      aspect-ratio: inherit;
-      transition: all 0.3s ease;
-      object-fit: contain;
-      pointer-events: none;
     }
   }
 </style>

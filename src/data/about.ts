@@ -1,8 +1,18 @@
-export interface AboutMetric {
-  img?: string;
-  title?: string;
-  number: string;
-  description: string;
+import type { ImageMetadata } from 'astro';
+import profilePhoto from '../assets/profile/yo_letra.webp';
+import profileBackground from '../assets/profile/yo.webp';
+import udgLogo from '../assets/companies/udg.webp';
+import clearpeaksLogo from '../assets/companies/clearpeaks.webp';
+import yuukoGamesLogo from '../assets/projects/yuukogames/yuukogames.webp';
+import englishFlag from '../assets/flags/english.webp';
+import spanishFlag from '../assets/flags/spanish.webp';
+import catalanFlag from '../assets/flags/catalan.webp';
+
+export interface AboutItem {
+  image?: ImageMetadata;
+  heading?: string;
+  title: string;
+  subtitle: string;
 }
 
 export interface AboutSection<T> {
@@ -21,13 +31,13 @@ export interface AboutContent {
     name: string;
     birthDate: string;
     location: string;
-    photo: string;
-    background: string;
+    photo: ImageMetadata;
+    background: ImageMetadata;
   };
   focus: AboutSection<string>;
-  education: AboutSection<AboutMetric>;
-  professionalExperience: AboutSection<AboutMetric>;
-  languages: AboutSection<AboutMetric>;
+  education: AboutSection<AboutItem>;
+  professionalExperience: AboutSection<AboutItem>;
+  languages: AboutSection<AboutItem>;
 }
 
 export const ABOUT: AboutContent = {
@@ -43,8 +53,8 @@ export const ABOUT: AboutContent = {
     name: 'Aleix Ferré',
     birthDate: '1999-12-19',
     location: 'Girona',
-    photo: '/assets/profile/yo_letra.webp',
-    background: '/assets/profile/yo.webp',
+    photo: profilePhoto,
+    background: profileBackground,
   },
   focus: {
     title: 'Currently focused on',
@@ -58,10 +68,10 @@ export const ABOUT: AboutContent = {
     title: 'Education',
     items: [
       {
-        img: '/assets/companies/udg.webp',
-        title: 'University of Girona',
-        number: 'Game Design and Development Degree',
-        description: '2017 - 2021',
+        image: udgLogo,
+        heading: 'University of Girona',
+        title: 'Game Design and Development Degree',
+        subtitle: '2017 - 2021',
       },
     ],
   },
@@ -69,22 +79,22 @@ export const ABOUT: AboutContent = {
     title: 'Professional Experience',
     items: [
       {
-        img: '/assets/projects/yuukogames/yuukogames.webp',
-        title: 'Yuuko Games',
-        number: 'Co-Founder',
-        description: '2023 - Present',
+        image: yuukoGamesLogo,
+        heading: 'Yuuko Games',
+        title: 'Co-Founder',
+        subtitle: '2023 - Present',
       },
       {
-        img: '/assets/companies/clearpeaks.webp',
-        title: 'ClearPeaks',
-        number: 'Senior Web & Mobile Developer',
-        description: '2023 - Present',
+        image: clearpeaksLogo,
+        heading: 'ClearPeaks',
+        title: 'Senior Web & Mobile Developer',
+        subtitle: '2023 - Present',
       },
       {
-        img: '/assets/companies/clearpeaks.webp',
-        title: 'ClearPeaks',
-        number: 'Junior Web Developer',
-        description: '2021 - 2023',
+        image: clearpeaksLogo,
+        heading: 'ClearPeaks',
+        title: 'Junior Web Developer',
+        subtitle: '2021 - 2023',
       },
     ],
   },
@@ -92,19 +102,19 @@ export const ABOUT: AboutContent = {
     title: 'Languages',
     items: [
       {
-        img: '/assets/flags/english.webp',
-        number: 'English',
-        description: 'Full Professional',
+        image: englishFlag,
+        title: 'English',
+        subtitle: 'Full Professional',
       },
       {
-        img: '/assets/flags/spanish.webp',
-        number: 'Spanish',
-        description: 'Native',
+        image: spanishFlag,
+        title: 'Spanish',
+        subtitle: 'Native',
       },
       {
-        img: '/assets/flags/catalan.webp',
-        number: 'Catalan',
-        description: 'Native',
+        image: catalanFlag,
+        title: 'Catalan',
+        subtitle: 'Native',
       },
     ],
   },

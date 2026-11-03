@@ -1,6 +1,6 @@
-<div class="stars" transition:persist="stars">
-  <canvas id="stars-canvas"></canvas>
-</div>
+<star-field class="stars">
+  <canvas data-star-canvas></canvas>
+</star-field>
 
 <style lang="scss">
   .stars {
@@ -19,6 +19,8 @@
 
   canvas {
     display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>
 
@@ -31,48 +33,107 @@
     vy: number;
   };
 
+  type Size = {
+    width: number;
+    height: number;
+  };
+
   const NUM_STARS = 300;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const canvas = document.getElementById('stars-canvas') as HTMLCanvasElement | null;
-  const ctx = canvas?.getContext('2d');
-
-  if (canvas && ctx) {
-    let width = 0;
-    let height = 0;
-
-    const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-
-    resize();
-
-    const stars: Star[] = Array.from({ length: NUM_STARS }).map(() => ({
+  function createStars(count: number, { width, height }: Size): Star[] {
+    return Array.from({ length: count }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       radius: Math.random() * 1.2 + 0.2,
       vx: (Math.random() - 0.5) * 0.05,
       vy: (Math.random() - 0.5) * 0.05,
     }));
+  }
 
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'white';
-      for (const star of stars) {
-        star.x += star.vx;
-        star.y += star.vy;
+  function stepStars(stars: Star[], { width, height }: Size) {
+    for (const star of stars) {
+      star.x += star.vx;
+      star.y += star.vy;
+      if (star.x < 0 || star.x > width) star.vx *= -1;
+      if (star.y < 0 || star.y > height) star.vy *= -1;
+    }
+  }
 
-        if (star.x < 0 || star.x > width) star.vx *= -1;
-        if (star.y < 0 || star.y > height) star.vy *= -1;
+  function drawStars(ctx: CanvasRenderingContext2D, stars: Star[], { width, height }: Size) {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = 'white';
+    for (const star of stars) {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      requestAnimationFrame(animate);
+  function resizeCanvas(ctx: CanvasRenderingContext2D, { width, height }: Size) {
+    const ratio = window.devicePixelRatio || 1;
+    ctx.canvas.width = Math.round(width * ratio);
+    ctx.canvas.height = Math.round(height * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  class StarField extends HTMLElement {
+    private ctx: CanvasRenderingContext2D | null = null;
+    private stars: Star[] = [];
+    private size: Size = { width: 0, height: 0 };
+    private frame = 0;
+    private resizeObserver = new ResizeObserver(([entry]) => {
+      if (entry) this.resize({ width: entry.contentRect.width, height: entry.contentRect.height });
+    });
+
+    connectedCallback() {
+      this.ctx = this.querySelector<HTMLCanvasElement>('[data-star-canvas]')?.getContext('2d') ?? null;
+      if (!this.ctx) return;
+      this.resize({ width: this.clientWidth, height: this.clientHeight });
+      this.stars = createStars(NUM_STARS, this.size);
+      this.resizeObserver.observe(this);
+      reducedMotion.addEventListener('change', this.restart);
+      this.start();
+    }
+
+    disconnectedCallback() {
+      this.stop();
+      this.resizeObserver.disconnect();
+      reducedMotion.removeEventListener('change', this.restart);
+    }
+
+    private start() {
+      if (reducedMotion.matches) this.draw();
+      else this.tick();
+    }
+
+    private stop() {
+      cancelAnimationFrame(this.frame);
+      this.frame = 0;
+    }
+
+    private restart = () => {
+      this.stop();
+      this.start();
     };
 
-    window.addEventListener('resize', resize);
-    animate();
+    private tick = () => {
+      stepStars(this.stars, this.size);
+      this.draw();
+      this.frame = requestAnimationFrame(this.tick);
+    };
+
+    private draw() {
+      if (this.ctx) drawStars(this.ctx, this.stars, this.size);
+    }
+
+    private resize(size: Size) {
+      if (!this.ctx) return;
+      this.size = size;
+      resizeCanvas(this.ctx, size);
+      this.draw();
+    }
   }
+
+  if (!customElements.get('star-field')) customElements.define('star-field', StarField);
 </script>

@@ -1,0 +1,130 @@
+---
+import ActionLink from '../ui/ActionLink.astro';
+import BulletSection from './BulletSection.astro';
+import Gallery from './Gallery.astro';
+import type { Project } from '../../lib/projects';
+import { formatDuration, formatMonth } from '../../lib/dates';
+
+interface Props {
+  project: Project;
+}
+
+const project = Astro.props.project.data;
+---
+
+<div class="details" data-swap-region="project-details" data-reset-scroll>
+  <div class="sticky-actions row">
+    <ActionLink href="/projects" icon="/assets/back.svg" label="See All" mobileOnly />
+    <div class="heading row appear-lite">
+      <h2 class="title">{project.name}</h2>
+      {project.report && (
+        <ActionLink
+          href={project.report.href}
+          target="_blank"
+          icon="/assets/projects/_actions/project_report.svg"
+          label={project.report.label}
+          iconOnDesktop={false}
+        />
+      )}
+    </div>
+    <ActionLink
+      href={project.url}
+      target="_blank"
+      icon="/assets/projects/_actions/visit_project.svg"
+      label="Visit Project"
+      iconOnDesktop={false}
+    />
+  </div>
+  <div class="appear-lite">
+    <div class="separator"></div>
+    <p>{project.description}</p>
+    {project.screenshots.length > 0 && (
+      <Gallery images={project.screenshots} keepOriginal={project.keepOriginalScreenshots} />
+    )}
+    <h3>Details</h3>
+    <ul>
+      {Object.entries(project.details).map(([key, value]) => (
+        <li>
+          <b>{key}:</b>
+          <span> {value}</span>
+        </li>
+      ))}
+    </ul>
+    {project.goodForYouIf && <BulletSection title="Good for you if" items={project.goodForYouIf} />}
+    {project.whatILearned && <BulletSection title="What I learned" items={project.whatILearned} />}
+    <h3>Project Timeline</h3>
+    <p>
+      {formatMonth(project.startedAt)} -{' '}
+      {project.finishedAt ? (
+        <span>
+          {formatMonth(project.finishedAt)} ({formatDuration(project.startedAt, project.finishedAt)})
+        </span>
+      ) : (
+        <span>In Progress</span>
+      )}
+    </p>
+  </div>
+</div>
+
+<style lang="scss">
+  .details {
+    flex: 1;
+    background-color: rgba(240, 248, 255, 0.103);
+    padding: 2em;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    height: 70vh;
+    overflow: auto;
+    position: relative;
+    scroll-padding-top: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    @include mobile {
+      height: auto;
+      padding: 1.25em;
+      overflow: visible;
+      font-size: 1.05rem;
+    }
+  }
+
+  .separator {
+    height: 1rem;
+  }
+
+  .sticky-actions {
+    position: sticky;
+    top: 10px;
+    z-index: 8;
+    background: rgba(16, 18, 26, 0.6);
+    backdrop-filter: blur(6px);
+    padding: 0.75em 0.75em 0.75em 1.4em;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+    @include mobile {
+      font-size: 0.8rem;
+      top: 8px;
+      margin: 0 -0.5em 0.75em -0.5em;
+      padding: 0.85em 1em;
+      z-index: 12;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .heading {
+    flex: 1;
+  }
+
+  .title {
+    flex: 1;
+    margin: 0;
+  }
+</style>

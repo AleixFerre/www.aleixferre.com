@@ -1,0 +1,107 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  label: string;
+  icon?: string;
+  iconOnDesktop?: boolean;
+  mobileOnly?: boolean;
+  variant?: 'default' | 'floating';
+}
+
+const {
+  label,
+  icon,
+  iconOnDesktop = true,
+  mobileOnly = false,
+  variant = 'default',
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  class:list={['action-link', variant, { 'icon-mobile-only': !iconOnDesktop, 'mobile-only': mobileOnly }, className]}
+  {...rest}
+>
+  {icon && <img class="icon" src={icon} alt="" />}
+  <span class:list={['label', { 'label-desktop-only': icon }]}>{label}</span>
+</a>
+
+<style lang="scss">
+  .action-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 1lh;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-base) ease,
+      font-weight var(--duration-base) ease;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  .default {
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.226);
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: white;
+    font-family: var(--font-mono);
+    text-align: center;
+  }
+
+  .floating {
+    padding: 12px;
+    background: rgba(16, 18, 26, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+
+    .label {
+      text-wrap-mode: nowrap;
+    }
+  }
+
+  .mobile-only {
+    display: none;
+
+    @include mobile {
+      display: flex;
+    }
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .icon-mobile-only .icon {
+    display: none;
+
+    @include mobile {
+      display: block;
+    }
+  }
+
+  .label-desktop-only {
+    @include mobile {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+</style>

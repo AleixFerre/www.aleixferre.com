@@ -1,8 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-.html,
+@use 'tokens';
+
 body {
   margin: 0;
-  font-family: "Fira Code Variable", "Fira Code", monospace;
+  font-family: var(--font-mono);
   font-size: 16px;
 
   @include mobile {
@@ -12,6 +12,11 @@ body {
 
 html {
   color-scheme: dark;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
@@ -31,7 +36,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 2px solid transparent;
   background-clip: padding-box;
 
@@ -41,35 +46,31 @@ html {
 }
 
 .appear {
-  animation: appear 0.3s ease-in-out;
+  animation: fade-in var(--duration-base) ease-in-out;
 }
 
 .appear-lite {
-  animation: appear-lite 0.4s ease-out;
+  animation: fade-in 0.4s ease-out;
 }
 
-@keyframes appear {
-  0% {
+@keyframes fade-in {
+  from {
     opacity: 0;
   }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes appear-lite {
-  0% {
-    opacity: 0;
-  }
-  100% {
+  to {
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
+  .appear,
+  .appear-lite {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
   }
 }

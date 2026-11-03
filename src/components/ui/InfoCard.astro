@@ -1,0 +1,138 @@
+---
+import type { ImageMetadata } from 'astro';
+import Card from './Card.astro';
+import { backgroundImage } from '../../lib/assets';
+
+interface Props {
+  heading?: string;
+  title: string;
+  subtitle: string;
+  image?: ImageMetadata;
+  imageMode?: 'watermark' | 'flag';
+  imageOpacity?: number;
+  align?: 'center' | 'left';
+  class?: string;
+}
+
+const {
+  heading,
+  title,
+  subtitle,
+  image,
+  imageMode = 'watermark',
+  imageOpacity = 0.22,
+  align = 'center',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const imageValue = image && (await backgroundImage(image, 'logo'));
+const style = imageValue && `--image: ${imageValue}; --image-opacity: ${imageOpacity}`;
+---
+
+<Card class:list={['info-card', `align-${align}`, imageValue && imageMode, className]} style={style} {...rest}>
+  {heading && <p class="heading">{heading}</p>}
+  <div class="body">
+    <div class="title">{title}</div>
+    <div class="subtitle">{subtitle}</div>
+  </div>
+</Card>
+
+<style lang="scss">
+  .info-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+  }
+
+  .heading {
+    font-size: 0.8em;
+    text-align: center;
+    margin: 0;
+    text-wrap: balance;
+
+    @include mobile {
+      font-size: 1.2em;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include mobile {
+      font-size: 1.4em;
+    }
+  }
+
+  .title {
+    color: var(--color-accent);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .align-left {
+    .heading,
+    .title,
+    .subtitle {
+      text-align: left;
+    }
+
+    .body {
+      align-items: flex-start;
+    }
+  }
+
+  .watermark,
+  .flag {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+
+    &::after {
+      content: '';
+      position: absolute;
+      background-image: var(--image);
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: saturate(0.5);
+      pointer-events: none;
+    }
+  }
+
+  .watermark::after {
+    inset: 1.5em;
+    z-index: -1;
+    background-size: contain;
+    opacity: var(--image-opacity);
+  }
+
+  .flag {
+    align-items: flex-start;
+    padding-right: 6em;
+
+    &::after {
+      top: 50%;
+      right: 1.25em;
+      transform: translateY(-50%);
+      width: 4em;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--radius-sm);
+      background-size: cover;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+  }
+</style>

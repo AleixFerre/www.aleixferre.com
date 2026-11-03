@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  variant?: 'flat' | 'raised';
+}
+
+const { href, variant = 'raised', class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag href={href} class:list={['card', variant, className]} {...rest}>
+  <slot />
+</Tag>
+
+<style lang="scss">
+  :where(.card) {
+    padding: 10px;
+  }
+
+  :where(.card.flat) {
+    background-color: var(--surface-flat);
+    border-radius: var(--radius-sm);
+  }
+
+  :where(.card.raised) {
+    background: var(--surface-card);
+    border-radius: var(--radius-md);
+    outline: var(--outline-card);
+    box-shadow: var(--shadow-card);
+  }
+</style>

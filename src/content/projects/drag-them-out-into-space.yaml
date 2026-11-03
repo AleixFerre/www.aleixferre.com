@@ -1,0 +1,24 @@
+order: 9
+name: Drag Them Out Into Space
+description: A gamejam game about a superwoman that needs to protect the city from meteors by dragging them out into space.
+url: https://aleixferre.itch.io/drag-them-out-into-space
+logo: ../../assets/projects/drag-them-out-into-space/drag-them-out-into-space.webp
+background: ../../assets/projects/drag-them-out-into-space/drag-them-out-into-space_bg.webp
+screenshots:
+  - ../../assets/projects/drag-them-out-into-space/drag-them-out-into-space-1.webp
+  - ../../assets/projects/drag-them-out-into-space/drag-them-out-into-space-2.webp
+  - ../../assets/projects/drag-them-out-into-space/drag-them-out-into-space-3.webp
+details:
+  Main Focus: GameJam Game Development.
+  Notable Features: The drag mechanic makes it easily compatible with mobile devices.
+  Technologies Used: Unity, C#, Bfxr, Git.
+  Challenges Faced: Balancing the meteorite frequence and the drag mechanic to make it fun and challenging.
+  Authors: Aleix Ferré, Joaquín Villena, Joel Pérez.
+goodForYouIf:
+  - You want to play a game with a unique mechanic.
+  - You like a short but intense experience.
+whatILearned:
+  - How to design an innovative game mechanic that is both interesting and useful.
+  - How to design and implement fun mechanics fast and efficiently.
+startedAt: 2021-04-01
+finishedAt: 2021-04-02

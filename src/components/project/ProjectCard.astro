@@ -1,0 +1,100 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Card from '../ui/Card.astro';
+import Img from '../ui/Img.astro';
+import type { Project } from '../../lib/projects';
+import { backgroundImage } from '../../lib/assets';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
+  project: Project;
+  variant?: 'grid' | 'featured' | 'sidebar';
+  priority?: boolean;
+}
+
+const { project, variant = 'grid', priority = false, class: className, ...rest } = Astro.props;
+
+const background = await backgroundImage(project.data.background, variant === 'sidebar' ? 'sidebarCard' : 'card');
+---
+
+<Card
+  href={`/projects/${project.id}`}
+  variant={variant === 'featured' ? 'raised' : 'flat'}
+  class:list={['project', `project-${variant}`, className]}
+  style={`background-image: ${background};`}
+  {...rest}
+>
+  <Img src={project.data.logo} alt={project.data.name} variant="card" priority={priority} />
+</Card>
+
+<style lang="scss">
+  .project {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    filter: brightness(0.8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition:
+      filter var(--duration-base) ease,
+      transform var(--duration-base) ease;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1);
+    }
+
+    @include motion-safe {
+      &:hover {
+        transform: translateY(-4px) scale(1.01);
+
+        img {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    img {
+      width: auto;
+      height: 70%;
+      max-width: 70%;
+      object-fit: contain;
+      aspect-ratio: inherit;
+      transition: transform var(--duration-base) ease;
+      pointer-events: none;
+    }
+  }
+
+  .project-sidebar {
+    transition:
+      filter var(--duration-base) ease,
+      transform var(--duration-base) ease,
+      margin var(--duration-base) ease;
+
+    &[aria-current] {
+      margin: 0 2px;
+      transform: scale(1.03);
+
+      img {
+        transform: scale(1.1);
+      }
+    }
+
+    @include motion-safe {
+      &[aria-current]:hover {
+        transform: translateY(-4px) scale(1.03);
+
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    &:not([aria-current]) {
+      filter: brightness(0.3);
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+</style>

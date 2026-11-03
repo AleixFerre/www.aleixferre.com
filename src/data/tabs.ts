@@ -1,13 +1,8 @@
-export enum TABS {
-  HOME = 'home',
-  PROJECTS = 'projects',
-  ABOUT = 'about',
-  CONTACT = 'contact',
-}
+export const TABS = [
+  { id: 'home', label: 'Home', href: '/' },
+  { id: 'projects', label: 'Projects', href: '/projects' },
+  { id: 'about', label: 'About', href: '/about' },
+  { id: 'contact', label: 'Contact', href: '/contact' },
+] as const;
 
-export const TABS_LIST: Record<TABS, string> = {
-  [TABS.HOME]: 'HOME',
-  [TABS.PROJECTS]: 'PROJECTS',
-  [TABS.ABOUT]: 'ABOUT',
-  [TABS.CONTACT]: 'CONTACT',
-};
+export type TabId = (typeof TABS)[number]['id'];

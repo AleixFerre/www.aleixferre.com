@@ -1,0 +1,25 @@
+order: 11
+name: ASCII Shader
+description: A shader for Unity that converts your screen into a text-based ASCII art.
+url: https://aleixferre.itch.io/ascii-shader
+logo: ../../assets/projects/ascii-shader/ascii-shader.webp
+background: ../../assets/projects/ascii-shader/ascii-shader_bg.webp
+screenshots:
+  - ../../assets/projects/ascii-shader/ascii-shader-1.webp
+  - ../../assets/projects/ascii-shader/ascii-shader-2.webp
+keepOriginalScreenshots: true
+details:
+  Main Focus: Unity Fullscreen Shader Development.
+  Notable Features: A shader that converts your screen into ASCII art.
+  University Project: This is a university project.
+  Technologies Used: Unity, C#, ShaderLab, Git.
+  Challenges Faced: Making the shader visually appealing and performant.
+  Authors: Aleix Ferré, Joaquín Villena, Joel Pérez.
+goodForYouIf:
+  - You like this shader for your games.
+  - You want to make a variant of this shader.
+whatILearned:
+  - How a shader works in Unity.
+  - How to make a shader visually appealing and performant.
+startedAt: 2021-03-01
+finishedAt: 2021-04-01

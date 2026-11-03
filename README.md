@@ -17,6 +17,10 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `bun run dev` | Start the dev server at http://localhost:4321 |
 | `bun run build` | Type-check with `astro check` and build the static site into `dist/` |
 | `bun run preview` | Serve `dist/` at http://localhost:4321 to test the production build |
+| `bun run format` | Format the repo with Prettier |
+| `bun run format:check` | Report files that Prettier would change, without writing them |
+| `bun run lint` | Lint TypeScript and Astro files with ESLint |
+| `bun run test` | Run the Vitest unit tests (`src/**/*.test.ts`) once |
 | `bun run deploy` | Build the site and publish `dist/` to the `gh-pages` branch (see [Deployment](#deployment)) |
 
 ## Project structure
@@ -26,15 +30,20 @@ The site is built with [Astro](https://astro.build) as fully static pages, with 
 | `src/pages/` | One page per route: `/`, `/projects`, `/projects/<id>`, `/about`, `/contact` |
 | `src/layouts/` | Base HTML head and the tab shell shared by every page |
 | `src/components/` | Reusable components (gallery, images, metrics, star background) |
-| `src/data/` | Projects, about content and tabs, as plain TypeScript |
-| `src/assets/` | Profile and project images, resized and optimized at build time by Astro's `<Image>` |
-| `public/assets/` | Icons, logos, Lordicon animations and the CV, served as `/assets/...` |
-| `src/utils/assets.ts` | Looks up `src/assets` images by their `/assets/...` path and holds the image widths and quality |
+| `src/content/projects/` | One YAML file per project, loaded as a content collection (schema in `src/content.config.ts`) |
+| `src/data/` | Site metadata, tabs, home, about and contact content, as plain TypeScript |
+| `src/assets/` | Profile, project, company logo and flag images, resized and optimized at build time by Astro's `<Image>` |
+| `public/assets/` | SVG icons, Lordicon animations, the CV, the favicon and the social preview image, served as `/assets/...` |
+| `src/lib/assets.ts` | Image widths, sizes and quality, and the responsive background helper |
+| `src/lib/dates.ts` | Month, age, years-since and duration formatting (UTC) |
+| `src/lib/navigation.ts` | Current-link matching shared by the server render and the client router |
+| `src/lib/breakpoints.ts` | Mobile breakpoint shared by the Astro config, SCSS and responsive images |
 
 ## Adding a project
 
-1. Add the `.webp` images under `src/assets/projects/<id>/`.
-2. Add the project to `src/data/projects.ts` and include it in `ALL_PROJECTS` (and `FEATURED_PROJECTS` to show it on the home page).
+1. Add the `.webp` logo, background and screenshots under `src/assets/projects/<id>/`.
+2. Add `src/content/projects/<id>.yaml` (the file name is the URL id) with image paths relative to it (`../../assets/projects/<id>/...`). `order` sets the position in the lists, `highlight: true` makes the card wide on `/projects`, and `keepOriginalScreenshots: true` serves the screenshots unresized.
+3. To show it on the home page, add its id to `featured` in `src/data/home.ts`.
 
 ## Deployment
 
