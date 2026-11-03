@@ -2,7 +2,7 @@
 import ActionLink from '../ui/ActionLink.astro';
 import BulletSection from './BulletSection.astro';
 import Gallery from './Gallery.astro';
-import type { Project } from '../../data/projects';
+import type { Project } from '../../lib/projects';
 import { formatMonth } from '../../utils/format-month';
 import { formatDuration } from '../../utils/format-duration';
 
@@ -10,7 +10,7 @@ interface Props {
   project: Project;
 }
 
-const { project } = Astro.props;
+const project = Astro.props.project.data;
 ---
 
 <div class="details" data-swap-region="project-details" data-reset-scroll>
@@ -19,12 +19,12 @@ const { project } = Astro.props;
     <div class="heading row appear-lite">
       <h2 class="title">{project.name}</h2>
       {
-        project.additionalUrl && (
+        project.report && (
           <ActionLink
-            href={project.additionalUrl[0]}
+            href={project.report.href}
             target="_blank"
             icon="/assets/projects/_actions/project_report.svg"
-            label={project.additionalUrl[1]}
+            label={project.report.label}
             iconOnDesktop={false}
           />
         )
@@ -41,7 +41,7 @@ const { project } = Astro.props;
   <div class="appear-lite">
     <div class="separator"></div>
     <p>{project.description}</p>
-    {project.images.length > 0 && <Gallery images={project.images} />}
+    {project.screenshots.length > 0 && <Gallery images={project.screenshots} keepOriginal={project.keepOriginalScreenshots} />}
     <h3>Details</h3>
     <ul>
       {
@@ -56,7 +56,7 @@ const { project } = Astro.props;
     {project.whatILearned && <BulletSection title="What I learned" items={project.whatILearned} />}
     <h3>Project Timeline</h3>
     <p>
-      {formatMonth(project.createdAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({formatDuration(project.createdAt, project.finishedAt)})</span> : <span>In Progress</span>}
+      {formatMonth(project.startedAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({formatDuration(project.startedAt, project.finishedAt)})</span> : <span>In Progress</span>}
     </p>
   </div>
 </div>

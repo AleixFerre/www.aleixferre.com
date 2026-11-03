@@ -4,6 +4,7 @@ import '@fontsource-variable/fira-code';
 import '@fontsource/pt-sans/400.css';
 import '@fontsource/pt-sans/700.css';
 import '../styles/global.scss';
+import { SITE } from '../data/site';
 
 interface Props {
   title?: string;
@@ -11,11 +12,9 @@ interface Props {
   image?: string;
 }
 
-const {
-  title = 'Aleix Ferré - Game Designer & Programmer',
-  description = 'Game Designer & Programmer specializing in Unity development. Portfolio showcasing game projects, skills, and professional experience.',
-  image = '/assets/profile/promo.webp',
-} = Astro.props;
+const { title: pageTitle, description = SITE.description, image = SITE.image } = Astro.props;
+
+const title = pageTitle ? `${pageTitle} | ${SITE.name}` : SITE.title;
 
 const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const canonicalUrl = new URL(pathname, Astro.site).href;
@@ -29,11 +28,8 @@ const imageUrl = new URL(image, Astro.site).href;
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="game design, game development, unity, programmer, portfolio, aleix ferré, game designer"
-    />
-    <meta name="author" content="Aleix Ferré" />
+    <meta name="keywords" content={SITE.keywords.join(', ')} />
+    <meta name="author" content={SITE.name} />
     <link rel="canonical" href={canonicalUrl} />
 
     <meta property="og:title" content={title} />
@@ -51,7 +47,7 @@ const imageUrl = new URL(image, Astro.site).href;
     <script
       is:inline
       src="https://analytics.ahrefs.com/analytics.js"
-      data-key="fPJUOKILanfySrwwfD8iPA"
+      data-key={SITE.analyticsKey}
       async></script>
     <ClientRouter />
   </head>

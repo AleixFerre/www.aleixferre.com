@@ -1,0 +1,25 @@
+order: 8
+name: Endless Dungeon
+description: A gamejam game about a knight that has a ball attached to a chain, swinging it around to move smoothly and defeat enemies.
+url: https://aleixferre.itch.io/endless-dungeon
+logo: ../../assets/projects/endless-dungeon/endless-dungeon.webp
+background: ../../assets/projects/endless-dungeon/endless-dungeon_bg.webp
+screenshots:
+  - ../../assets/projects/endless-dungeon/endless-dungeon-1.webp
+  - ../../assets/projects/endless-dungeon/endless-dungeon-2.webp
+  - ../../assets/projects/endless-dungeon/endless-dungeon-3.webp
+  - ../../assets/projects/endless-dungeon/endless-dungeon-4.webp
+details:
+  Main Focus: GameJam Game Development.
+  Notable Features: A unique gameplay mechanic, making it useful and interesting.
+  Technologies Used: Unity, C#, Git.
+  Challenges Faced: Making the mechanic interesting, useful and easily understandable.
+  Authors: Aleix Ferré, Joaquín Villena, Joel Pérez.
+goodForYouIf:
+  - You like fast and challenging games.
+  - You want to play a unique and engaging game.
+whatILearned:
+  - How to design an innovative game mechanic that is both interesting and useful.
+  - How to design and implement fun mechanics fast and efficiently.
+startedAt: 2021-07-01
+finishedAt: 2021-07-02

@@ -12,7 +12,7 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
 ---
 
 <TabLayout
-  title="About | Aleix Ferré"
+  title="About"
   description="Aleix Ferré, Game Designer & Developer: web dashboards and mobile apps at ClearPeaks, Yuuko Games by night. Education, professional experience and languages."
 >
   <div class="grid">
@@ -40,14 +40,7 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
       <div class="list">
         {
           ABOUT.education.items.map((education) => (
-            <InfoCard
-              class="item"
-              heading={education.title}
-              title={education.number}
-              subtitle={education.description}
-              image={education.img}
-              imageOpacity={0.5}
-            />
+            <InfoCard class="item" {...education} imageOpacity={0.5} />
           ))
         }
       </div>
@@ -56,15 +49,7 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
       <p>{ABOUT.professionalExperience.title}</p>
       <div class="list">
         {
-          ABOUT.professionalExperience.items.map((experience) => (
-            <InfoCard
-              class="item"
-              heading={experience.title}
-              title={experience.number}
-              subtitle={experience.description}
-              image={experience.img}
-            />
-          ))
+          ABOUT.professionalExperience.items.map((experience) => <InfoCard class="item" {...experience} />)
         }
       </div>
     </Card>
@@ -73,14 +58,7 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
       <div class="list">
         {
           ABOUT.languages.items.map((language) => (
-            <InfoCard
-              class="item"
-              title={language.number}
-              subtitle={language.description}
-              image={language.img}
-              imageMode="flag"
-              align="left"
-            />
+            <InfoCard class="item" {...language} imageMode="flag" align="left" />
           ))
         }
       </div>

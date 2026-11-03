@@ -1,0 +1,25 @@
+order: 12
+name: The Angry Stewardess
+description: A gamejam game about a stewardess in a train that kicks all security guards out of the train.
+url: https://aleixferre.itch.io/the-angry-stewardess
+logo: ../../assets/projects/angry-stewardess/angry-stewardess.webp
+background: ../../assets/projects/angry-stewardess/angry-stewardess_bg.webp
+screenshots:
+  - ../../assets/projects/angry-stewardess/angry-stewardess-1.webp
+  - ../../assets/projects/angry-stewardess/angry-stewardess-2.webp
+  - ../../assets/projects/angry-stewardess/angry-stewardess-3.webp
+details:
+  Main Focus: GameJam Game Development.
+  Notable Features: The rage mechanic, that is a counter-mechanic for the health, makes the game interesting and engaging.
+  Technologies Used: Unity, C#, Git.
+  Challenges Faced: Making the rage mechanic interesting, useful and easily understandable.
+  Authors: Aleix Ferré, Eric Valero, Laureola, Joel Pérez, Arnau Albertí.
+goodForYouIf:
+  - You like fast and challenging games.
+  - You want to play a unique and engaging game.
+  - You like a short but intense experience.
+whatILearned:
+  - How to design an innovative game mechanic that is both interesting and useful.
+  - How to design and implement fun mechanics fast and efficiently.
+startedAt: 2022-09-01
+finishedAt: 2022-09-02

@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'astro/types';
 import Card from '../ui/Card.astro';
 import Img from '../ui/Img.astro';
-import type { Project } from '../../data/projects';
+import type { Project } from '../../lib/projects';
 import { backgroundImage } from '../../utils/assets';
 
 interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
@@ -13,7 +13,7 @@ interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
 
 const { project, variant = 'grid', priority = false, class: className, ...rest } = Astro.props;
 
-const background = await backgroundImage(project.backgroundImage, variant === 'sidebar' ? 'sidebarCard' : 'card');
+const background = await backgroundImage(project.data.background, variant === 'sidebar' ? 'sidebarCard' : 'card');
 ---
 
 <Card
@@ -23,7 +23,7 @@ const background = await backgroundImage(project.backgroundImage, variant === 's
   style={`background-image: ${background};`}
   {...rest}
 >
-  <Img src={project.image} alt={project.name} variant="card" priority={priority} />
+  <Img src={project.data.logo} alt={project.data.name} variant="card" priority={priority} />
 </Card>
 
 <style lang="scss">

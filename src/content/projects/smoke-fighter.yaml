@@ -1,0 +1,24 @@
+order: 10
+name: SmokeFighter
+description: A gamejam game about a fire fighter that needs to protect a building from smoke and fire!
+url: https://aleixferre.itch.io/smokefighter
+logo: ../../assets/projects/smokefighter/smokefighter.webp
+background: ../../assets/projects/smokefighter/smokefighter_bg.webp
+screenshots:
+  - ../../assets/projects/smokefighter/smokefighter-1.webp
+  - ../../assets/projects/smokefighter/smokefighter-2.webp
+  - ../../assets/projects/smokefighter/smokefighter-3.webp
+details:
+  Main Focus: GameJam Game Development.
+  Notable Features: The movement is smooth due to the lerp function. The fire mechanic make the game increasingly difficult.
+  Technologies Used: Unity, C#, Git.
+  Challenges Faced: Making the progressive difficulty and the fire mechanic interesting, useful and easily understandable.
+  Authors: Aleix Ferré, Joaquín Villena.
+goodForYouIf:
+  - You like incresingly difficult games.
+  - You like a short but intense experience.
+whatILearned:
+  - How to design an innovative game mechanic that is both interesting and useful.
+  - How to design and implement fun mechanics fast and efficiently.
+startedAt: 2021-04-01
+finishedAt: 2021-04-02

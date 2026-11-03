@@ -1,19 +1,21 @@
 ---
 import ActionLink from '../ui/ActionLink.astro';
 import ProjectCard from './ProjectCard.astro';
-import { ALL_PROJECTS } from '../../data/projects';
+import { getProjects } from '../../lib/projects';
 
 interface Props {
   currentId: string;
 }
 
 const { currentId } = Astro.props;
+
+const projects = await getProjects();
 ---
 
 <div class="list" data-scroll-current>
   <ActionLink class="see-all" href="/projects" icon="/assets/back.svg" label="See All" variant="floating" />
   {
-    ALL_PROJECTS.map((item) => (
+    projects.map((item) => (
       <ProjectCard
         class="item"
         project={item}

@@ -1,0 +1,29 @@
+order: 7
+name: Masters Arena
+description: A multiplayer online battle arena game that pits players against each other in strategic combat.
+url: https://aleixferre.itch.io/masters-arena
+report:
+  href: /assets/projects/masters-arena/tfg.pdf
+  label: Project Report
+logo: ../../assets/projects/masters-arena/masters-arena.webp
+background: ../../assets/projects/masters-arena/masters-arena_bg.webp
+screenshots:
+  - ../../assets/projects/masters-arena/masters-arena-1.webp
+  - ../../assets/projects/masters-arena/masters-arena-2.webp
+  - ../../assets/projects/masters-arena/masters-arena-3.webp
+  - ../../assets/projects/masters-arena/masters-arena-4.webp
+details:
+  Main Focus: Realtime Multiplayer Game Development in Unity.
+  Notable Features: Real-time multiplayer combat, unique character abilities, scalable systems and fun gameplay.
+  University Final Project: This was my final project for my university Game Design & Development degree. I had a 10/10 grade.
+  Technologies Used: Unity, C#, Photon Pun, Git, Mixamo.
+goodForYouIf:
+  - You like fast MOBA games.
+  - You want to experiment a fresh take on the genre.
+  - You want to check out what I did for my final project at university.
+whatILearned:
+  - I learned how to create a game that involves real-time multiplayer combat, unique character abilities, and scalable systems.
+  - I learned how to use the Unity game engine to create a game that is both challenging and engaging.
+  - I learned how to use the Photon Pun Services to create a game that uses the client-server architecture.
+startedAt: 2021-03-01
+finishedAt: 2022-01-02

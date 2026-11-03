@@ -1,0 +1,23 @@
+order: 2
+name: Yuuko Games
+description: A game development studio focused on creating unique and engaging games based in Girona.
+url: https://yuukogamesstudio.github.io
+logo: ../../assets/projects/yuukogames/yuukogames.webp
+background: ../../assets/projects/yuukogames/yuukogames_bg.webp
+screenshots:
+  - ../../assets/projects/yuukogames/yuukogames-1.webp
+  - ../../assets/projects/yuukogames/yuukogames-2.webp
+details:
+  Main Focus: Game Development and Design
+  Notable Projects: Threefold, The Forbidden Door, USignals
+  Technologies Used: Unity, C#, Git
+  Team Members: Aleix Ferré, Joaquin Villena, Arnau Albertí
+goodForYouIf:
+  - You are looking for a quality-first game development studio.
+  - You want to work with a team of talented and experienced developers.
+  - You want to create a unique and engaging game that will captivate players.
+whatILearned:
+  - How to finish a complete commercial game from start to finish.
+  - How to market a game.
+  - How to work in a team with other developers.
+startedAt: 2023-04-01

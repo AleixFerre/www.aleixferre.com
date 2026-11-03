@@ -1,8 +1,8 @@
-export interface AboutMetric {
-  img?: string;
-  title?: string;
-  number: string;
-  description: string;
+export interface AboutItem {
+  image?: string;
+  heading?: string;
+  title: string;
+  subtitle: string;
 }
 
 export interface AboutSection<T> {
@@ -25,9 +25,9 @@ export interface AboutContent {
     background: string;
   };
   focus: AboutSection<string>;
-  education: AboutSection<AboutMetric>;
-  professionalExperience: AboutSection<AboutMetric>;
-  languages: AboutSection<AboutMetric>;
+  education: AboutSection<AboutItem>;
+  professionalExperience: AboutSection<AboutItem>;
+  languages: AboutSection<AboutItem>;
 }
 
 export const ABOUT: AboutContent = {
@@ -58,10 +58,10 @@ export const ABOUT: AboutContent = {
     title: 'Education',
     items: [
       {
-        img: '/assets/companies/udg.webp',
-        title: 'University of Girona',
-        number: 'Game Design and Development Degree',
-        description: '2017 - 2021',
+        image: '/assets/companies/udg.webp',
+        heading: 'University of Girona',
+        title: 'Game Design and Development Degree',
+        subtitle: '2017 - 2021',
       },
     ],
   },
@@ -69,22 +69,22 @@ export const ABOUT: AboutContent = {
     title: 'Professional Experience',
     items: [
       {
-        img: '/assets/projects/yuukogames/yuukogames.webp',
-        title: 'Yuuko Games',
-        number: 'Co-Founder',
-        description: '2023 - Present',
+        image: '/assets/projects/yuukogames/yuukogames.webp',
+        heading: 'Yuuko Games',
+        title: 'Co-Founder',
+        subtitle: '2023 - Present',
       },
       {
-        img: '/assets/companies/clearpeaks.webp',
-        title: 'ClearPeaks',
-        number: 'Senior Web & Mobile Developer',
-        description: '2023 - Present',
+        image: '/assets/companies/clearpeaks.webp',
+        heading: 'ClearPeaks',
+        title: 'Senior Web & Mobile Developer',
+        subtitle: '2023 - Present',
       },
       {
-        img: '/assets/companies/clearpeaks.webp',
-        title: 'ClearPeaks',
-        number: 'Junior Web Developer',
-        description: '2021 - 2023',
+        image: '/assets/companies/clearpeaks.webp',
+        heading: 'ClearPeaks',
+        title: 'Junior Web Developer',
+        subtitle: '2021 - 2023',
       },
     ],
   },
@@ -92,19 +92,19 @@ export const ABOUT: AboutContent = {
     title: 'Languages',
     items: [
       {
-        img: '/assets/flags/english.webp',
-        number: 'English',
-        description: 'Full Professional',
+        image: '/assets/flags/english.webp',
+        title: 'English',
+        subtitle: 'Full Professional',
       },
       {
-        img: '/assets/flags/spanish.webp',
-        number: 'Spanish',
-        description: 'Native',
+        image: '/assets/flags/spanish.webp',
+        title: 'Spanish',
+        subtitle: 'Native',
       },
       {
-        img: '/assets/flags/catalan.webp',
-        number: 'Catalan',
-        description: 'Native',
+        image: '/assets/flags/catalan.webp',
+        title: 'Catalan',
+        subtitle: 'Native',
       },
     ],
   },

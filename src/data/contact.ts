@@ -1,3 +1,5 @@
+import { SITE } from './site';
+
 export interface ContactLink {
   label: string;
   href: string;
@@ -7,8 +9,8 @@ export interface ContactLink {
 
 export const CONTACT_LINKS: ContactLink[] = [
   { label: 'Download CV', href: '/assets/contact/cv.pdf', icon: '/assets/contact/cv.json', wide: true },
-  { label: 'Github', href: 'https://github.com/AleixFerre', icon: '/assets/contact/github.json' },
-  { label: 'Itch.io', href: 'https://aleixferre.itch.io/', icon: '/assets/contact/itchio.json' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aleixferre/', icon: '/assets/contact/linkedin.json' },
-  { label: 'Email', href: 'mailto:afj.99@hotmail.com', icon: '/assets/contact/email.json' },
+  { label: 'Github', href: SITE.social.github, icon: '/assets/contact/github.json' },
+  { label: 'Itch.io', href: SITE.social.itchio, icon: '/assets/contact/itchio.json' },
+  { label: 'LinkedIn', href: SITE.social.linkedin, icon: '/assets/contact/linkedin.json' },
+  { label: 'Email', href: `mailto:${SITE.email}`, icon: '/assets/contact/email.json' },
 ];
