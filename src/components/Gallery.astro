@@ -77,8 +77,10 @@ const cols = Math.min(Math.max(images.length, 2), 4);
       transition: transform 0.2s ease-in-out;
       cursor: pointer;
 
-      &:hover {
-        transform: scale(1.02);
+      @include motion-safe {
+        &:hover {
+          transform: scale(1.02);
+        }
       }
     }
 

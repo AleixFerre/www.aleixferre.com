@@ -135,11 +135,6 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
 </script>
 
 <style lang="scss">
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
   .project-row {
     display: flex;
     flex-direction: row;
@@ -166,8 +161,8 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     flex: 1;
     background-color: rgba(240, 248, 255, 0.103);
     padding: 2em;
-    border-radius: 10px;
-    font-family: 'PT Sans', sans-serif;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
     height: 70vh;
     overflow: auto;
     position: relative;
@@ -193,7 +188,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       background: rgba(16, 18, 26, 0.6);
       backdrop-filter: blur(6px);
       padding: 0.75em 0.75em 0.75em 1.4em;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       border: 1px solid rgba(255, 255, 255, 0.04);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 
@@ -223,7 +218,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
 
       .button {
         background-color: rgba(0, 0, 0, 0.226);
-        border-radius: 10px;
+        border-radius: var(--radius-sm);
         padding: 10px;
         display: flex;
         padding: 1em;
@@ -231,10 +226,12 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
         justify-content: center;
         gap: 10px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition:
+          background-color var(--duration-base) ease,
+          font-weight var(--duration-base) ease;
         color: white;
         text-decoration: none;
-        font-family: 'Fira Code Variable', 'Fira Code', monospace;
+        font-family: var(--font-mono);
         text-align: center;
       }
     }
@@ -267,7 +264,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       height: 90vh;
       overflow-y: auto;
       overflow-x: hidden;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       position: relative;
 
       .button.stick {
@@ -276,7 +273,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
         align-self: stretch;
         z-index: 7;
         background: rgba(16, 18, 26, 0.75);
-        border-radius: 10px;
+        border-radius: var(--radius-sm);
         border: 1px solid rgba(255, 255, 255, 0.06);
         backdrop-filter: blur(6px);
         display: flex;
@@ -285,10 +282,7 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       }
     }
 
-    @include mobile {
-      display: flex;
-      flex-direction: column;
-    }
+    @include stack-on-mobile;
 
     .box {
       display: flex;
@@ -299,8 +293,8 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
   }
 
   .box {
-    background-color: rgba(255, 255, 255, 0.051);
-    border-radius: 10px;
+    background-color: var(--surface-flat);
+    border-radius: var(--radius-sm);
     padding: 10px;
   }
 
@@ -310,17 +304,25 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition:
+      filter var(--duration-base) ease,
+      transform var(--duration-base) ease,
+      margin var(--duration-base) ease;
     cursor: pointer;
     flex: 1;
     min-height: 50px;
 
     &:hover {
       filter: brightness(1);
-      transform: translateY(-4px) scale(1.01);
+    }
 
-      img {
-        transform: scale(1.05);
+    @include motion-safe {
+      &:hover {
+        transform: translateY(-4px) scale(1.01);
+
+        img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -333,10 +335,12 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       }
     }
 
-    &.selected:hover {
-      transform: translateY(-4px) scale(1.03);
-      img {
-        transform: scale(1.1);
+    @include motion-safe {
+      &.selected:hover {
+        transform: translateY(-4px) scale(1.03);
+        img {
+          transform: scale(1.1);
+        }
       }
     }
 
@@ -351,14 +355,14 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
       max-width: 70%;
       object-fit: contain;
       aspect-ratio: inherit;
-      transition: all 0.3s ease;
+      transition: transform var(--duration-base) ease;
       pointer-events: none;
     }
   }
 
   .button {
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     padding: 12px;
     height: 1lh;
     display: flex;
@@ -366,7 +370,9 @@ const backgrounds = await Promise.all(ALL_PROJECTS.map((item) => backgroundImage
     justify-content: center;
     gap: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition:
+      background-color var(--duration-base) ease,
+      font-weight var(--duration-base) ease;
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     font-weight: 600;
