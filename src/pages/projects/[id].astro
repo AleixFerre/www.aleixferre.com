@@ -2,7 +2,6 @@
 import TabLayout from '../../layouts/TabLayout.astro';
 import ProjectSidebar from '../../components/project/ProjectSidebar.astro';
 import ProjectDetails from '../../components/project/ProjectDetails.astro';
-import { TABS } from '../../data/tabs';
 import { ALL_PROJECTS, type Project } from '../../data/projects';
 import { asset } from '../../utils/assets';
 
@@ -18,7 +17,6 @@ const { project } = Astro.props;
 ---
 
 <TabLayout
-  activeTab={TABS.PROJECTS}
   title={`${project.name} | Aleix Ferré`}
   description={project.description}
   image={asset(project.image).src}
@@ -28,20 +26,6 @@ const { project } = Astro.props;
     <ProjectDetails project={project} />
   </div>
 </TabLayout>
-
-<script>
-  document.addEventListener('astro:after-swap', () => {
-    const current = location.pathname.replace(/\/+$/, '');
-    for (const item of document.querySelectorAll<HTMLAnchorElement>('.list a.project')) {
-      item.classList.toggle('selected', new URL(item.href).pathname.replace(/\/+$/, '') === current);
-    }
-    document.querySelector('.details')?.scrollTo({ top: 0 });
-  });
-
-  document.addEventListener('astro:page-load', () => {
-    document.querySelector('.list .selected')?.scrollIntoView({ block: 'nearest' });
-  });
-</script>
 
 <style lang="scss">
   .project-row {

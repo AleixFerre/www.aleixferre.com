@@ -10,9 +10,19 @@ interface Props {
 const { currentId } = Astro.props;
 ---
 
-<div class="list">
+<div class="list" data-scroll-current>
   <ActionLink class="see-all" href="/projects" icon="/assets/back.svg" label="See All" variant="floating" />
-  {ALL_PROJECTS.map((item) => <ProjectCard class="item" project={item} variant="sidebar" selected={item.id === currentId} />)}
+  {
+    ALL_PROJECTS.map((item) => (
+      <ProjectCard
+        class="item"
+        project={item}
+        variant="sidebar"
+        data-current="page"
+        aria-current={item.id === currentId ? 'page' : undefined}
+      />
+    ))
+  }
 </div>
 
 <style lang="scss">

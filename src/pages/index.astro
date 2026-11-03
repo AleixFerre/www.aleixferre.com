@@ -5,7 +5,6 @@ import Stat from '../components/ui/Stat.astro';
 import IconText from '../components/ui/IconText.astro';
 import Img from '../components/ui/Img.astro';
 import ProjectCard from '../components/project/ProjectCard.astro';
-import { TABS } from '../data/tabs';
 import { FEATURED_PROJECTS } from '../data/projects';
 import { ABOUT } from '../data/about';
 import { yearsSince } from '../utils/years-since';
@@ -17,7 +16,7 @@ const yearsSinceIndie = yearsSince(new Date('2017-01-01'));
 const yearsSinceWeb = yearsSince(new Date('2021-09-01'));
 ---
 
-<TabLayout activeTab={TABS.HOME}>
+<TabLayout>
   <div class="grid">
     <Card class="box profile" href="/about" style={`--profile-background: ${profileBackground}`}>
       <Img src={ABOUT.profile.photo} class="profile-image" alt={ABOUT.profile.name} variant="profile" priority />

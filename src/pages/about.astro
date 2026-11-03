@@ -2,7 +2,6 @@
 import TabLayout from '../layouts/TabLayout.astro';
 import Card from '../components/ui/Card.astro';
 import InfoCard from '../components/ui/InfoCard.astro';
-import { TABS } from '../data/tabs';
 import { ABOUT } from '../data/about';
 import { backgroundImage } from '../utils/assets';
 import { ageOn } from '../utils/age';
@@ -13,7 +12,6 @@ const profileBackground = await backgroundImage(ABOUT.profile.background, 'profi
 ---
 
 <TabLayout
-  activeTab={TABS.ABOUT}
   title="About | Aleix Ferré"
   description="Aleix Ferré, Game Designer & Developer: web dashboards and mobile apps at ClearPeaks, Yuuko Games by night. Education, professional experience and languages."
 >

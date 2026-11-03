@@ -61,7 +61,7 @@ const imageUrl = new URL(image, Astro.site).href;
 </html>
 
 <script>
-  const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
+  import { normalizePath } from '../lib/navigation';
 
   document.addEventListener(
     'click',
