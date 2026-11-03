@@ -1,6 +1,6 @@
 order: 1
 name: Threefold
-description: "A match-3 sorting puzzle about tidy shelves and messy piles. Drag the little pixel-art characters between floating islands: when a shelf holds three of the same kind they pop, and the layer behind them slides forward. Clear every layer before time runs out across 5,000 stages."
+description: 'A match-3 sorting puzzle about tidy shelves and messy piles. Drag the little pixel-art characters between floating islands: when a shelf holds three of the same kind they pop, and the layer behind them slides forward. Clear every layer before time runs out across 5,000 stages.'
 url: https://yuukogames.itch.io/threefold
 report:
   href: https://www.yuukogames.com/games/threefold

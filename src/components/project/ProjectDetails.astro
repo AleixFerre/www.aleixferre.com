@@ -17,17 +17,15 @@ const project = Astro.props.project.data;
     <ActionLink href="/projects" icon="/assets/back.svg" label="See All" mobileOnly />
     <div class="heading row appear-lite">
       <h2 class="title">{project.name}</h2>
-      {
-        project.report && (
-          <ActionLink
-            href={project.report.href}
-            target="_blank"
-            icon="/assets/projects/_actions/project_report.svg"
-            label={project.report.label}
-            iconOnDesktop={false}
-          />
-        )
-      }
+      {project.report && (
+        <ActionLink
+          href={project.report.href}
+          target="_blank"
+          icon="/assets/projects/_actions/project_report.svg"
+          label={project.report.label}
+          iconOnDesktop={false}
+        />
+      )}
     </div>
     <ActionLink
       href={project.url}
@@ -40,22 +38,30 @@ const project = Astro.props.project.data;
   <div class="appear-lite">
     <div class="separator"></div>
     <p>{project.description}</p>
-    {project.screenshots.length > 0 && <Gallery images={project.screenshots} keepOriginal={project.keepOriginalScreenshots} />}
+    {project.screenshots.length > 0 && (
+      <Gallery images={project.screenshots} keepOriginal={project.keepOriginalScreenshots} />
+    )}
     <h3>Details</h3>
     <ul>
-      {
-        Object.entries(project.details).map(([key, value]) => (
-          <li>
-            <b>{key}:</b><span> {value}</span>
-          </li>
-        ))
-      }
+      {Object.entries(project.details).map(([key, value]) => (
+        <li>
+          <b>{key}:</b>
+          <span> {value}</span>
+        </li>
+      ))}
     </ul>
     {project.goodForYouIf && <BulletSection title="Good for you if" items={project.goodForYouIf} />}
     {project.whatILearned && <BulletSection title="What I learned" items={project.whatILearned} />}
     <h3>Project Timeline</h3>
     <p>
-      {formatMonth(project.startedAt)} - {project.finishedAt ? <span>{formatMonth(project.finishedAt)} ({formatDuration(project.startedAt, project.finishedAt)})</span> : <span>In Progress</span>}
+      {formatMonth(project.startedAt)} -{' '}
+      {project.finishedAt ? (
+        <span>
+          {formatMonth(project.finishedAt)} ({formatDuration(project.startedAt, project.finishedAt)})
+        </span>
+      ) : (
+        <span>In Progress</span>
+      )}
     </p>
   </div>
 </div>

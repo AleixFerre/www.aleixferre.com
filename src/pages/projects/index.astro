@@ -11,11 +11,9 @@ const projects = await getProjects();
   description="Games and tools by Aleix Ferré, from Yuuko Games and Masters Arena to the USignals Unity package, with screenshots, details and lessons learned."
 >
   <div class="grid appear">
-    {
-      projects.map((item, index) => (
-        <ProjectCard class:list={['item', { wide: item.data.highlight }]} project={item} priority={index < 2} />
-      ))
-    }
+    {projects.map((item, index) => (
+      <ProjectCard class:list={['item', { wide: item.data.highlight }]} project={item} priority={index < 2} />
+    ))}
   </div>
 </TabLayout>
 

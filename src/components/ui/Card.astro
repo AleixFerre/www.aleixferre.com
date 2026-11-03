@@ -9,7 +9,9 @@ const { href, variant = 'raised', class: className, ...rest } = Astro.props;
 const Tag = href ? 'a' : 'div';
 ---
 
-<Tag href={href} class:list={['card', variant, className]} {...rest}><slot /></Tag>
+<Tag href={href} class:list={['card', variant, className]} {...rest}>
+  <slot />
+</Tag>
 
 <style lang="scss">
   :where(.card) {

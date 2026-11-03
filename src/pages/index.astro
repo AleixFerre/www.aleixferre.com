@@ -22,32 +22,32 @@ const featured = await Promise.all(
   <div class="grid">
     <Card class="box profile" href="/about" style={`--profile-background: ${profileBackground}`}>
       <Img src={ABOUT.profile.photo} class="profile-image" alt={ABOUT.profile.name} variant="profile" priority />
-      <p class="name">Game Designer <br />& Developer</p>
+      <p class="name">
+        Game Designer <br />& Developer
+      </p>
     </Card>
     <Card class="box">
       <p>Experience</p>
       <div class="grid experience">
-        {
-          HOME.experience.map(({ label, since }) => (
-            <Stat label={label} value={yearsSince(since)} suffix="+" caption="years" />
-          ))
-        }
+        {HOME.experience.map(({ label, since }) => (
+          <Stat label={label} value={yearsSince(since)} suffix="+" caption="years" />
+        ))}
       </div>
     </Card>
     <Card class="box">
       <p>Specialized In</p>
       <div class="grid specialized">
-        {HOME.specializations.map(({ text, icon }) => <IconText variant="tile" text={text} icon={icon} />)}
+        {HOME.specializations.map(({ text, icon }) => (
+          <IconText variant="tile" text={text} icon={icon} />
+        ))}
       </div>
     </Card>
     <Card class="box featured">
       <p>Featured Projects</p>
       <div class="grid projects">
-        {
-          featured.map(({ project, size }) => (
-            <ProjectCard class:list={['item', size]} project={project} variant="featured" />
-          ))
-        }
+        {featured.map(({ project, size }) => (
+          <ProjectCard class:list={['item', size]} project={project} variant="featured" />
+        ))}
       </div>
     </Card>
   </div>
@@ -132,8 +132,7 @@ const featured = await Promise.all(
     }
 
     &.profile {
-      background-image: var(--profile-background),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+      background-image: var(--profile-background), linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
       background-size: cover, cover;
       background-position: center, center;
       background-repeat: no-repeat, no-repeat;

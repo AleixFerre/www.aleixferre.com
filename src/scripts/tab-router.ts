@@ -6,12 +6,7 @@ const STYLES = 'link[rel=stylesheet], style';
 const CURRENT_PANEL = '[data-tab-link][aria-current] + [data-tab-panel]';
 
 const isPlainClick = (event: MouseEvent) =>
-  !event.defaultPrevented &&
-  event.button === 0 &&
-  !event.metaKey &&
-  !event.ctrlKey &&
-  !event.shiftKey &&
-  !event.altKey;
+  !event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 
 const isSamePage = (to: URL) =>
   to.origin === location.origin &&

@@ -15,7 +15,8 @@ const { value, suffix, label, caption } = Astro.props;
   <p class="label">{label}</p>
   <div class="metric">
     <div class="data">
-      <span class="value">{value}</span>{suffix}
+      <span class="value">{value}</span>
+      {suffix}
     </div>
     <div class="caption">{caption}</div>
   </div>
